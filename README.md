@@ -19,11 +19,81 @@
 
 🌐 [jeffreyemanuel.com](https://www.jeffreyemanuel.com) · 📝 [jeffreysprompts.com](https://jeffreysprompts.com) · ⚡ [agent-flywheel.com](https://agent-flywheel.com) · 🔬 [brennerbot.org](https://brennerbot.org)
 
+<p align="center">
+  <img src="https://github-profile-trophy.vercel.app/?username=Dicklesworthstone&theme=darkhub&no-frame=true&row=1&column=7" alt="GitHub Trophies" />
+</p>
+
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=Dicklesworthstone&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&count_private=false" width="49%" alt="GitHub Stats" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Dicklesworthstone&layout=compact&theme=tokyonight&hide_border=true&bg_color=0d1117&langs_count=10" width="49%" alt="Top Languages" />
+</p>
+
 ---
 
 ## The Agentic Coding Flywheel
 
 A self-reinforcing ecosystem of 14 tools for multi-agent software development. Agents coordinate via mail, track work via beads, search past sessions, guard against destructive mistakes, and orchestrate across tmux panes. Each tool amplifies the others. The whole thing started in October 2025 and the shipping cadence accelerates with every addition.
+
+```mermaid
+graph TD
+    subgraph orchestration["Orchestration"]
+        NTM["NTM<br/>Tmux Orchestrator"]
+        ACFS["Flywheel Setup<br/>Zero-to-VPS"]
+    end
+
+    subgraph coordination["Coordination"]
+        MAIL["Agent Mail<br/>1,677★"]
+        SLB["SLB<br/>Two-Person Rule"]
+    end
+
+    subgraph knowledge["Knowledge"]
+        CASS["CASS<br/>Session Search"]
+        CM["CASS Memory<br/>3-Layer Memory"]
+        MS["Meta Skill<br/>Skill Platform"]
+        XF["XF<br/>X Archive Search"]
+    end
+
+    subgraph tasks["Task Management"]
+        BV["Beads Viewer<br/>1,242★"]
+        BR["Beads Rust<br/>Issue Tracker"]
+    end
+
+    subgraph safety["Safety"]
+        DCG["DCG<br/>Command Guard"]
+        UBS["UBS<br/>Bug Scanner"]
+    end
+
+    subgraph utility["Utility"]
+        RU["RU<br/>Repo Updater"]
+        GIIL["GIIL<br/>Image Downloader"]
+    end
+
+    MAIL <--> NTM
+    MAIL <--> BV
+    MAIL <--> CASS
+    MAIL <--> CM
+    MAIL <--> SLB
+
+    NTM <--> CASS
+    NTM <--> BV
+    NTM <--> DCG
+    NTM <--> RU
+
+    CASS <--> CM
+    CASS <--> MS
+    CASS <--> XF
+
+    BV <--> UBS
+    BV <--> MS
+    BR <--> BV
+
+    DCG <--> SLB
+    UBS <--> SLB
+
+    ACFS -.->|installs| NTM
+    ACFS -.->|installs| MAIL
+    ACFS -.->|installs| DCG
+```
 
 | Tool | Stars | Lang | Purpose |
 |:-----|------:|:-----|:--------|
@@ -41,6 +111,41 @@ A self-reinforcing ecosystem of 14 tools for multi-agent software development. A
 | [**SLB**](https://github.com/Dicklesworthstone/slb) | 56 | Go | Two-person rule: peer approval before dangerous commands |
 | [**RU**](https://github.com/Dicklesworthstone/repo_updater) | 51 | Bash | Keep hundreds of Git repos in sync with one command |
 | [**GIIL**](https://github.com/Dicklesworthstone/giil) | 28 | Bash | Download full-res images from iCloud/Dropbox share links |
+
+### Quick Install
+
+**Full ecosystem** (Ubuntu VPS, 30 minutes):
+
+```bash
+curl -fsSL "https://raw.githubusercontent.com/Dicklesworthstone/agentic_coding_flywheel_setup/main/install.sh" | bash -s -- --yes --mode vibe
+```
+
+**Individual Rust tools** via Cargo:
+
+```bash
+cargo install coding-agent-search      # cass — unified session search
+cargo install destructive_command_guard # dcg  — command safety guard
+cargo install beads_rust               # br   — issue tracker
+cargo install xf                       # xf   — X/Twitter archive search
+```
+
+### Agent Mail in Action
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Dicklesworthstone/mcp_agent_mail/main/screenshots/output/agent_mail_showcase.gif" alt="Agent Mail — agents coordinating via threaded messages, file leases, and audit trails" width="800" />
+</p>
+
+---
+
+## What I'm Building Now
+
+| Project | Lang | What it does |
+|:--------|:-----|:-------------|
+| [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | Rust | Clean-room SQLite reimplementation with MVCC page-level versioning and RaptorQ erasure codes |
+| [**FrankenTUI**](https://github.com/Dicklesworthstone/frankentui) | Rust | Minimal, deterministic terminal UI kernel — the rendering layer for CASS, Beads Viewer, and NTM |
+| [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | Rust | Terminal hypervisor for AI agent swarms: pattern detection, event automation, multiplexed I/O |
+| [**Bio-Inspired Nanochat**](https://github.com/Dicklesworthstone/bio_inspired_nanochat) | Python | What if a Transformer had a metabolism? Living weights with synaptic fatigue and structural plasticity |
+| [**SmartEdgar**](https://github.com/Dicklesworthstone/smartedgar) | Python | SEC filing ingestion, entity resolution, and research stack with an MCP server at its core |
 
 ---
 
@@ -61,10 +166,10 @@ A self-reinforcing ecosystem of 14 tools for multi-agent software development. A
 ### Systems & Rust
 
 - ⚡ **[Fast Vector Similarity](https://github.com/Dicklesworthstone/fast_vector_similarity)** `426★` — High-speed Rust library for complex vector similarity metrics with Python bindings.
-- 🔬 **[FrankenTUI](https://github.com/Dicklesworthstone/frankentui)** `134★` — Minimal, high-performance terminal UI kernel focused on correctness and determinism.
-- 🦀 **[Fast CMA-ES](https://github.com/Dicklesworthstone/fast_cmaes)** — SIMD-accelerated, Rayon-parallelized evolution strategy optimizer in Rust.
+- 🔬 **[FrankenTUI](https://github.com/Dicklesworthstone/frankentui)** `134★` — Minimal, high-performance terminal UI kernel. The rendering substrate for CASS, Beads Viewer, and NTM.
 - 🗄️ **[FrankenSQLite](https://github.com/Dicklesworthstone/frankensqlite)** `32★` — Clean-room Rust reimplementation of SQLite with MVCC page-level versioning and RaptorQ erasure codes.
 - 🖥️ **[FrankenTerm](https://github.com/Dicklesworthstone/frankenterm)** `32★` — Terminal hypervisor for AI agent swarms with pattern detection and event-driven automation.
+- 🦀 **[Fast CMA-ES](https://github.com/Dicklesworthstone/fast_cmaes)** — SIMD-accelerated, Rayon-parallelized evolution strategy optimizer in Rust.
 - 🦎 **[Rust ScriptBots](https://github.com/Dicklesworthstone/rust_scriptbots)** — Deterministic, GPU-accelerated artificial life simulator. Modern Rust reimplementation of Karpathy's ScriptBots.
 - 🔍 **[UltraSearch](https://github.com/Dicklesworthstone/ultrasearch)** — Instant file search engine for Windows using NTFS USN journals and Tantivy. A modern "Everything" in Rust.
 
@@ -152,6 +257,12 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 ## GitHub Activity
 
 ![GitHub Contribution Graph](https://ghchart.rshah.org/Dicklesworthstone)
+
+<p align="center">
+  <a href="https://star-history.com/#Dicklesworthstone/mcp_agent_mail&Dicklesworthstone/llm_aided_ocr&Dicklesworthstone/beads_viewer&Dicklesworthstone/agentic_coding_flywheel_setup&Dicklesworthstone/swiss_army_llama&Date">
+    <img src="https://api.star-history.com/svg?repos=Dicklesworthstone/mcp_agent_mail,Dicklesworthstone/llm_aided_ocr,Dicklesworthstone/beads_viewer,Dicklesworthstone/agentic_coding_flywheel_setup,Dicklesworthstone/swiss_army_llama&type=Date&theme=dark" alt="Star History Chart" width="800" />
+  </a>
+</p>
 
 ---
 
