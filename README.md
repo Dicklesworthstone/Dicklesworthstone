@@ -128,6 +128,23 @@ A self-reinforcing ecosystem of 14 tools for multi-agent software development. A
 <sub>Interactive docs for the Rust SQLite reimplementation</sub>
 </td>
 </tr>
+<tr>
+<td align="center" width="33%">
+<a href="https://agent-flywheel.com"><img src="https://agent-flywheel.com/opengraph-image?de905a94719d4144" alt="Agent Flywheel" width="100%" /></a><br/>
+<a href="https://agent-flywheel.com"><strong>Agent Flywheel</strong></a><br/>
+<sub>Interactive setup wizard for the complete Flywheel ecosystem</sub>
+</td>
+<td align="center" width="33%">
+<a href="https://brennerbot.org"><img src="https://brennerbot.org/opengraph-image?a523997cd907b722" alt="Brenner Bot" width="100%" /></a><br/>
+<a href="https://brennerbot.org"><strong>Brenner Bot</strong></a><br/>
+<sub>Multi-agent research orchestration using Sydney Brenner's methods</sub>
+</td>
+<td align="center" width="33%">
+<a href="https://jeffreysprompts.com"><img src="https://jeffreysprompts.com/opengraph-image?ea14d913901310ce" alt="Jeffrey's Prompts" width="100%" /></a><br/>
+<a href="https://jeffreysprompts.com"><strong>Jeffrey's Prompts</strong></a><br/>
+<sub>Battle-tested prompts for AI coding agents</sub>
+</td>
+</tr>
 </table>
 
 ---
