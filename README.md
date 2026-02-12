@@ -6,31 +6,31 @@
 
 **New York** · Builder & engineer · Former long/short equity analyst
 
-![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white)
-![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
-![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white)
-![Next.js](https://img.shields.io/badge/-Next.js-000000?style=flat-square&logo=next.js&logoColor=white)
-![React](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=black)
-![Three.js](https://img.shields.io/badge/-Three.js-000000?style=flat-square&logo=three.js&logoColor=white)
-![Claude](https://img.shields.io/badge/-Claude-191919?style=flat-square&logo=anthropic&logoColor=white)
-![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white)
-![SQLite](https://img.shields.io/badge/-SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)
+![Rust](https://img.shields.io/badge/-Rust-2b2b2b?style=flat-square&logo=rust&logoColor=dea584)
+![TypeScript](https://img.shields.io/badge/-TypeScript-2b2b2b?style=flat-square&logo=typescript&logoColor=3178C6)
+![Python](https://img.shields.io/badge/-Python-2b2b2b?style=flat-square&logo=python&logoColor=3776AB)
+![Go](https://img.shields.io/badge/-Go-2b2b2b?style=flat-square&logo=go&logoColor=00ADD8)
+![Next.js](https://img.shields.io/badge/-Next.js-2b2b2b?style=flat-square&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/-React-2b2b2b?style=flat-square&logo=react&logoColor=61DAFB)
+![Three.js](https://img.shields.io/badge/-Three.js-2b2b2b?style=flat-square&logo=three.js&logoColor=white)
+![Claude](https://img.shields.io/badge/-Claude-2b2b2b?style=flat-square&logo=anthropic&logoColor=d4a27f)
+![Bash](https://img.shields.io/badge/-Bash-2b2b2b?style=flat-square&logo=gnu-bash&logoColor=4EAA25)
+![SQLite](https://img.shields.io/badge/-SQLite-2b2b2b?style=flat-square&logo=sqlite&logoColor=63b4f4)
 
 *Building the tooling that lets dozens of AI agents ship complex projects in days.*
 
-![Stars](https://img.shields.io/badge/GitHub_Stars-16.7k+-yellow?style=flat-square&logo=github)
-![Repos](https://img.shields.io/badge/Open_Source_Projects-90+-blue?style=flat-square&logo=github)
-![Followers](https://img.shields.io/badge/Followers-1.7k+-green?style=flat-square&logo=github)
-![X](https://img.shields.io/badge/X_Followers-29k-black?style=flat-square&logo=x)
+![Stars](https://img.shields.io/badge/Stars-16.7k+-2b2b2b?style=flat-square&logo=github&logoColor=white)
+![Repos](https://img.shields.io/badge/Projects-90+-2b2b2b?style=flat-square&logo=github&logoColor=white)
+![Followers](https://img.shields.io/badge/Followers-1.7k+-2b2b2b?style=flat-square&logo=github&logoColor=white)
+![X](https://img.shields.io/badge/𝕏_Followers-29k-2b2b2b?style=flat-square&logo=x&logoColor=white)
 
-[![Website](https://img.shields.io/badge/jeffreyemanuel.com-FF5722?style=for-the-badge&logo=google-chrome&logoColor=white)](https://www.jeffreyemanuel.com)
-[![Prompts](https://img.shields.io/badge/jeffreysprompts.com-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://jeffreysprompts.com)
-[![Flywheel](https://img.shields.io/badge/agent--flywheel.com-10B981?style=for-the-badge&logo=atom&logoColor=white)](https://agent-flywheel.com)
-[![Brenner](https://img.shields.io/badge/brennerbot.org-3B82F6?style=for-the-badge&logo=microscope&logoColor=white)](https://brennerbot.org)
-[![FrankenTUI](https://img.shields.io/badge/frankentui.com-F97316?style=for-the-badge&logo=terminal&logoColor=white)](https://frankentui.com)
+[![Website](https://img.shields.io/badge/jeffreyemanuel.com-2b2b2b?style=flat-square&logo=google-chrome&logoColor=white)](https://www.jeffreyemanuel.com)
+[![Prompts](https://img.shields.io/badge/jeffreysprompts.com-2b2b2b?style=flat-square&logo=bookstack&logoColor=white)](https://jeffreysprompts.com)
+[![Flywheel](https://img.shields.io/badge/agent--flywheel.com-2b2b2b?style=flat-square&logo=atom&logoColor=white)](https://agent-flywheel.com)
+[![Brenner](https://img.shields.io/badge/brennerbot.org-2b2b2b?style=flat-square&logo=microscope&logoColor=white)](https://brennerbot.org)
+[![FrankenTUI](https://img.shields.io/badge/frankentui.com-2b2b2b?style=flat-square&logo=terminal&logoColor=white)](https://frankentui.com)
 
-**Ask me about:** ![Multi-Agent Systems](https://img.shields.io/badge/-Multi--Agent_Coordination-blueviolet?style=flat-square) ![Agentic Coding](https://img.shields.io/badge/-Agentic_Coding_Workflows-00ADD8?style=flat-square) ![Rust CLI](https://img.shields.io/badge/-Rust_CLI_Tools-000000?style=flat-square&logo=rust&logoColor=white) ![LLM Apps](https://img.shields.io/badge/-LLM_Applications-10B981?style=flat-square) ![Terminal UI](https://img.shields.io/badge/-Terminal_UI-4EAA25?style=flat-square)
+`Multi-Agent Coordination` · `Agentic Coding` · `Rust CLI Tools` · `LLM Applications` · `Terminal UI`
 
 </div>
 
