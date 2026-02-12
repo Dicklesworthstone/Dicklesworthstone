@@ -51,67 +51,9 @@
 
 A self-reinforcing ecosystem of 14 tools for multi-agent software development. Agents coordinate via mail, track work via beads, search past sessions, guard against destructive mistakes, and orchestrate across tmux panes. Each tool amplifies the others. The whole thing started in October 2025 and the shipping cadence accelerates with every addition.
 
-```mermaid
-%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#58a6ff', 'primaryTextColor': '#c9d1d9', 'primaryBorderColor': '#30363d', 'lineColor': '#8b949e', 'secondaryColor': '#21262d', 'tertiaryColor': '#161b22', 'clusterBkg': '#0d1117', 'clusterBorder': '#30363d' }}}%%
-graph TD
-    subgraph orchestration["🎛️ Orchestration"]
-        NTM["<b>NTM</b><br/>Tmux Orchestrator"]
-        ACFS["<b>Flywheel Setup</b><br/>Zero-to-VPS"]
-    end
-
-    subgraph coordination["📬 Coordination"]
-        MAIL["<b>Agent Mail</b><br/>⭐ 1,677"]
-        SLB["<b>SLB</b><br/>Two-Person Rule"]
-    end
-
-    subgraph knowledge["🧠 Knowledge"]
-        CASS["<b>CASS</b><br/>Session Search"]
-        CM["<b>CASS Memory</b><br/>3-Layer Memory"]
-        MS["<b>Meta Skill</b><br/>Skill Platform"]
-        XF["<b>XF</b><br/>X Archive Search"]
-    end
-
-    subgraph tasks["📋 Task Management"]
-        BV["<b>Beads Viewer</b><br/>⭐ 1,242"]
-        BR["<b>Beads Rust</b><br/>Issue Tracker"]
-    end
-
-    subgraph safety["🛡️ Safety"]
-        DCG["<b>DCG</b><br/>Command Guard"]
-        UBS["<b>UBS</b><br/>Bug Scanner"]
-    end
-
-    subgraph utility["🔧 Utility"]
-        RU["<b>RU</b><br/>Repo Updater"]
-        GIIL["<b>GIIL</b><br/>Image Downloader"]
-    end
-
-    MAIL <--> NTM
-    MAIL <--> BV
-    MAIL <--> CASS
-    MAIL <--> CM
-    MAIL <--> SLB
-
-    NTM <--> CASS
-    NTM <--> BV
-    NTM <--> DCG
-    NTM <--> RU
-
-    CASS <--> CM
-    CASS <--> MS
-    CASS <--> XF
-
-    BV <--> UBS
-    BV <--> MS
-    BR <--> BV
-
-    DCG <--> SLB
-    UBS <--> SLB
-
-    ACFS -.->|installs| NTM
-    ACFS -.->|installs| MAIL
-    ACFS -.->|installs| DCG
-```
+<p align="center">
+  <img src="flywheel_diagram.webp" alt="The Agentic Coding Flywheel — 14 interconnected tools for multi-agent development" width="800" />
+</p>
 
 | Tool | Stars | Lang | Purpose |
 |:-----|:-----:|:----:|:--------|
