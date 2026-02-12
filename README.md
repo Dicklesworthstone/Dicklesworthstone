@@ -140,9 +140,9 @@ A self-reinforcing ecosystem of 14 tools for multi-agent software development. A
 <sub>Multi-agent research orchestration using Sydney Brenner's methods</sub>
 </td>
 <td align="center" width="33%">
-<a href="https://jeffreysprompts.com"><img src="https://jeffreysprompts.com/opengraph-image?ea14d913901310ce" alt="Jeffrey's Prompts" width="100%" /></a><br/>
-<a href="https://jeffreysprompts.com"><strong>Jeffrey's Prompts</strong></a><br/>
-<sub>Battle-tested prompts for AI coding agents</sub>
+<a href="https://jeffreyemanuel.com/tldr"><img src="https://jeffreyemanuel.com/tldr/opengraph-image?6394e3001be2769b" alt="Jeffrey Emanuel — TL;DR" width="100%" /></a><br/>
+<a href="https://jeffreyemanuel.com/tldr"><strong>jeffreyemanuel.com/tldr</strong></a><br/>
+<sub>The short version of everything I'm working on</sub>
 </td>
 </tr>
 </table>
