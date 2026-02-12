@@ -74,7 +74,7 @@ A self-reinforcing ecosystem of 14 tools for multi-agent software development. A
 - 🔢 **[Model-Guided Research](https://github.com/Dicklesworthstone/model_guided_research)** `94★` — 11 exotic math frameworks for AI (Lie group attention, p-adic spaces, tropical geometry), designed by GPT-5.
 - 🛡️ **[ACIP](https://github.com/Dicklesworthstone/acip)** `247★` — AI Cognitive Inoculation Protocol: defense against prompt injection via external monitoring.
 - 🔬 **[Brenner Bot](https://github.com/Dicklesworthstone/brenner_bot)** `51★` — Multi-agent research system embodying Sydney Brenner's scientific methodology.
-- 🧮 **[LLM Introspective Compression](https://github.com/Dicklesworthstone/llm_introspective_compression_and_metacognition)** `30★` — Treating LLM context as a save state: reasoning backtracking and metacognitive control.
+- 🧮 **[LLM Introspective Compression](https://www.jeffreyemanuel.com/writing/llm_introspective_compression)** `30★` — Treating LLM context as a save state: reasoning backtracking and metacognitive control.
 - 🦠 **[Phage Explorer](https://github.com/Dicklesworthstone/phage_explorer)** `22★` — Interactive educational site exploring bacteriophages with 3D visualization.
 
 ### Developer Tools
@@ -90,35 +90,30 @@ A self-reinforcing ecosystem of 14 tools for multi-agent software development. A
 ### Education & Visualization
 
 - 🌀 **[Visual A* Pathfinding](https://github.com/Dicklesworthstone/visual_astar_python)** `176★` — Cinematic, animated visualizations of pathfinding algorithms in action.
-- ⏱️ **[Introduction to Temporal Logic](https://github.com/Dicklesworthstone/introduction_to_temporal_logic)** `108★` — How temporal logic can be used to analyze concurrency.
-- 📐 **[Hoeffding's D Explainer](https://github.com/Dicklesworthstone/hoeffdings_d_explainer)** `100★` — The non-parametric dependency measure that catches what Pearson and Spearman miss.
-- 🍞 **[Lamport's Bakery Algorithm](https://github.com/Dicklesworthstone/bakery_algorithm)** `95★` — Visual Pythonic implementation of fair mutual exclusion without atomic hardware.
-- 🧮 **[CMA-ES Explainer](https://github.com/Dicklesworthstone/cmaes_explainer)** — Interactive deep dive into the evolution strategy that works where gradient descent fails.
+- ⏱️ **[Introduction to Temporal Logic](https://www.jeffreyemanuel.com/writing/introduction_to_temporal_logic)** `108★` — How temporal logic can be used to analyze concurrency.
+- 📐 **[Hoeffding's D Explainer](https://www.jeffreyemanuel.com/writing/hoeffdings_d_explainer)** `100★` — The non-parametric dependency measure that catches what Pearson and Spearman miss.
+- 🍞 **[Lamport's Bakery Algorithm](https://www.jeffreyemanuel.com/writing/bakery_algorithm)** `95★` — Visual Pythonic implementation of fair mutual exclusion without atomic hardware.
+- 🧮 **[CMA-ES Explainer](https://www.jeffreyemanuel.com/writing/cmaes_explainer)** — Interactive deep dive into the evolution strategy that works where gradient descent fails.
 - 🏰 **[Kissinger Thesis Reader](https://github.com/Dicklesworthstone/kissinger_undergraduate_thesis)** `47★` — A reader for Henry Kissinger's 400-page undergraduate thesis on the meaning of history.
 
-<details>
-<summary><strong>More projects (20+ stars)</strong></summary>
+### More Projects
 
-<br>
-
-- **[Next.js GitHub Blog](https://github.com/Dicklesworthstone/nextjs-github-markdown-blog)** `89★` — Blogging platform that uses GitHub as a headless CMS
-- **[JeffreysPrompts.com](https://github.com/Dicklesworthstone/jeffreysprompts.com)** `69★` — Curated prompt library for agentic coding workflows
-- **[LLM Docs](https://github.com/Dicklesworthstone/llm-docs)** `64★` — Documentation optimized for LLM consumption
-- **[Grassmann Article](https://github.com/Dicklesworthstone/grassmann_article)** `54★` — The story of the self-taught genius who invented linear algebra decades early
-- **[LLM Tournament](https://github.com/Dicklesworthstone/llm-tournament)** `47★` — Arena where LLMs compete and iterate on coding challenges via peer review
-- **[Clawdbot Skills](https://github.com/Dicklesworthstone/agent_flywheel_clawdbot_skills_and_integrations)** `43★` — Modular skill library teaching agents to use the Flywheel toolkit
-- **[Automated Plan Reviser](https://github.com/Dicklesworthstone/automated_plan_reviser_pro)** `42★` — Iterative specification refinement using extended reasoning models
-- **[The Lighthill Debate on AI](https://github.com/Dicklesworthstone/the_lighthill_debate_on_ai)** `34★` — Full transcript of the 1973 debate that nearly killed British AI research
-- **[YouTube Transcript Cleaner](https://github.com/Dicklesworthstone/youtube_transcript_cleaner)** `27★` — Clean up raw YouTube auto-captions into readable text
-- **[Remote Compilation Helper](https://github.com/Dicklesworthstone/remote_compilation_helper)** `27★` — Transparent build offloading for AI agents via Claude Code hooks
-- **[System Resource Protection](https://github.com/Dicklesworthstone/system_resource_protection_script)** `25★` — Intelligent resource guardrails that prevent dev tools from freezing your Linux desktop
-- **[ASupersync](https://github.com/Dicklesworthstone/asupersync)** `23★` — Spec-first, cancel-correct, capability-secure async runtime for Rust
-- **[Anti-Alzheimer's Flasher](https://github.com/Dicklesworthstone/anti_alzheimers_flasher)** `23★` — Web-based 40Hz neural stimulation tool
-- **[Chat to File](https://github.com/Dicklesworthstone/chat_shared_conversation_to_file)** `22★` — Convert ChatGPT, Gemini, and Grok share links to clean Markdown
-- **[Phage Explorer](https://github.com/Dicklesworthstone/phage_explorer)** `22★` — Interactive bacteriophage education with 3D visualization
-- **[PrepareProjectForLLMPrompt](https://github.com/Dicklesworthstone/prepareprojectforllmprompt)** `22★` — Flatten a codebase into a single LLM-ready prompt
-
-</details>
+- 📰 **[Next.js GitHub Blog](https://github.com/Dicklesworthstone/nextjs-github-markdown-blog)** `89★` — Blogging platform that uses GitHub as a headless CMS
+- 📝 **[JeffreysPrompts.com](https://github.com/Dicklesworthstone/jeffreysprompts.com)** `69★` — Curated prompt library for agentic coding workflows
+- 📚 **[LLM Docs](https://github.com/Dicklesworthstone/llm-docs)** `64★` — Documentation optimized for LLM consumption
+- 📐 **[Grassmann Article](https://www.jeffreyemanuel.com/writing/hermann_grassmann_nature_of_abstractions)** `54★` — The story of the self-taught genius who invented linear algebra decades early
+- 🏆 **[LLM Tournament](https://www.jeffreyemanuel.com/writing/llm_multi_round_coding_tournament)** `47★` — Arena where LLMs compete and iterate on coding challenges via peer review
+- 🧩 **[Clawdbot Skills](https://github.com/Dicklesworthstone/agent_flywheel_clawdbot_skills_and_integrations)** `43★` — Modular skill library teaching agents to use the Flywheel toolkit
+- 🔁 **[Automated Plan Reviser](https://github.com/Dicklesworthstone/automated_plan_reviser_pro)** `42★` — Iterative specification refinement using extended reasoning models
+- 🗣️ **[The Lighthill Debate on AI](https://www.jeffreyemanuel.com/writing/the_lighthill_debate_on_ai)** `34★` — Full transcript of the 1973 debate that nearly killed British AI research
+- 🎬 **[YouTube Transcript Cleaner](https://github.com/Dicklesworthstone/youtube_transcript_cleaner)** `27★` — Clean up raw YouTube auto-captions into readable text
+- 📡 **[Remote Compilation Helper](https://github.com/Dicklesworthstone/remote_compilation_helper)** `27★` — Transparent build offloading for AI agents via Claude Code hooks
+- 🛡️ **[System Resource Protection](https://github.com/Dicklesworthstone/system_resource_protection_script)** `25★` — Intelligent resource guardrails that prevent dev tools from freezing your Linux desktop
+- 🔄 **[ASupersync](https://github.com/Dicklesworthstone/asupersync)** `23★` — Spec-first, cancel-correct, capability-secure async runtime for Rust
+- 💡 **[Anti-Alzheimer's Flasher](https://github.com/Dicklesworthstone/anti_alzheimers_flasher)** `23★` — Web-based 40Hz neural stimulation tool
+- 💬 **[Chat to File](https://github.com/Dicklesworthstone/chat_shared_conversation_to_file)** `22★` — Convert ChatGPT, Gemini, and Grok share links to clean Markdown
+- 🦠 **[Phage Explorer](https://github.com/Dicklesworthstone/phage_explorer)** `22★` — Interactive bacteriophage education with 3D visualization
+- 📦 **[PrepareProjectForLLMPrompt](https://github.com/Dicklesworthstone/prepareprojectforllmprompt)** `22★` — Flatten a codebase into a single LLM-ready prompt
 
 ---
 
@@ -180,14 +175,9 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 
 ---
 
-<details>
-<summary><strong>Background</strong></summary>
-
-<br>
+## Background
 
 - Spent a decade as a long/short equity analyst at hedge funds in New York
 - Building with deep learning since 2010, multi-agent systems since 2023
 - Consult to PE firms and hedge funds on AI automation strategy
 - The Flywheel ecosystem started in October 2025 and each tool accelerates the creation of the next
-
-</details>
