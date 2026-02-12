@@ -1,54 +1,40 @@
 <svg width="495" height="195" viewBox="0 0 495 195" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="0.5" y="0.5" rx="4.5" width="494" height="194" fill="#0d1117" stroke="#30363d"/>
   <text x="25" y="35" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, 'Helvetica Neue', sans-serif" font-weight="600" font-size="18">Jeffrey Emanuel's GitHub Stats</text>
-  <!-- Stars -->
-  <g transform="translate(25, 60)">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="#e3b341">
-      <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>
-    </svg>
-    <text x="24" y="13" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Total Stars:</text>
-    <text x="200" y="13" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">16,702</text>
-  </g>
-  <!-- Commits -->
-  <g transform="translate(25, 90)">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="#3fb950">
-      <path d="M11.93 8.5a4.002 4.002 0 01-7.86 0H.75a.75.75 0 010-1.5h3.32a4.002 4.002 0 017.86 0h3.32a.75.75 0 010 1.5h-3.32zm-1.43-.75a2.5 2.5 0 10-5 0 2.5 2.5 0 005 0z"/>
-    </svg>
-    <text x="24" y="13" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Total Commits:</text>
-    <text x="200" y="13" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">59,306</text>
-  </g>
-  <!-- Repos -->
-  <g transform="translate(25, 120)">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="#8b949e">
-      <path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 010-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8V1.5zm-8 11h1.173v-2H4.5a1 1 0 100 2z"/>
-    </svg>
-    <text x="24" y="13" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Public Repos:</text>
-    <text x="200" y="13" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">152</text>
-  </g>
-  <!-- Followers -->
-  <g transform="translate(260, 60)">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="#db61a2">
-      <path d="M2 5.5a3.5 3.5 0 115.898 2.549 5.507 5.507 0 013.034 4.084.75.75 0 11-1.482.235 4.001 4.001 0 00-7.9 0 .75.75 0 01-1.482-.236A5.507 5.507 0 013.102 8.05 3.49 3.49 0 012 5.5zM11 4a.75.75 0 100 1.5 1.5 1.5 0 01.666 2.844.75.75 0 00-.416.672v.352a.75.75 0 00.574.73c1.2.289 2.162 1.2 2.522 2.372a.75.75 0 101.434-.44 5.01 5.01 0 00-2.56-3.012A3 3 0 0011 4zM5.5 3a2 2 0 100 4 2 2 0 000-4z"/>
-    </svg>
-    <text x="24" y="13" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Followers:</text>
-    <text x="160" y="13" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">1,765</text>
-  </g>
-  <!-- Contributions -->
-  <g transform="translate(260, 90)">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="#f78166">
-      <path d="M8.5.75a.75.75 0 00-1.5 0v5.19L4.72 3.66a.75.75 0 00-1.06 1.06l3.5 3.5a.75.75 0 001.06 0l3.5-3.5a.75.75 0 00-1.06-1.06L8.5 5.94V.75zm-3.75 9.5a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z"/>
-    </svg>
-    <text x="24" y="13" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Contributions:</text>
-    <text x="160" y="13" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">60,233</text>
-  </g>
-  <!-- Following -->
-  <g transform="translate(260, 120)">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="#8b949e">
-      <path d="M8 2c1.981 0 3.671.992 4.933 2.078 1.27 1.091 2.187 2.345 2.637 3.023a1.62 1.62 0 010 1.798c-.45.678-1.367 1.932-2.637 3.023C11.67 13.008 9.981 14 8 14c-1.981 0-3.671-.992-4.933-2.078C1.797 10.831.88 9.577.43 8.899a1.62 1.62 0 010-1.798c.45-.678 1.367-1.932 2.637-3.023C4.33 2.992 6.019 2 8 2zM1.679 7.932a.12.12 0 000 .136c.411.622 1.241 1.75 2.366 2.717C5.176 11.758 6.527 12.5 8 12.5c1.473 0 2.825-.742 3.955-1.715 1.124-.967 1.954-2.096 2.366-2.717a.12.12 0 000-.136c-.412-.621-1.242-1.75-2.366-2.717C10.824 4.242 9.473 3.5 8 3.5c-1.473 0-2.824.742-3.955 1.715-1.124.967-1.954 2.096-2.366 2.717zM8 10a2 2 0 110-4 2 2 0 010 4z"/>
-    </svg>
-    <text x="24" y="13" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Following:</text>
-    <text x="160" y="13" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">28</text>
-  </g>
+
+  <!-- Row 1: Stars -->
+  <circle cx="33" cy="68" r="5" fill="#e3b341"/>
+  <text x="46" y="72" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Total Stars</text>
+  <text x="190" y="72" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">16,702</text>
+
+  <!-- Row 2: Commits -->
+  <circle cx="33" cy="98" r="5" fill="#3fb950"/>
+  <text x="46" y="102" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Total Commits</text>
+  <text x="190" y="102" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">59,306</text>
+
+  <!-- Row 3: Public Repos -->
+  <circle cx="33" cy="128" r="5" fill="#8b949e"/>
+  <text x="46" y="132" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Public Repos</text>
+  <text x="190" y="132" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">152</text>
+
+  <!-- Row 1 right: Followers -->
+  <circle cx="285" cy="68" r="5" fill="#db61a2"/>
+  <text x="298" y="72" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Followers</text>
+  <text x="420" y="72" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">1,765</text>
+
+  <!-- Row 2 right: Contributions -->
+  <circle cx="285" cy="98" r="5" fill="#f78166"/>
+  <text x="298" y="102" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Contributions</text>
+  <text x="420" y="102" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">60,233</text>
+
+  <!-- Row 3 right: Following -->
+  <circle cx="285" cy="128" r="5" fill="#8b949e"/>
+  <text x="298" y="132" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Following</text>
+  <text x="420" y="132" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">28</text>
+
+  <!-- Divider -->
+  <line x1="260" y1="55" x2="260" y2="145" stroke="#21262d" stroke-width="1"/>
+
   <!-- Updated date -->
-  <text x="25" y="170" fill="#484f58" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="11">Updated Feb 2026</text>
+  <text x="25" y="172" fill="#484f58" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="11">Updated Feb 2026</text>
 </svg>
