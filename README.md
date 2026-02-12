@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="je_banner.webp" alt="Jeffrey Emanuel — Builder & Engineer" width="100%" />
+
 # Jeffrey Emanuel
 
 <img src="je_headshot.webp" alt="Jeffrey Emanuel" width="180" />
