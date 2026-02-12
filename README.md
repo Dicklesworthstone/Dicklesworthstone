@@ -108,6 +108,28 @@ A self-reinforcing ecosystem of 14 tools for multi-agent software development. A
 | [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Terminal hypervisor for AI agent swarms: pattern detection, event automation, multiplexed I/O |
 | [**Bio-Inspired Nanochat**](https://github.com/Dicklesworthstone/bio_inspired_nanochat) | ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white) | What if a Transformer had a metabolism? Living weights with synaptic fatigue and structural plasticity |
 
+### Live Demos
+
+<table>
+<tr>
+<td align="center" width="33%">
+<a href="https://frankentui.com/web"><img src="https://frankentui.com/web/og.png" alt="FrankenTUI Web Demo" width="100%" /></a><br/>
+<a href="https://frankentui.com/web"><strong>FrankenTUI — Web Demo</strong></a><br/>
+<sub>Pure TypeScript terminal UI running in the browser</sub>
+</td>
+<td align="center" width="33%">
+<a href="https://frankentui.com/web_react"><img src="https://frankentui.com/web_react/opengraph-image?5478ac34bb117957" alt="FrankenTUI React Demo" width="100%" /></a><br/>
+<a href="https://frankentui.com/web_react"><strong>FrankenTUI — React Demo</strong></a><br/>
+<sub>React component wrapper for FrankenTUI widgets</sub>
+</td>
+<td align="center" width="33%">
+<a href="https://frankensqlite.com/"><img src="https://frankensqlite.com/og-image.png" alt="FrankenSQLite" width="100%" /></a><br/>
+<a href="https://frankensqlite.com/"><strong>FrankenSQLite</strong></a><br/>
+<sub>Interactive docs for the Rust SQLite reimplementation</sub>
+</td>
+</tr>
+</table>
+
 ---
 
 ## Open Source Highlights
