@@ -2,6 +2,9 @@
 
 # Jeffrey Emanuel
 
+<img src="je_headshot.webp" alt="Jeffrey Emanuel" width="150" style="border-radius: 50%;" />
+
+
 **New York** · Builder & engineer · Former long/short equity analyst
 
 ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white)
