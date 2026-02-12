@@ -1,6 +1,6 @@
 # Jeffrey Emanuel
 
-**New York** · Builder & engineer · Former long/short equity analyst · [Lumera Network](https://pastel.network) founder
+**New York** · Builder & engineer · Former long/short equity analyst
 
 ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
@@ -162,7 +162,6 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 
 ## Products
 
-- ⛓️ **[Lumera Network](https://pastel.network)** — Cosmos-based L1 for decentralized storage, AI inference, and cross-chain interoperability (formerly Pastel Network)
 - 📈 **[SmartEdgar](https://github.com/Dicklesworthstone/smartedgar)** — Modern SEC filing ingestion and research stack with an MCP server at its core
 - 🌐 **[jeffreyemanuel.com](https://www.jeffreyemanuel.com)** — Personal site built with Next.js 16, React Three Fiber, and GSAP. 70 components, 3D WebGL hero, 21 essays, 90+ project showcase.
 - 📝 **[JeffreysPrompts.com](https://jeffreysprompts.com)** — Battle-tested prompts for AI coding agents. Browse, copy, or install as Claude Code skills.
@@ -186,7 +185,6 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 
 <br>
 
-- Founded **Lumera Network** (formerly Pastel Network), a Cosmos-based L1 for decentralized storage and AI verification
 - Spent a decade as a long/short equity analyst at hedge funds in New York
 - Building with deep learning since 2010, multi-agent systems since 2023
 - Consult to PE firms and hedge funds on AI automation strategy
