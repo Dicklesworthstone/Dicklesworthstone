@@ -2,7 +2,7 @@
 
 # Jeffrey Emanuel
 
-<img src="je_headshot.webp" alt="Jeffrey Emanuel" width="150" style="border-radius: 50%;" />
+<img src="je_headshot.webp" alt="Jeffrey Emanuel" width="180" />
 
 
 **New York** · Builder & engineer · Former long/short equity analyst
