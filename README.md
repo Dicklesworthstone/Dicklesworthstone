@@ -228,8 +228,6 @@ In January 2025, I published a [12,000-word analysis](https://www.jeffreyemanuel
 > "Long, excellent... Jeffrey has a rare combination of experience in both computer science and investment analysis."
 > — **Simon Willison**, creator of Datasette
 
-Featured on Slashdot, Hacker News front page, and the Bankless podcast. Picked up by analysts and fund managers worldwide.
-
 ---
 
 ## Writing
@@ -265,6 +263,23 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 - 📝 **[JeffreysPrompts.com](https://jeffreysprompts.com)** — Battle-tested prompts for AI coding agents. Browse, copy, or install as Claude Code skills.
 - ⚡ **[Agent-Flywheel.com](https://agent-flywheel.com)** — Interactive setup wizard for the complete Flywheel ecosystem
 - 🔬 **[BrennerBot.org](https://brennerbot.org)** — Multi-agent research orchestration using Sydney Brenner's scientific methods
+
+---
+
+## Philosophy
+
+> The bottleneck in software isn't writing code — it's coordination. Build the right tooling and you can run a dozen frontier-model agents on the same repo at the same time, delivering in days what used to take months. That's the Flywheel thesis: every tool you add makes every agent more productive, and the compounding never stops.
+
+---
+
+## Recognition
+
+- **[Naval Ravikant](https://x.com/naval)** called the Nvidia short thesis a "dazzling 60-minute education on the state of AI"
+- **[Matt Levine](https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine)** (Bloomberg) called it "a candidate for the most impactful short research report ever written"
+- **[Simon Willison](https://simonwillison.net/)** (creator of Datasette) praised the "rare combination of experience in both computer science and investment analysis"
+- Front page of **Hacker News** (multiple times)
+- Featured on **Slashdot**, the **Bankless podcast**, and picked up by analysts and fund managers worldwide
+- 16,700+ GitHub stars, 1,700+ followers, 60,000+ contributions
 
 ---
 
