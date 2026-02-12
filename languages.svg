@@ -75,6 +75,6 @@
   </g>
   <!-- Summary -->
   <line x1="25" y1="210" x2="470" y2="210" stroke="#21262d" stroke-width="1"/>
-  <text x="25" y="235" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="12">289M lines across 220 repositories</text>
+  <text x="25" y="235" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="12">289M bytes across 220 repositories</text>
   <text x="25" y="255" fill="#484f58" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="11">Updated Feb 2026 · Measured by total code bytes per language</text>
 </svg>

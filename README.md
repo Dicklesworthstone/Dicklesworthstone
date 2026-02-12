@@ -119,11 +119,10 @@ curl -fsSL "https://raw.githubusercontent.com/Dicklesworthstone/agentic_coding_f
 **Individual Rust tools** via Cargo:
 
 ```bash
-cargo install coding-agent-search      # cass — unified session search
-cargo install destructive_command_guard # dcg  — command safety guard
-cargo install beads_rust               # br   — issue tracker
-cargo install xf                       # xf   — X/Twitter archive search
+cargo install xf  # xf — X/Twitter archive search
 ```
+
+Other Flywheel tools (CASS, DCG, Beads Rust) install from source via the Flywheel Setup script or `cargo install --git`.
 
 ### Agent Mail in Action
 
@@ -138,10 +137,9 @@ cargo install xf                       # xf   — X/Twitter archive search
 | Project | Lang | What it does |
 |:--------|:-----|:-------------|
 | [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | Rust | Clean-room SQLite reimplementation with MVCC page-level versioning and RaptorQ erasure codes |
-| [**FrankenTUI**](https://github.com/Dicklesworthstone/frankentui) | Rust | Minimal, deterministic terminal UI kernel — the rendering layer for CASS, Beads Viewer, and NTM |
+| [**FrankenTUI**](https://github.com/Dicklesworthstone/frankentui) | Rust | Minimal, deterministic terminal UI kernel — the rendering layer for CASS and other Rust TUI tools |
 | [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | Rust | Terminal hypervisor for AI agent swarms: pattern detection, event automation, multiplexed I/O |
 | [**Bio-Inspired Nanochat**](https://github.com/Dicklesworthstone/bio_inspired_nanochat) | Python | What if a Transformer had a metabolism? Living weights with synaptic fatigue and structural plasticity |
-| [**SmartEdgar**](https://github.com/Dicklesworthstone/smartedgar) | Python | SEC filing ingestion, entity resolution, and research stack with an MCP server at its core |
 
 ---
 
@@ -162,7 +160,7 @@ cargo install xf                       # xf   — X/Twitter archive search
 ### Systems & Rust
 
 - ⚡ **[Fast Vector Similarity](https://github.com/Dicklesworthstone/fast_vector_similarity)** `426★` — High-speed Rust library for complex vector similarity metrics with Python bindings.
-- 🔬 **[FrankenTUI](https://github.com/Dicklesworthstone/frankentui)** `134★` — Minimal, high-performance terminal UI kernel. The rendering substrate for CASS, Beads Viewer, and NTM.
+- 🔬 **[FrankenTUI](https://github.com/Dicklesworthstone/frankentui)** `134★` — Minimal, high-performance terminal UI kernel. The rendering substrate for CASS and other Rust TUI applications in the Flywheel.
 - 🗄️ **[FrankenSQLite](https://github.com/Dicklesworthstone/frankensqlite)** `32★` — Clean-room Rust reimplementation of SQLite with MVCC page-level versioning and RaptorQ erasure codes.
 - 🖥️ **[FrankenTerm](https://github.com/Dicklesworthstone/frankenterm)** `32★` — Terminal hypervisor for AI agent swarms with pattern detection and event-driven automation.
 - 🦀 **[Fast CMA-ES](https://github.com/Dicklesworthstone/fast_cmaes)** — SIMD-accelerated, Rayon-parallelized evolution strategy optimizer in Rust.
@@ -172,7 +170,7 @@ cargo install xf                       # xf   — X/Twitter archive search
 ### Research & Science
 
 - 🧬 **[Bio-Inspired Nanochat](https://github.com/Dicklesworthstone/bio_inspired_nanochat)** — What if a Transformer had a metabolism? Living weights with synaptic fatigue and structural plasticity.
-- 🔢 **[Model-Guided Research](https://github.com/Dicklesworthstone/model_guided_research)** `94★` — 11 exotic math frameworks for AI (Lie group attention, p-adic spaces, tropical geometry), designed by GPT-5.
+- 🔢 **[Model-Guided Research](https://github.com/Dicklesworthstone/model_guided_research)** `94★` — 11 exotic math frameworks for AI (Lie group attention, p-adic spaces, tropical geometry), designed with frontier models.
 - 🛡️ **[ACIP](https://github.com/Dicklesworthstone/acip)** `247★` — AI Cognitive Inoculation Protocol: defense against prompt injection via external monitoring.
 - 🔬 **[Brenner Bot](https://github.com/Dicklesworthstone/brenner_bot)** `51★` — Multi-agent research system embodying Sydney Brenner's scientific methodology.
 - 🧮 **[LLM Introspective Compression](https://www.jeffreyemanuel.com/writing/llm_introspective_compression)** `30★` — Treating LLM context as a save state: reasoning backtracking and metacognitive control.
@@ -213,7 +211,6 @@ cargo install xf                       # xf   — X/Twitter archive search
 - 🔄 **[ASupersync](https://github.com/Dicklesworthstone/asupersync)** `23★` — Spec-first, cancel-correct, capability-secure async runtime for Rust
 - 💡 **[Anti-Alzheimer's Flasher](https://github.com/Dicklesworthstone/anti_alzheimers_flasher)** `23★` — Web-based 40Hz neural stimulation tool
 - 💬 **[Chat to File](https://github.com/Dicklesworthstone/chat_shared_conversation_to_file)** `22★` — Convert ChatGPT, Gemini, and Grok share links to clean Markdown
-- 🦠 **[Phage Explorer](https://github.com/Dicklesworthstone/phage_explorer)** `22★` — Interactive bacteriophage education with 3D visualization
 - 📦 **[PrepareProjectForLLMPrompt](https://github.com/Dicklesworthstone/prepareprojectforllmprompt)** `22★` — Flatten a codebase into a single LLM-ready prompt
 
 ---
@@ -255,8 +252,8 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 ![GitHub Contribution Graph](https://ghchart.rshah.org/Dicklesworthstone)
 
 <p align="center">
-  <a href="https://star-history.com/#Dicklesworthstone/mcp_agent_mail&Dicklesworthstone/llm_aided_ocr&Dicklesworthstone/beads_viewer&Dicklesworthstone/agentic_coding_flywheel_setup&Dicklesworthstone/swiss_army_llama&Date">
-    <img src="https://api.star-history.com/svg?repos=Dicklesworthstone/mcp_agent_mail,Dicklesworthstone/llm_aided_ocr,Dicklesworthstone/beads_viewer,Dicklesworthstone/agentic_coding_flywheel_setup,Dicklesworthstone/swiss_army_llama&type=Date&theme=dark" alt="Star History Chart" width="800" />
+  <a href="https://star-history.com/#Dicklesworthstone/mcp_agent_mail&Dicklesworthstone/llm_aided_ocr&Dicklesworthstone/beads_viewer&Dicklesworthstone/agentic_coding_flywheel_setup&Dicklesworthstone/your-source-to-prompt.html&Date">
+    <img src="https://api.star-history.com/svg?repos=Dicklesworthstone/mcp_agent_mail,Dicklesworthstone/llm_aided_ocr,Dicklesworthstone/beads_viewer,Dicklesworthstone/agentic_coding_flywheel_setup,Dicklesworthstone/your-source-to-prompt.html&type=Date&theme=dark" alt="Star History Chart" width="800" />
   </a>
 </p>
 
@@ -264,7 +261,6 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 
 ## Products
 
-- 📈 **[SmartEdgar](https://github.com/Dicklesworthstone/smartedgar)** — Modern SEC filing ingestion and research stack with an MCP server at its core
 - 🌐 **[jeffreyemanuel.com](https://www.jeffreyemanuel.com)** — Personal site built with Next.js 16, React Three Fiber, and GSAP. 70 components, 3D WebGL hero, 21 essays, 90+ project showcase.
 - 📝 **[JeffreysPrompts.com](https://jeffreysprompts.com)** — Battle-tested prompts for AI coding agents. Browse, copy, or install as Claude Code skills.
 - ⚡ **[Agent-Flywheel.com](https://agent-flywheel.com)** — Interactive setup wizard for the complete Flywheel ecosystem
