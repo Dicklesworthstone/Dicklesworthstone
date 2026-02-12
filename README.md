@@ -19,15 +19,6 @@
 
 🌐 [jeffreyemanuel.com](https://www.jeffreyemanuel.com) · 📝 [jeffreysprompts.com](https://jeffreysprompts.com) · ⚡ [agent-flywheel.com](https://agent-flywheel.com) · 🔬 [brennerbot.org](https://brennerbot.org)
 
-<p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=Dicklesworthstone&theme=darkhub&no-frame=true&row=1&column=7" alt="GitHub Trophies" />
-</p>
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Dicklesworthstone&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&count_private=false" width="49%" alt="GitHub Stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Dicklesworthstone&layout=compact&theme=tokyonight&hide_border=true&bg_color=0d1117&langs_count=10" width="49%" alt="Top Languages" />
-</p>
-
 ---
 
 ## The Agentic Coding Flywheel
