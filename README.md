@@ -17,7 +17,7 @@
 ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white)
 ![SQLite](https://img.shields.io/badge/-SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)
 
-*Building the tools that sit between markets and frontier AI.*
+*Building the tooling that lets dozens of AI agents ship complex projects in days.*
 
 ![Stars](https://img.shields.io/badge/GitHub_Stars-16.7k+-yellow?style=flat-square&logo=github)
 ![Repos](https://img.shields.io/badge/Open_Source_Projects-90+-blue?style=flat-square&logo=github)
@@ -30,7 +30,13 @@
 [![Brenner](https://img.shields.io/badge/brennerbot.org-3B82F6?style=for-the-badge&logo=microscope&logoColor=white)](https://brennerbot.org)
 [![FrankenTUI](https://img.shields.io/badge/frankentui.com-F97316?style=for-the-badge&logo=terminal&logoColor=white)](https://frankentui.com)
 
+**Ask me about:** ![Multi-Agent Systems](https://img.shields.io/badge/-Multi--Agent_Coordination-blueviolet?style=flat-square) ![Agentic Coding](https://img.shields.io/badge/-Agentic_Coding_Workflows-00ADD8?style=flat-square) ![Rust CLI](https://img.shields.io/badge/-Rust_CLI_Tools-000000?style=flat-square&logo=rust&logoColor=white) ![LLM Apps](https://img.shields.io/badge/-LLM_Applications-10B981?style=flat-square) ![Terminal UI](https://img.shields.io/badge/-Terminal_UI-4EAA25?style=flat-square)
+
 </div>
+
+<p align="center">
+<a href="#the-agentic-coding-flywheel">Flywheel</a> · <a href="#what-im-building-now">Building Now</a> · <a href="#open-source-highlights">Open Source</a> · <a href="#the-nvidia-short-thesis">Nvidia Thesis</a> · <a href="#writing">Writing</a> · <a href="#products">Products</a> · <a href="#philosophy">Philosophy</a> · <a href="#connect">Connect</a>
+</p>
 
 <p align="center">
   <picture>
@@ -108,11 +114,11 @@ A self-reinforcing ecosystem of 14 tools for multi-agent software development. A
 
 ### AI & LLM Tools
 
-- 📄 **[LLM-Aided OCR](https://github.com/Dicklesworthstone/llm_aided_ocr)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/llm_aided_ocr?style=flat-square&label=⭐&color=yellow) — Tesseract + language models = perfect PDFs. Corrects OCR errors that regex rules never catch.
+- 📄 **[LLM-Aided OCR](https://github.com/Dicklesworthstone/llm_aided_ocr)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/llm_aided_ocr?style=flat-square&label=⭐&color=yellow) 🔥 — Tesseract + language models = perfect PDFs. Corrects OCR errors that regex rules never catch.
 - 🦙 **[Swiss Army Llama](https://github.com/Dicklesworthstone/swiss_army_llama)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/swiss_army_llama?style=flat-square&label=⭐&color=yellow) — High-performance FastAPI service for local LLM inference and semantic search.
-- 📋 **[Your Source to Prompt](https://github.com/Dicklesworthstone/your-source-to-prompt.html)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/your-source-to-prompt.html?style=flat-square&label=⭐&color=yellow) — Secure, browser-based tool that turns codebases into optimized LLM prompts.
+- 📋 **[Your Source to Prompt](https://github.com/Dicklesworthstone/your-source-to-prompt.html)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/your-source-to-prompt.html?style=flat-square&label=⭐&color=yellow) 🔥 — Secure, browser-based tool that turns codebases into optimized LLM prompts.
 - 🎥 **[Bulk YouTube Transcriber](https://github.com/Dicklesworthstone/bulk_transcribe_youtube_videos_from_playlist)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/bulk_transcribe_youtube_videos_from_playlist?style=flat-square&label=⭐&color=yellow) — Convert entire playlists into structured, searchable text with Whisper.
-- 🤖 **[Claude Code Agent Farm](https://github.com/Dicklesworthstone/claude_code_agent_farm)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/claude_code_agent_farm?style=flat-square&label=⭐&color=yellow) — Orchestrate parallel Claude Code agents to autonomously improve codebases across 34 tech stacks.
+- 🤖 **[Claude Code Agent Farm](https://github.com/Dicklesworthstone/claude_code_agent_farm)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/claude_code_agent_farm?style=flat-square&label=⭐&color=yellow) 🔥 — Orchestrate parallel Claude Code agents to autonomously improve codebases across 34 tech stacks.
 - 🧠 **[Mindmap Generator](https://github.com/Dicklesworthstone/mindmap-generator)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/mindmap-generator?style=flat-square&label=⭐&color=yellow) — Distills documents into hierarchical, context-aware mindmaps using non-linear exploration.
 - 🔗 **[Ultimate MCP Client](https://github.com/Dicklesworthstone/ultimate_mcp_client)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/ultimate_mcp_client?style=flat-square&label=⭐&color=yellow) — Universal bridge for AI models to interact with the real world via MCP.
 - 🔌 **[Ultimate MCP Server](https://github.com/Dicklesworthstone/ultimate_mcp_server)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/ultimate_mcp_server?style=flat-square&label=⭐&color=yellow) — Unified MCP server exposing dozens of tools to frontier models.
@@ -120,7 +126,7 @@ A self-reinforcing ecosystem of 14 tools for multi-agent software development. A
 
 ### Systems & Rust
 
-- ⚡ **[Fast Vector Similarity](https://github.com/Dicklesworthstone/fast_vector_similarity)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/fast_vector_similarity?style=flat-square&label=⭐&color=yellow) — High-speed Rust library for complex vector similarity metrics with Python bindings.
+- ⚡ **[Fast Vector Similarity](https://github.com/Dicklesworthstone/fast_vector_similarity)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/fast_vector_similarity?style=flat-square&label=⭐&color=yellow) 🔥 — High-speed Rust library for complex vector similarity metrics with Python bindings.
 - 🔬 **[FrankenTUI](https://github.com/Dicklesworthstone/frankentui)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/frankentui?style=flat-square&label=⭐&color=yellow) — Minimal, high-performance terminal UI kernel. The rendering substrate for CASS and other Rust TUI applications in the Flywheel.
 - 🗄️ **[FrankenSQLite](https://github.com/Dicklesworthstone/frankensqlite)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/frankensqlite?style=flat-square&label=⭐&color=yellow) — Clean-room Rust reimplementation of SQLite with MVCC page-level versioning and RaptorQ erasure codes.
 - 🖥️ **[FrankenTerm](https://github.com/Dicklesworthstone/frankenterm)** ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/frankenterm?style=flat-square&label=⭐&color=yellow) — Terminal hypervisor for AI agent swarms with pattern detection and event-driven automation.
