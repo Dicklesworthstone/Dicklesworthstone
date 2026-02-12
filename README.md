@@ -29,6 +29,7 @@
 [![Prompts](https://img.shields.io/badge/jeffreysprompts.com-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://jeffreysprompts.com)
 [![Flywheel](https://img.shields.io/badge/agent--flywheel.com-10B981?style=for-the-badge&logo=atom&logoColor=white)](https://agent-flywheel.com)
 [![Brenner](https://img.shields.io/badge/brennerbot.org-3B82F6?style=for-the-badge&logo=microscope&logoColor=white)](https://brennerbot.org)
+[![FrankenTUI](https://img.shields.io/badge/frankentui.com-F97316?style=for-the-badge&logo=terminal&logoColor=white)](http://frankentui.com)
 
 </div>
 
@@ -236,6 +237,7 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 - 📝 **[JeffreysPrompts.com](https://jeffreysprompts.com)** — Battle-tested prompts for AI coding agents. Browse, copy, or install as Claude Code skills.
 - ⚡ **[Agent-Flywheel.com](https://agent-flywheel.com)** — Interactive setup wizard for the complete Flywheel ecosystem
 - 🔬 **[BrennerBot.org](https://brennerbot.org)** — Multi-agent research orchestration using Sydney Brenner's scientific methods
+- 🖥️ **[FrankenTUI.com](http://frankentui.com)** — Minimal, deterministic terminal UI kernel for Rust TUI applications
 
 ---
 
