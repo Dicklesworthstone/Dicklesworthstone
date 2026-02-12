@@ -19,6 +19,11 @@
 
 🌐 [jeffreyemanuel.com](https://www.jeffreyemanuel.com) · 📝 [jeffreysprompts.com](https://jeffreysprompts.com) · ⚡ [agent-flywheel.com](https://agent-flywheel.com) · 🔬 [brennerbot.org](https://brennerbot.org)
 
+<p align="center">
+  <img src="stats.svg" width="49%" alt="GitHub Stats" />
+  <img src="languages.svg" width="49%" alt="Top Languages" />
+</p>
+
 ---
 
 ## The Agentic Coding Flywheel

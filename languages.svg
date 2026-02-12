@@ -1,0 +1,80 @@
+<svg width="495" height="285" viewBox="0 0 495 285" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0.5" y="0.5" rx="4.5" width="494" height="284" fill="#0d1117" stroke="#30363d"/>
+  <text x="25" y="35" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, 'Helvetica Neue', sans-serif" font-weight="600" font-size="18">Top Languages (by code volume)</text>
+  <!-- Progress bar background -->
+  <rect x="25" y="50" rx="3" width="445" height="10" fill="#161b22"/>
+  <!-- Rust 53.2% = 237px -->
+  <rect x="25" y="50" rx="3" width="237" height="10" fill="#dea584"/>
+  <!-- TypeScript 13.6% = 60px -->
+  <rect x="262" y="50" width="60" height="10" fill="#3178c6"/>
+  <!-- Go 10.6% = 47px -->
+  <rect x="322" y="50" width="47" height="10" fill="#00ADD8"/>
+  <!-- Python 8.6% = 38px -->
+  <rect x="369" y="50" width="38" height="10" fill="#3572A5"/>
+  <!-- Shell 5.7% = 25px -->
+  <rect x="407" y="50" width="25" height="10" fill="#89e051"/>
+  <!-- C 3.5% = 16px -->
+  <rect x="432" y="50" width="16" height="10" fill="#555555"/>
+  <!-- HTML 2.7% = 12px -->
+  <rect x="448" y="50" width="12" height="10" fill="#e34c26"/>
+  <!-- JS 1.7% = 8px -->
+  <rect x="460" y="50" width="8" height="10" fill="#f1e05a"/>
+  <!-- Other ~0.4% = 2px -->
+  <rect x="468" y="50" rx="3" width="2" height="10" fill="#663399"/>
+  <!-- Legend entries - Column 1 -->
+  <g transform="translate(25, 82)">
+    <circle cx="6" cy="6" r="6" fill="#dea584"/>
+    <text x="18" y="10" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">Rust</text>
+    <text x="62" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">53.2%</text>
+  </g>
+  <g transform="translate(25, 107)">
+    <circle cx="6" cy="6" r="6" fill="#3178c6"/>
+    <text x="18" y="10" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">TypeScript</text>
+    <text x="100" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">13.6%</text>
+  </g>
+  <g transform="translate(25, 132)">
+    <circle cx="6" cy="6" r="6" fill="#00ADD8"/>
+    <text x="18" y="10" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">Go</text>
+    <text x="42" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">10.6%</text>
+  </g>
+  <g transform="translate(25, 157)">
+    <circle cx="6" cy="6" r="6" fill="#3572A5"/>
+    <text x="18" y="10" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">Python</text>
+    <text x="68" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">8.6%</text>
+  </g>
+  <g transform="translate(25, 182)">
+    <circle cx="6" cy="6" r="6" fill="#89e051"/>
+    <text x="18" y="10" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">Shell</text>
+    <text x="56" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">5.7%</text>
+  </g>
+  <!-- Legend entries - Column 2 -->
+  <g transform="translate(260, 82)">
+    <circle cx="6" cy="6" r="6" fill="#555555"/>
+    <text x="18" y="10" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">C</text>
+    <text x="32" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">3.5%</text>
+  </g>
+  <g transform="translate(260, 107)">
+    <circle cx="6" cy="6" r="6" fill="#e34c26"/>
+    <text x="18" y="10" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">HTML</text>
+    <text x="58" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">2.7%</text>
+  </g>
+  <g transform="translate(260, 132)">
+    <circle cx="6" cy="6" r="6" fill="#f1e05a"/>
+    <text x="18" y="10" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">JavaScript</text>
+    <text x="94" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">1.7%</text>
+  </g>
+  <g transform="translate(260, 157)">
+    <circle cx="6" cy="6" r="6" fill="#663399"/>
+    <text x="18" y="10" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">CSS</text>
+    <text x="46" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">0.3%</text>
+  </g>
+  <g transform="translate(260, 182)">
+    <circle cx="6" cy="6" r="6" fill="#f34b7d"/>
+    <text x="18" y="10" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">C++</text>
+    <text x="46" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">0.1%</text>
+  </g>
+  <!-- Summary -->
+  <line x1="25" y1="210" x2="470" y2="210" stroke="#21262d" stroke-width="1"/>
+  <text x="25" y="235" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="12">289M lines across 220 repositories</text>
+  <text x="25" y="255" fill="#484f58" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="11">Updated Feb 2026 · Measured by total code bytes per language</text>
+</svg>
