@@ -58,7 +58,7 @@
 </p>
 
 > [!NOTE]
-> **85,434 contributions in the past year** — powered by 52+ AI coding agent subscription accounts (~$12K/month) and the Flywheel tooling below. The vast majority landed since January 2026, when the ecosystem hit critical mass.
+> **85,434 contributions in the past year**, powered by 52+ AI coding agent subscription accounts (~$12K/month) and the Flywheel tooling below. The vast majority landed since January 2026, when the ecosystem hit critical mass.
 
 ---
 
@@ -161,7 +161,7 @@ Clean-room Rust reimplementations of foundational software. Each targets drop-in
 <td align="center" width="33%">
 <a href="https://frankensqlite.com/"><img src="https://frankensqlite.com/opengraph-image?9c3d4f6561b1a87f" alt="FrankenSQLite" width="100%" /></a><br/>
 <a href="https://frankensqlite.com/"><strong>FrankenSQLite</strong></a><br/>
-<sub>Interactive docs for the Rust SQLite reimplementation</sub>
+<sub>Project website for the Rust SQLite reimplementation</sub>
 </td>
 </tr>
 <tr>
