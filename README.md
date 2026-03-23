@@ -161,7 +161,7 @@ Clean-room Rust reimplementations of foundational software. Each targets drop-in
 <td align="center" width="33%">
 <a href="https://frankensqlite.com/"><img src="https://frankensqlite.com/opengraph-image?9c3d4f6561b1a87f" alt="FrankenSQLite" width="100%" /></a><br/>
 <a href="https://frankensqlite.com/"><strong>FrankenSQLite</strong></a><br/>
-<sub>Project website for the Rust SQLite reimplementation</sub>
+<sub>Clean-room Rust version of SQLite</sub>
 </td>
 </tr>
 <tr>
