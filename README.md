@@ -172,19 +172,19 @@ Clean-room Rust reimplementations of foundational software. Each targets drop-in
 <sub>Multi-agent research orchestration using Sydney Brenner's methods</sub>
 </td>
 <td align="center" width="33%">
-<a href="https://jeffreys-skills.md/"><img src="https://jeffreys-skills.md/og-image.png" alt="Jeffrey's Skills" width="100%" /></a><br/>
+<a href="https://jeffreys-skills.md/"><img src="https://jeffreys-skills.md/opengraph-image?d930fafff379ee1a" alt="Jeffrey's Skills" width="100%" /></a><br/>
 <a href="https://jeffreys-skills.md/"><strong>Jeffreys-Skills.md</strong></a><br/>
 <sub>Paid SaaS for Claude Code skill management</sub>
 </td>
 </tr>
 <tr>
 <td align="center" width="33%">
-<a href="https://mcpagentmail.com"><img src="https://mcpagentmail.com/og-image.png" alt="MCP Agent Mail" width="100%" /></a><br/>
+<a href="https://mcpagentmail.com"><img src="https://mcpagentmail.com/opengraph-image?8d5a8c7ba8199fab" alt="MCP Agent Mail" width="100%" /></a><br/>
 <a href="https://mcpagentmail.com"><strong>MCPAgentMail.com</strong></a><br/>
 <sub>Coordination layer for AI coding agents</sub>
 </td>
 <td align="center" width="33%">
-<a href="https://asupersync.com"><img src="https://asupersync.com/og-image.png" alt="ASupersync" width="100%" /></a><br/>
+<a href="https://asupersync.com"><img src="https://asupersync.com/opengraph-image?6211db02fc680de8" alt="ASupersync" width="100%" /></a><br/>
 <a href="https://asupersync.com"><strong>ASupersync.com</strong></a><br/>
 <sub>Cancel-correct async runtime for Rust</sub>
 </td>
