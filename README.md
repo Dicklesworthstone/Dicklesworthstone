@@ -21,8 +21,8 @@
 
 ![Stars](https://img.shields.io/badge/Stars-20k+-2b2b2b?style=flat-square&logo=github&logoColor=white)
 ![Repos](https://img.shields.io/badge/Projects-170+-2b2b2b?style=flat-square&logo=github&logoColor=white)
-![Followers](https://img.shields.io/badge/Followers-1.7k+-2b2b2b?style=flat-square&logo=github&logoColor=white)
-![X](https://img.shields.io/badge/𝕏_Followers-29k-2b2b2b?style=flat-square&logo=x&logoColor=white)
+![Followers](https://img.shields.io/badge/Followers-2.3k+-2b2b2b?style=flat-square&logo=github&logoColor=white)
+![X](https://img.shields.io/badge/𝕏_Followers-41k+-2b2b2b?style=flat-square&logo=x&logoColor=white)
 
 [![Website](https://img.shields.io/badge/jeffreyemanuel.com-2b2b2b?style=flat-square&logo=google-chrome&logoColor=white)](https://www.jeffreyemanuel.com)
 [![Prompts](https://img.shields.io/badge/jeffreysprompts.com-2b2b2b?style=flat-square&logo=bookstack&logoColor=white)](https://jeffreysprompts.com)
@@ -172,6 +172,23 @@ Clean-room Rust reimplementations of foundational software. Each targets drop-in
 <sub>Multi-agent research orchestration using Sydney Brenner's methods</sub>
 </td>
 <td align="center" width="33%">
+<a href="https://jeffreys-skills.md/"><img src="https://jeffreys-skills.md/og-image.png" alt="Jeffrey's Skills" width="100%" /></a><br/>
+<a href="https://jeffreys-skills.md/"><strong>Jeffreys-Skills.md</strong></a><br/>
+<sub>Paid SaaS for Claude Code skill management</sub>
+</td>
+</tr>
+<tr>
+<td align="center" width="33%">
+<a href="https://mcpagentmail.com"><img src="https://mcpagentmail.com/og-image.png" alt="MCP Agent Mail" width="100%" /></a><br/>
+<a href="https://mcpagentmail.com"><strong>MCPAgentMail.com</strong></a><br/>
+<sub>Coordination layer for AI coding agents</sub>
+</td>
+<td align="center" width="33%">
+<a href="https://asupersync.com"><img src="https://asupersync.com/og-image.png" alt="ASupersync" width="100%" /></a><br/>
+<a href="https://asupersync.com"><strong>ASupersync.com</strong></a><br/>
+<sub>Cancel-correct async runtime for Rust</sub>
+</td>
+<td align="center" width="33%">
 <a href="https://jeffreyemanuel.com/tldr"><img src="https://jeffreyemanuel.com/tldr/opengraph-image?6394e3001be2769b" alt="Jeffrey Emanuel — TL;DR" width="100%" /></a><br/>
 <a href="https://jeffreyemanuel.com/tldr"><strong>jeffreyemanuel.com/tldr</strong></a><br/>
 <sub>The short version of everything I'm working on</sub>
@@ -204,7 +221,10 @@ Clean-room Rust reimplementations of foundational software. Each targets drop-in
 | ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/fast_vector_similarity?style=flat-square&label=⭐&color=2b2b2b) | **[Fast Vector Similarity](https://github.com/Dicklesworthstone/fast_vector_similarity)** | High-speed Rust library for complex vector similarity metrics with Python bindings. |
 | ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/frankentui?style=flat-square&label=⭐&color=2b2b2b) | **[FrankenTUI](https://github.com/Dicklesworthstone/frankentui)** | Minimal, high-performance terminal UI kernel. The rendering substrate for CASS and other Rust TUI apps. |
 | ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/frankensqlite?style=flat-square&label=⭐&color=2b2b2b) | **[FrankenSQLite](https://github.com/Dicklesworthstone/frankensqlite)** | Clean-room Rust reimplementation of SQLite with MVCC page-level versioning and RaptorQ erasure codes. |
-| ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/frankenterm?style=flat-square&label=⭐&color=2b2b2b) | **[FrankenTerm](https://github.com/Dicklesworthstone/frankenterm)** | Terminal hypervisor for AI agent swarms with pattern detection and event-driven automation. |
+| ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/frankenterm?style=flat-square&label=⭐&color=2b2b2b) | **[FrankenTerm](https://github.com/Dicklesworthstone/frankenterm)** | WezTerm fork extended into a swarm-native terminal platform. 120+ crates, 482 modules, 45K+ tests. |
+| ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/asupersync?style=flat-square&label=⭐&color=2b2b2b) | **[ASupersync](https://github.com/Dicklesworthstone/asupersync)** | Structured concurrency runtime with regions, cancel-correct protocols, and capability-based context. Foundation for Pi Agent Rust and FastMCP Rust. |
+| ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/rich_rust?style=flat-square&label=⭐&color=2b2b2b) | **[Rich Rust](https://github.com/Dicklesworthstone/rich_rust)** | Port of Python's Rich. Markup syntax, tables, progress bars, syntax highlighting for 100+ languages. Zero unsafe. |
+| ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/fastmcp_rust?style=flat-square&label=⭐&color=2b2b2b) | **[FastMCP Rust](https://github.com/Dicklesworthstone/fastmcp_rust)** | Zero-boilerplate MCP framework built on ASupersync. Attribute macros for tools/resources, automatic timeout budgets. |
 | ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/fast_cmaes?style=flat-square&label=⭐&color=2b2b2b) | **[Fast CMA-ES](https://github.com/Dicklesworthstone/fast_cmaes)** | SIMD-accelerated, Rayon-parallelized evolution strategy optimizer in Rust. |
 | ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/rust_scriptbots?style=flat-square&label=⭐&color=2b2b2b) | **[Rust ScriptBots](https://github.com/Dicklesworthstone/rust_scriptbots)** | Deterministic, GPU-accelerated artificial life simulator. Modern Rust reimplementation of Karpathy's ScriptBots. |
 | ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/ultrasearch?style=flat-square&label=⭐&color=2b2b2b) | **[UltraSearch](https://github.com/Dicklesworthstone/ultrasearch)** | Instant file search engine for Windows using NTFS USN journals and Tantivy. A modern "Everything" in Rust. |
@@ -260,7 +280,9 @@ Clean-room Rust reimplementations of foundational software. Each targets drop-in
 | ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/youtube_transcript_cleaner?style=flat-square&label=⭐&color=2b2b2b) | **[YouTube Transcript Cleaner](https://github.com/Dicklesworthstone/youtube_transcript_cleaner)** | Clean up raw YouTube auto-captions into readable text |
 | ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/remote_compilation_helper?style=flat-square&label=⭐&color=2b2b2b) | **[Remote Compilation Helper](https://github.com/Dicklesworthstone/remote_compilation_helper)** | Transparent build offloading for AI agents via Claude Code hooks |
 | ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/system_resource_protection_script?style=flat-square&label=⭐&color=2b2b2b) | **[System Resource Protection](https://github.com/Dicklesworthstone/system_resource_protection_script)** | Intelligent resource guardrails that prevent dev tools from freezing your Linux desktop |
-| ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/asupersync?style=flat-square&label=⭐&color=2b2b2b) | **[ASupersync](https://github.com/Dicklesworthstone/asupersync)** | Spec-first, cancel-correct, capability-secure async runtime for Rust |
+| ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/post_compact_reminder?style=flat-square&label=⭐&color=2b2b2b) | **[Post Compact Reminder](https://github.com/Dicklesworthstone/post_compact_reminder)** | Claude Code hook that re-reads AGENTS.md after context compaction |
+| ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/rano?style=flat-square&label=⭐&color=2b2b2b) | **[RANO](https://github.com/Dicklesworthstone/rano)** | Network observer for AI CLI processes with provider attribution and SQLite logging |
+| ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/process_triage?style=flat-square&label=⭐&color=2b2b2b) | **[Process Triage](https://github.com/Dicklesworthstone/process_triage)** | Bayesian zombie process detection with staged SIGTERM/SIGKILL and protected process lists |
 | ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/anti_alzheimers_flasher?style=flat-square&label=⭐&color=2b2b2b) | **[Anti-Alzheimer's Flasher](https://github.com/Dicklesworthstone/anti_alzheimers_flasher)** | Web-based 40Hz neural stimulation tool |
 | ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/chat_shared_conversation_to_file?style=flat-square&label=⭐&color=2b2b2b) | **[Chat to File](https://github.com/Dicklesworthstone/chat_shared_conversation_to_file)** | Convert ChatGPT, Gemini, and Grok share links to clean Markdown |
 | ![Stars](https://img.shields.io/github/stars/Dicklesworthstone/prepareprojectforllmprompt?style=flat-square&label=⭐&color=2b2b2b) | **[PrepareProjectForLLMPrompt](https://github.com/Dicklesworthstone/prepareprojectforllmprompt)** | Flatten a codebase into a single LLM-ready prompt |
@@ -298,11 +320,12 @@ In January 2025, I published a [12,000-word analysis](https://www.jeffreyemanuel
 
 Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com/writing):
 
+- **[The Overprompting Trap](https://www.jeffreyemanuel.com/writing/overprompting)** — Why giving AI models too many constraints degrades output quality. The two-phase approach.
 - **[RaptorQ: The Black Magic of Liquid Data](https://www.jeffreyemanuel.com/writing/raptorq)** — Deep dive into the fountain code that turns any file into an infinite stream of interchangeable packets
 - **[The Short Case for Nvidia Stock](https://www.jeffreyemanuel.com/writing/the_short_case_for_nvda)** — How AI economics, DeepSeek, and GPU supply collide with valuation narratives
 - **[The Most Impressive Prediction of All Time](https://www.jeffreyemanuel.com/writing/the_most_impressive_prediction_of_all_time)** — Pyotr Durnovo's 1914 memo that predicted WWI, its alliances, and the Russian Revolution
 - **[The Lessons of Hermann Grassmann](https://www.jeffreyemanuel.com/writing/hermann_grassmann_nature_of_abstractions)** — The self-taught genius who invented linear algebra decades before it was understood
-- **[Factor Risk Models and the Hedge Fund Business](https://www.jeffreyemanuel.com/writing/barra_factor_model_article)** — How "smart" risk models distort incentives and create hidden systemic risk
+- **[Factor Risk Models and the Hedge Fund Business](https://www.jeffreyemanuel.com/writing/barra-factor-model)** — How "smart" risk models distort incentives and create hidden systemic risk
 - **[PPP Loan Fraud: A Data Science Detective Story](https://www.jeffreyemanuel.com/writing/ppp_loan_fraud_analysis)** — Network analysis that could have caught billions in theft
 - **[Making Complex Code Changes with Claude Code](https://www.jeffreyemanuel.com/writing/making_complex_code_changes_with_cc)** — Separating cognition: use agents for plans first, code second
 - **[Some Thoughts on AI Alignment](https://www.jeffreyemanuel.com/writing/some_thoughts_on_ai_alignment)** — Why internal alignment fails and AI needs an external criminal justice system
@@ -314,8 +337,8 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 ![GitHub Contribution Graph](https://ghchart.rshah.org/Dicklesworthstone)
 
 <p align="center">
-  <a href="https://star-history.com/#Dicklesworthstone/mcp_agent_mail&Dicklesworthstone/llm_aided_ocr&Dicklesworthstone/beads_viewer&Dicklesworthstone/agentic_coding_flywheel_setup&Dicklesworthstone/your-source-to-prompt.html&Date">
-    <img src="https://api.star-history.com/svg?repos=Dicklesworthstone/mcp_agent_mail,Dicklesworthstone/llm_aided_ocr,Dicklesworthstone/beads_viewer,Dicklesworthstone/agentic_coding_flywheel_setup,Dicklesworthstone/your-source-to-prompt.html&type=Date&theme=dark" alt="Star History Chart" width="800" />
+  <a href="https://star-history.com/#Dicklesworthstone/mcp_agent_mail&Dicklesworthstone/llm_aided_ocr&Dicklesworthstone/agentic_coding_flywheel_setup&Dicklesworthstone/beads_viewer&Dicklesworthstone/beads_rust&Dicklesworthstone/destructive_command_guard&Dicklesworthstone/coding_agent_session_search&Dicklesworthstone/pi_agent_rust&Date">
+    <img src="https://api.star-history.com/svg?repos=Dicklesworthstone/mcp_agent_mail,Dicklesworthstone/llm_aided_ocr,Dicklesworthstone/agentic_coding_flywheel_setup,Dicklesworthstone/beads_viewer,Dicklesworthstone/beads_rust,Dicklesworthstone/destructive_command_guard,Dicklesworthstone/coding_agent_session_search,Dicklesworthstone/pi_agent_rust&type=Date&theme=dark" alt="Star History Chart" width="800" />
   </a>
 </p>
 
@@ -347,9 +370,11 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 - **[Naval Ravikant](https://x.com/naval)** called the Nvidia short thesis a "dazzling 60-minute education on the state of AI"
 - **[Matt Levine](https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine)** (Bloomberg) called it "a candidate for the most impactful short research report ever written"
 - **[Simon Willison](https://simonwillison.net/)** (creator of Datasette) praised the "rare combination of experience in both computer science and investment analysis"
+- **[Steve Yegge](https://steve-yegge.medium.com/)** called me "a top-tier engineer, mathematician, AI researcher, and hedge-fund financier, equally rarified-air at all of them" and featured my tools in two Medium posts
+- **[Ryan Sean Adams](https://www.bankless.com/)** (Bankless) called the analysis "one of the most thorough analyses of a company I've ever seen"
 - Front page of **Hacker News** (multiple times)
-- Featured on **Slashdot**, the **Bankless podcast**, and picked up by analysts and fund managers worldwide
-- 20,000+ GitHub stars, 1,700+ followers, 170+ open-source projects
+- Featured on **Slashdot**, the **Bankless podcast**, **Delphi Digital**, **Farzad Podcast**, and picked up by analysts and fund managers worldwide
+- 20,000+ GitHub stars, 2,300+ GitHub followers, 170+ open-source projects, 41K+ X followers
 
 ---
 
