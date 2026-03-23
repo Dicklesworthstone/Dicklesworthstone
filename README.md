@@ -21,6 +21,7 @@
 
 ![Stars](https://img.shields.io/badge/Stars-20k+-2b2b2b?style=flat-square&logo=github&logoColor=white)
 ![Repos](https://img.shields.io/badge/Projects-170+-2b2b2b?style=flat-square&logo=github&logoColor=white)
+![Contributions](https://img.shields.io/badge/Contributions_(1yr)-85,434-2b2b2b?style=flat-square&logo=github&logoColor=white)
 ![Followers](https://img.shields.io/badge/Followers-2.3k+-2b2b2b?style=flat-square&logo=github&logoColor=white)
 ![X](https://img.shields.io/badge/𝕏_Followers-41k+-2b2b2b?style=flat-square&logo=x&logoColor=white)
 
@@ -55,6 +56,9 @@
     <img src="languages.svg" width="49%" alt="Top Languages" />
   </picture>
 </p>
+
+> [!NOTE]
+> **85,434 contributions in the past year** — powered by 52+ AI coding agent subscription accounts (~$12K/month) and the Flywheel tooling below. The vast majority landed since January 2026, when the ecosystem hit critical mass.
 
 ---
 
