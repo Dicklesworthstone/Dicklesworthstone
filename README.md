@@ -155,7 +155,7 @@ Clean-room Rust reimplementations of foundational software. Each targets drop-in
 <sub>React component wrapper for FrankenTUI widgets</sub>
 </td>
 <td align="center" width="33%">
-<a href="https://frankensqlite.com/"><img src="https://frankensqlite.com/og-image.png" alt="FrankenSQLite" width="100%" /></a><br/>
+<a href="https://frankensqlite.com/"><img src="https://frankensqlite.com/opengraph-image?9c3d4f6561b1a87f" alt="FrankenSQLite" width="100%" /></a><br/>
 <a href="https://frankensqlite.com/"><strong>FrankenSQLite</strong></a><br/>
 <sub>Interactive docs for the Rust SQLite reimplementation</sub>
 </td>
