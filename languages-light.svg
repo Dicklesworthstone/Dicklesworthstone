@@ -8,15 +8,15 @@
   <rect x="343" y="50" width="29" height="10" fill="#3178c6"/>
   <rect x="372" y="50" width="24" height="10" fill="#555555"/>
   <rect x="396" y="50" width="20" height="10" fill="#89e051"/>
-  <rect x="416" y="50" width="20" height="10" fill="#00ADD8"/>
-  <rect x="436" y="50" width="17" height="10" fill="#e34c26"/>
-  <rect x="453" y="50" width="4" height="10" fill="#f1e05a"/>
-  <rect x="457" y="50" width="3" height="10" fill="#f34b7d"/>
-  <rect x="460" y="50" rx="3" width="2" height="10" fill="#DA5B0B"/>
+  <rect x="416" y="50" width="19" height="10" fill="#00ADD8"/>
+  <rect x="435" y="50" width="17" height="10" fill="#e34c26"/>
+  <rect x="452" y="50" width="4" height="10" fill="#f1e05a"/>
+  <rect x="456" y="50" width="3" height="10" fill="#f34b7d"/>
+  <rect x="459" y="50" rx="3" width="2" height="10" fill="#DA5B0B"/>
   <g transform="translate(25, 82)">
     <circle cx="6" cy="6" r="6" fill="#dea584"/>
     <text x="18" y="10" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">Rust</text>
-    <text x="54" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">63.9%</text>
+    <text x="54" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">64.0%</text>
   </g>
   <g transform="translate(25, 107)">
     <circle cx="6" cy="6" r="6" fill="#3572A5"/>
@@ -41,7 +41,7 @@
   <g transform="translate(260, 82)">
     <circle cx="6" cy="6" r="6" fill="#00ADD8"/>
     <text x="18" y="10" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">Go</text>
-    <text x="38" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">4.5%</text>
+    <text x="38" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">4.4%</text>
   </g>
   <g transform="translate(260, 107)">
     <circle cx="6" cy="6" r="6" fill="#e34c26"/>
@@ -64,6 +64,6 @@
     <text x="150" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">.3%</text>
   </g>  <!-- Summary -->
   <line x1="25" y1="210" x2="470" y2="210" stroke="#d0d7de" stroke-width="1"/>
-  <text x="25" y="235" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="12">761M bytes across 171 repositories</text>
+  <text x="25" y="235" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="12">763M bytes across 171 repositories</text>
   <text x="25" y="255" fill="#6e7781" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="11">Updated Mar 2026 · Measured by total code bytes per language</text>
 </svg>
