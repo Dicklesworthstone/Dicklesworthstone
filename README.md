@@ -19,11 +19,11 @@
 
 *Building the tooling that lets dozens of AI agents ship complex projects in days.*
 
-![Stars](https://img.shields.io/badge/Stars-20k+-2b2b2b?style=flat-square&logo=github&logoColor=white)
-![Repos](https://img.shields.io/badge/Projects-170+-2b2b2b?style=flat-square&logo=github&logoColor=white)
-![Contributions](https://img.shields.io/badge/Contributions_(1yr)-85,434-2b2b2b?style=flat-square&logo=github&logoColor=white)
-![Followers](https://img.shields.io/badge/Followers-2.3k+-2b2b2b?style=flat-square&logo=github&logoColor=white)
-![X](https://img.shields.io/badge/𝕏_Followers-41k+-2b2b2b?style=flat-square&logo=x&logoColor=white)
+![Stars](https://img.shields.io/badge/Stars-21k+-2b2b2b?style=flat-square&logo=github&logoColor=white)
+![Repos](https://img.shields.io/badge/Projects-176-2b2b2b?style=flat-square&logo=github&logoColor=white)
+![Contributions](https://img.shields.io/badge/Contributions_(1yr)-108,221-2b2b2b?style=flat-square&logo=github&logoColor=white)
+![Followers](https://img.shields.io/badge/Followers-2.5k+-2b2b2b?style=flat-square&logo=github&logoColor=white)
+![X](https://img.shields.io/badge/𝕏_Followers-43.7k-2b2b2b?style=flat-square&logo=x&logoColor=white)
 
 [![Website](https://img.shields.io/badge/jeffreyemanuel.com-2b2b2b?style=flat-square&logo=google-chrome&logoColor=white)](https://www.jeffreyemanuel.com)
 [![Prompts](https://img.shields.io/badge/jeffreysprompts.com-2b2b2b?style=flat-square&logo=bookstack&logoColor=white)](https://jeffreysprompts.com)
@@ -34,7 +34,7 @@
 [![MCPMail](https://img.shields.io/badge/mcpagentmail.com-2b2b2b?style=flat-square&logo=mail.ru&logoColor=white)](https://mcpagentmail.com)
 [![FrankenSQLite](https://img.shields.io/badge/frankensqlite.com-2b2b2b?style=flat-square&logo=sqlite&logoColor=white)](https://frankensqlite.com)
 [![ASupersync](https://img.shields.io/badge/asupersync.com-2b2b2b?style=flat-square&logo=rust&logoColor=white)](https://asupersync.com)
-[![Discord](https://img.shields.io/badge/Flywheel_Hub-800_members-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/gnCHsYDR25)
+[![Discord](https://img.shields.io/badge/Flywheel_Hub-935_members-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/gnCHsYDR25)
 
 `Multi-Agent Coordination` · `Agentic Coding` · `Rust CLI Tools` · `LLM Applications` · `Terminal UI` · `FrankenSuite`
 
@@ -58,13 +58,13 @@
 </p>
 
 > [!NOTE]
-> **85,434 contributions in the past year**, powered by 52+ AI coding agent subscription accounts (~$12K/month) and the Flywheel tooling below. The vast majority landed since January 2026, when the ecosystem hit critical mass.
+> **108,221 contributions in the past year**, powered by 52+ AI coding agent subscription accounts (~$12K/month) and the Flywheel tooling below. The vast majority landed since January 2026, when the ecosystem hit critical mass.
 
 ---
 
 ## The Agentic Coding Flywheel
 
-A self-reinforcing ecosystem of 14 tools for multi-agent software development. Agents coordinate via mail, track work via beads, search past sessions, guard against destructive mistakes, and orchestrate across tmux panes. Each tool amplifies the others. Started October 2025; shipping cadence accelerates with every addition. Join the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~800 members). Read the [comprehensive guide](https://agent-flywheel.com/complete-guide) or the [beginner-friendly version](https://agent-flywheel.com/core-flywheel).
+A self-reinforcing ecosystem of 14 tools for multi-agent software development. Agents coordinate via mail, track work via beads, search past sessions, guard against destructive mistakes, and orchestrate across tmux panes. Each tool amplifies the others. Started October 2025; shipping cadence accelerates with every addition. Join the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~935 members). Read the [comprehensive guide](https://agent-flywheel.com/complete-guide) or the [beginner-friendly version](https://agent-flywheel.com/core-flywheel).
 
 <p align="center">
   <img src="flywheel_diagram.webp" alt="The Agentic Coding Flywheel — 14 interconnected tools for multi-agent development" width="800" />
@@ -350,10 +350,10 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 
 ## Products
 
-- 🌐 **[jeffreyemanuel.com](https://www.jeffreyemanuel.com)** — Personal site built with Next.js 16, React Three Fiber, and GSAP. 170+ project showcase.
+- 🌐 **[jeffreyemanuel.com](https://www.jeffreyemanuel.com)** — Personal site built with Next.js 16, React Three Fiber, and GSAP. 176 project showcase.
 - 💰 **[Jeffreys-Skills.md](https://jeffreys-skills.md/)** — Paid SaaS for managing, discovering, and deploying Claude Code skills.
 - 📝 **[JeffreysPrompts.com](https://jeffreysprompts.com)** — Free prompt library with a premium section for advanced workflows.
-- ⚡ **[Agent-Flywheel.com](https://agent-flywheel.com)** — Home of the Flywheel methodology. [Comprehensive guide](https://agent-flywheel.com/complete-guide), [beginner-friendly guide](https://agent-flywheel.com/core-flywheel), and the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~800 members).
+- ⚡ **[Agent-Flywheel.com](https://agent-flywheel.com)** — Home of the Flywheel methodology. [Comprehensive guide](https://agent-flywheel.com/complete-guide), [beginner-friendly guide](https://agent-flywheel.com/core-flywheel), and the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~935 members).
 - 📬 **[MCPAgentMail.com](https://mcpagentmail.com)** — Project site for MCP Agent Mail.
 - 🖥️ **[FrankenTUI.com](https://frankentui.com)** — Project site for FrankenTUI.
 - 🗄️ **[FrankenSQLite.com](https://frankensqlite.com)** — Project site for FrankenSQLite.
@@ -378,7 +378,7 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 - **[Ryan Sean Adams](https://www.bankless.com/)** (Bankless) called the analysis "one of the most thorough analyses of a company I've ever seen"
 - Front page of **Hacker News** (multiple times)
 - Featured on **Slashdot**, the **Bankless podcast**, **Delphi Digital**, **Farzad Podcast**, and picked up by analysts and fund managers worldwide
-- 20,000+ GitHub stars, 2,300+ GitHub followers, 170+ open-source projects, 41K+ X followers
+- 21,000+ GitHub stars, 2,500+ GitHub followers, 176 open-source projects, 43.7K X followers
 
 ---
 
