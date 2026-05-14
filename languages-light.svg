@@ -3,25 +3,25 @@
   <text x="25" y="35" fill="#24292f" font-family="'Segoe UI', Ubuntu, 'Helvetica Neue', sans-serif" font-weight="600" font-size="18">Top Languages (by code volume)</text>
   <!-- Progress bar background -->
   <rect x="25" y="50" rx="3" width="445" height="10" fill="#eaeef2"/>
-  <rect x="25" y="50" rx="3" width="260" height="10" fill="#dea584"/>
-  <rect x="285" y="50" width="81" height="10" fill="#e34c26"/>
-  <rect x="366" y="50" width="24" height="10" fill="#3572A5"/>
-  <rect x="390" y="50" width="20" height="10" fill="#89e051"/>
-  <rect x="410" y="50" width="18" height="10" fill="#3178c6"/>
-  <rect x="428" y="50" width="15" height="10" fill="#555555"/>
-  <rect x="443" y="50" width="13" height="10" fill="#00ADD8"/>
-  <rect x="456" y="50" width="2" height="10" fill="#f1e05a"/>
-  <rect x="458" y="50" width="2" height="10" fill="#f34b7d"/>
-  <rect x="460" y="50" rx="3" width="2" height="10" fill="#DA5B0B"/>
+  <rect x="25" y="50" rx="3" width="262" height="10" fill="#dea584"/>
+  <rect x="287" y="50" width="80" height="10" fill="#e34c26"/>
+  <rect x="367" y="50" width="24" height="10" fill="#3572A5"/>
+  <rect x="391" y="50" width="21" height="10" fill="#89e051"/>
+  <rect x="412" y="50" width="18" height="10" fill="#3178c6"/>
+  <rect x="430" y="50" width="14" height="10" fill="#555555"/>
+  <rect x="444" y="50" width="13" height="10" fill="#00ADD8"/>
+  <rect x="457" y="50" width="2" height="10" fill="#f1e05a"/>
+  <rect x="459" y="50" width="2" height="10" fill="#f34b7d"/>
+  <rect x="461" y="50" rx="3" width="2" height="10" fill="#DA5B0B"/>
   <g transform="translate(25, 82)">
     <circle cx="6" cy="6" r="6" fill="#dea584"/>
     <text x="18" y="10" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">Rust</text>
-    <text x="54" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">58.6%</text>
+    <text x="54" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">58.9%</text>
   </g>
   <g transform="translate(25, 107)">
     <circle cx="6" cy="6" r="6" fill="#e34c26"/>
     <text x="18" y="10" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">HTML</text>
-    <text x="54" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">18.4%</text>
+    <text x="54" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">18.2%</text>
   </g>
   <g transform="translate(25, 132)">
     <circle cx="6" cy="6" r="6" fill="#3572A5"/>
@@ -31,7 +31,7 @@
   <g transform="translate(25, 157)">
     <circle cx="6" cy="6" r="6" fill="#89e051"/>
     <text x="18" y="10" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">Shell</text>
-    <text x="62" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">4.7%</text>
+    <text x="62" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">4.8%</text>
   </g>
   <g transform="translate(25, 182)">
     <circle cx="6" cy="6" r="6" fill="#3178c6"/>
@@ -41,7 +41,7 @@
   <g transform="translate(260, 82)">
     <circle cx="6" cy="6" r="6" fill="#555555"/>
     <text x="18" y="10" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">C</text>
-    <text x="30" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">3.4%</text>
+    <text x="30" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">3.3%</text>
   </g>
   <g transform="translate(260, 107)">
     <circle cx="6" cy="6" r="6" fill="#00ADD8"/>
