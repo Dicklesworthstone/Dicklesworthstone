@@ -4,29 +4,29 @@
   <!-- Progress bar background -->
   <rect x="25" y="50" rx="3" width="445" height="10" fill="#eaeef2"/>
   <rect x="25" y="50" rx="3" width="263" height="10" fill="#dea584"/>
-  <rect x="288" y="50" width="80" height="10" fill="#e34c26"/>
-  <rect x="368" y="50" width="24" height="10" fill="#3572A5"/>
-  <rect x="392" y="50" width="21" height="10" fill="#89e051"/>
-  <rect x="413" y="50" width="17" height="10" fill="#3178c6"/>
-  <rect x="430" y="50" width="14" height="10" fill="#555555"/>
-  <rect x="444" y="50" width="13" height="10" fill="#00ADD8"/>
-  <rect x="457" y="50" width="2" height="10" fill="#f1e05a"/>
-  <rect x="459" y="50" width="2" height="10" fill="#f34b7d"/>
-  <rect x="461" y="50" rx="3" width="2" height="10" fill="#DA5B0B"/>
+  <rect x="288" y="50" width="79" height="10" fill="#e34c26"/>
+  <rect x="367" y="50" width="24" height="10" fill="#3572A5"/>
+  <rect x="391" y="50" width="21" height="10" fill="#89e051"/>
+  <rect x="412" y="50" width="17" height="10" fill="#3178c6"/>
+  <rect x="429" y="50" width="14" height="10" fill="#555555"/>
+  <rect x="443" y="50" width="13" height="10" fill="#00ADD8"/>
+  <rect x="456" y="50" width="2" height="10" fill="#f1e05a"/>
+  <rect x="458" y="50" width="2" height="10" fill="#f34b7d"/>
+  <rect x="460" y="50" rx="3" width="2" height="10" fill="#DA5B0B"/>
   <g transform="translate(25, 82)">
     <circle cx="6" cy="6" r="6" fill="#dea584"/>
     <text x="18" y="10" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">Rust</text>
-    <text x="54" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">59.2%</text>
+    <text x="54" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">59.3%</text>
   </g>
   <g transform="translate(25, 107)">
     <circle cx="6" cy="6" r="6" fill="#e34c26"/>
     <text x="18" y="10" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">HTML</text>
-    <text x="54" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">18.0%</text>
+    <text x="54" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">17.8%</text>
   </g>
   <g transform="translate(25, 132)">
     <circle cx="6" cy="6" r="6" fill="#3572A5"/>
     <text x="18" y="10" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">Python</text>
-    <text x="70" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">5.4%</text>
+    <text x="70" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">5.5%</text>
   </g>
   <g transform="translate(25, 157)">
     <circle cx="6" cy="6" r="6" fill="#89e051"/>
