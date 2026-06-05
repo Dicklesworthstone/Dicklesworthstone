@@ -19,11 +19,11 @@
 
 *Building the tooling that lets dozens of AI agents ship complex projects in days.*
 
-![Stars](https://img.shields.io/badge/Stars-22,990+-2b2b2b?style=flat-square&logo=github&logoColor=white)
-![Projects](https://img.shields.io/badge/Projects-174-2b2b2b?style=flat-square&logo=github&logoColor=white)
-![Contributions_(1yr)](https://img.shields.io/badge/Contributions_(1yr)-155,792-2b2b2b?style=flat-square&logo=github&logoColor=white)
-![Followers](https://img.shields.io/badge/Followers-2,700+-2b2b2b?style=flat-square&logo=github&logoColor=white)
-![X_Followers](https://img.shields.io/badge/X_Followers-44.8K-2b2b2b?style=flat-square&logo=x&logoColor=white)
+![Stars: 22,990+](https://img.shields.io/static/v1?label=Stars&message=22%2C990%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Repos: 174](https://img.shields.io/static/v1?label=Repos&message=174&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 155,792](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=155%2C792&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Followers: 2,700+](https://img.shields.io/static/v1?label=Followers&message=2%2C700%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![X: 44.8K](https://img.shields.io/static/v1?label=X+Followers&message=44.8K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
 [![Website](https://img.shields.io/badge/jeffreyemanuel.com-2b2b2b?style=flat-square&logo=google-chrome&logoColor=white)](https://www.jeffreyemanuel.com)
 [![Prompts](https://img.shields.io/badge/jeffreysprompts.com-2b2b2b?style=flat-square&logo=bookstack&logoColor=white)](https://jeffreysprompts.com)

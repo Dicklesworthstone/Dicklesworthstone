@@ -11,7 +11,7 @@ import sys
 import urllib.error
 import urllib.request
 from pathlib import Path
-from urllib.parse import parse_qsl, quote
+from urllib.parse import parse_qsl, quote, urlencode
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -100,6 +100,19 @@ def existing_match(text: str, pattern: str, default: str) -> str:
     return match.group(1) if match else default
 
 
+def existing_badge_message(
+    text: str, labels: list[str], legacy_pattern: str, default: str
+) -> str:
+    static_pattern = re.compile(
+        r"!\[[^\]]+\]\(https://img\.shields\.io/static/v1\?(?P<query>[^)]*)\)"
+    )
+    for match in static_pattern.finditer(text):
+        params = dict(parse_qsl(match.group("query"), keep_blank_values=True))
+        if params.get("label") in labels and params.get("message"):
+            return params["message"]
+    return existing_match(text, legacy_pattern, default)
+
+
 def decode_json(text: str) -> object:
     return JSON_DECODER.decode(text)
 
@@ -144,12 +157,21 @@ def replace_section_range(
     return updated
 
 
-def round_badge_line(label: str, value: str, logo: str = "github") -> str:
-    value = quote(value, safe=",.+")
-    return (
-        f"![{label}](https://img.shields.io/badge/{label}-{value}-2b2b2b"
-        f"?style=flat-square&logo={logo}&logoColor=white)"
+def round_badge_line(
+    label: str, value: str, logo: str = "github", alt_label: str | None = None
+) -> str:
+    query = urlencode(
+        {
+            "label": label,
+            "message": value,
+            "color": "2b2b2b",
+            "style": "flat-square",
+            "logo": logo,
+            "logoColor": "white",
+        }
     )
+    alt = f"{alt_label or label}: {value}"
+    return f"![{alt}](https://img.shields.io/static/v1?{query})"
 
 
 def discord_badge_line(member_count: str) -> str:
@@ -436,15 +458,42 @@ def build_writing_block() -> str:
 def main() -> None:
     original = README.read_text(encoding="utf-8")
     text = original
-    existing_stars_label = existing_match(text, r"badge/Stars-([^-/]+)-", "0+")
-    existing_projects = existing_match(text, r"badge/Projects-([^-/]+)-", "0")
-    existing_contributions = existing_match(
+    existing_stars_label = existing_badge_message(
         text,
-        r"> \*\*([\d,]+) contributions in the past year\*\*",
+        ["Stars"],
+        r"badge/Stars-([^-/]+)-",
+        "0+",
+    )
+    existing_projects = existing_badge_message(
+        text,
+        ["Repos", "Projects"],
+        r"badge/(?:Projects|Repos)-([^-/]+)-",
         "0",
     )
-    existing_followers_label = existing_match(text, r"badge/Followers-([^-/]+)-", "0+")
-    existing_x_label = existing_match(text, r"badge/X_Followers-([^-/]+)-", "0")
+    existing_contributions = existing_badge_message(
+        text,
+        ["Contributions (1yr)", "Contributions"],
+        r"badge/Contributions(?:_\([^)]*\))?-([^-/]+)-",
+        "0",
+    )
+    if existing_contributions == "0":
+        existing_contributions = existing_match(
+            text,
+            r"> \*\*([\d,]+) contributions in the past year\*\*",
+            "0",
+        )
+    existing_followers_label = existing_badge_message(
+        text,
+        ["Followers"],
+        r"badge/Followers-([^-/]+)-",
+        "0+",
+    )
+    existing_x_label = existing_badge_message(
+        text,
+        ["X Followers", "X_Followers"],
+        r"badge/(?:X_Followers|[^-]+_Followers)-([^-/]+)-",
+        "0",
+    )
     existing_discord_members = existing_match(
         text,
         r"Flywheel_Hub-([\d,]+)_members",
@@ -453,31 +502,42 @@ def main() -> None:
 
     text = replace_line_any(
         text,
-        ["![Stars]("],
+        ["![Stars](", "![Stars:"],
         round_badge_line("Stars", env("README_STARS_LABEL", existing_stars_label)),
     )
     text = replace_line_any(
         text,
-        ["![Repos](", "![Projects]("],
-        round_badge_line("Projects", env("OPEN_SOURCE_PROJECTS", existing_projects)),
+        ["![Repos](", "![Repos:", "![Projects](", "![Projects:"],
+        round_badge_line("Repos", env("OPEN_SOURCE_PROJECTS", existing_projects)),
     )
     text = replace_line_any(
         text,
-        ["![Contributions](", "![Contributions_(1yr)]("],
+        [
+            "![Contributions](",
+            "![Contributions:",
+            "![Contributions_(1yr)](",
+            "![Contributions_(1yr):",
+        ],
         round_badge_line(
-            "Contributions_(1yr)",
+            "Contributions (1yr)",
             env("README_CONTRIBUTIONS", env("CONTRIBUTIONS_FMT", existing_contributions)),
+            alt_label="Contributions",
         ),
     )
     text = replace_line_any(
         text,
-        ["![Followers]("],
+        ["![Followers](", "![Followers:"],
         round_badge_line("Followers", env("README_FOLLOWERS_LABEL", existing_followers_label)),
     )
     text = replace_line_any(
         text,
-        ["![X](", "![X_Followers]("],
-        round_badge_line("X_Followers", env("X_FOLLOWERS_LABEL", existing_x_label), logo="x"),
+        ["![X](", "![X:", "![X_Followers](", "![X_Followers:"],
+        round_badge_line(
+            "X Followers",
+            env("X_FOLLOWERS_LABEL", existing_x_label),
+            logo="x",
+            alt_label="X",
+        ),
     )
     discord_members = env("DISCORD_MEMBERS_FMT", existing_discord_members)
     text = replace_line_any(
