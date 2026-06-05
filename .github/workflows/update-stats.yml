@@ -16,14 +16,14 @@ jobs:
 
       - name: Update all stats SVGs
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PROFILE_STATS_TOKEN || secrets.GITHUB_TOKEN }}
         run: bash update-stats.sh
 
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add stats.svg stats-light.svg languages.svg languages-light.svg
+          git add README.md stats.svg stats-light.svg languages.svg languages-light.svg
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else

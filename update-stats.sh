@@ -1,14 +1,33 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# update-stats.sh — Fetches live GitHub stats and regenerates all 4 SVG files.
+# update-stats.sh — Fetches live GitHub stats and refreshes profile artifacts.
 # Used by the daily GitHub Actions workflow and can be run manually.
-# Requires: gh CLI authenticated, jq
+# Requires: gh CLI authenticated, jq, python3, curl
 
 USERNAME="Dicklesworthstone"
 MONTH=$(date +"%b %Y")
 
-fmt() { printf "%'d" "$1"; }
+fmt() { python3 -c 'import sys; print(f"{int(sys.argv[1]):,}")' "$1"; }
+calc_pct() {
+  python3 -c 'import sys; den=int(sys.argv[2]); print("0.0" if den == 0 else f"{int(sys.argv[1]) * 100 / den:.1f}")' "$1" "$2"
+}
+bar_width() {
+  python3 -c 'import sys; print(max(2, int(float(sys.argv[1]) * int(sys.argv[2]) / 100)))' "$1" "$2"
+}
+human_bytes() {
+  python3 -c 'import sys; n=int(sys.argv[1]); print(f"{n // 1000000000}G" if n >= 1000000000 else (f"{n // 1000000}M" if n >= 1000000 else (f"{n // 1000}K" if n >= 1000 else f"{n}B")))' "$1"
+}
+xml_escape() {
+  python3 -c 'import html, sys; print(html.escape(sys.argv[1], quote=True), end="")' "$1"
+}
+sanitize_color() {
+  if [[ "$1" =~ ^#[0-9A-Fa-f]{6}$ ]]; then
+    printf '%s' "$1"
+  else
+    printf '#888888'
+  fi
+}
 
 echo "=== Fetching user profile ==="
 PROFILE=$(gh api "users/${USERNAME}")
@@ -16,13 +35,24 @@ FOLLOWERS=$(echo "$PROFILE" | jq -r '.followers')
 FOLLOWING=$(echo "$PROFILE" | jq -r '.following')
 PUBLIC_REPOS=$(echo "$PROFILE" | jq -r '.public_repos')
 
-echo "=== Fetching total stars (paginated) ==="
+echo "=== Fetching public non-fork project count ==="
+# shellcheck disable=SC2016
+OPEN_SOURCE_PROJECTS=$(gh api graphql -f login="$USERNAME" -f query='query($login: String!) {
+  user(login: $login) {
+    repositories(ownerAffiliations: OWNER, isFork: false, privacy: PUBLIC) {
+      totalCount
+    }
+  }
+}' | jq -r '.data.user.repositories.totalCount')
+
+echo "=== Fetching total public stars (paginated) ==="
 TOTAL_STARS=0
 CURSOR=""
 PAGE=1
+# shellcheck disable=SC2016
 STARS_QUERY='query($login: String!, $after: String) {
   user(login: $login) {
-    repositories(first: 100, after: $after, ownerAffiliations: OWNER) {
+    repositories(first: 100, after: $after, ownerAffiliations: OWNER, privacy: PUBLIC) {
       nodes { stargazerCount }
       pageInfo { endCursor hasNextPage }
     }
@@ -44,26 +74,59 @@ while true; do
 done
 
 echo "=== Fetching contributions ==="
+# shellcheck disable=SC2016
 CONTRIB=$(gh api graphql -f query='query($login: String!) { user(login: $login) { contributionsCollection { contributionCalendar { totalContributions } } } }' -f login="$USERNAME")
 CONTRIBUTIONS=$(echo "$CONTRIB" | jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions')
+CONTRIBUTIONS=${CONTRIBUTIONS_OVERRIDE:-$CONTRIBUTIONS}
+README_CONTRIBUTIONS_RAW=$CONTRIBUTIONS
 
-echo "=== Fetching total commits ==="
-TOTAL_COMMITS=$(gh api "search/commits?q=author:${USERNAME}&per_page=1" | jq -r '.total_count')
+echo "=== Fetching public commits ==="
+COMMITS_SEARCH_QUERY="${COMMITS_SEARCH_QUERY:-author:${USERNAME} is:public}"
+TOTAL_COMMITS=$(gh api -X GET search/commits -f q="$COMMITS_SEARCH_QUERY" -f per_page=1 | jq -r '.total_count')
 
 echo ""
 echo "Stars:         $(fmt $TOTAL_STARS)"
-echo "Commits:       $(fmt $TOTAL_COMMITS)"
-echo "Public Repos:  $(fmt $PUBLIC_REPOS)"
-echo "Followers:     $(fmt $FOLLOWERS)"
-echo "Contributions: $(fmt $CONTRIBUTIONS)"
-echo "Following:     $(fmt $FOLLOWING)"
+echo "Commits:       $(fmt "$TOTAL_COMMITS")"
+echo "Public Repos:  $(fmt "$PUBLIC_REPOS")"
+echo "Open Source:   $(fmt "$OPEN_SOURCE_PROJECTS")"
+echo "Followers:     $(fmt "$FOLLOWERS")"
+echo "Contributions: $(fmt "$CONTRIBUTIONS")"
+echo "Following:     $(fmt "$FOLLOWING")"
 
 STARS_FMT=$(fmt $TOTAL_STARS)
-COMMITS_FMT=$(fmt $TOTAL_COMMITS)
-REPOS_FMT=$(fmt $PUBLIC_REPOS)
-FOLLOWERS_FMT=$(fmt $FOLLOWERS)
-CONTRIBUTIONS_FMT=$(fmt $CONTRIBUTIONS)
-FOLLOWING_FMT=$(fmt $FOLLOWING)
+COMMITS_FMT=$(fmt "$TOTAL_COMMITS")
+REPOS_FMT=$(fmt "$PUBLIC_REPOS")
+FOLLOWERS_FMT=$(fmt "$FOLLOWERS")
+CONTRIBUTIONS_FMT=$(fmt "$CONTRIBUTIONS")
+README_CONTRIBUTIONS=$(fmt "$README_CONTRIBUTIONS_RAW")
+FOLLOWING_FMT=$(fmt "$FOLLOWING")
+
+README_STARS_LABEL="$(fmt $(( (TOTAL_STARS / 10) * 10 )))+"
+README_FOLLOWERS_LABEL="$(fmt $(( (FOLLOWERS / 100) * 100 )))+"
+X_FOLLOWERS_LABEL="${X_FOLLOWERS_LABEL:-44.8K}"
+
+echo "=== Fetching Discord member count ==="
+DISCORD_INVITE_CODE="${DISCORD_INVITE_CODE:-gnCHsYDR25}"
+DISCORD_MEMBERS="${DISCORD_MEMBERS:-}"
+if [ -z "$DISCORD_MEMBERS" ]; then
+  if DISCORD_JSON=$(curl -fsSL "https://discord.com/api/v10/invites/${DISCORD_INVITE_CODE}?with_counts=true" 2>/dev/null); then
+    DISCORD_MEMBERS=$(echo "$DISCORD_JSON" | jq -r '.approximate_member_count // empty')
+  fi
+fi
+if [ -n "$DISCORD_MEMBERS" ]; then
+  DISCORD_MEMBERS_FMT=$(fmt "$DISCORD_MEMBERS")
+  export DISCORD_MEMBERS_FMT
+  echo "Discord:      ${DISCORD_MEMBERS_FMT} members"
+else
+  echo "Discord:      count unavailable; leaving README fallback in place"
+fi
+
+RECENT_REPOS_JSON_CONTENT=$(gh repo list "$USERNAME" \
+  --limit 1000 \
+  --visibility public \
+  --json name,description,primaryLanguage,pushedAt,updatedAt,stargazerCount,isArchived,isFork,url)
+export RECENT_REPOS_JSON_CONTENT
+export OPEN_SOURCE_PROJECTS README_CONTRIBUTIONS README_STARS_LABEL README_FOLLOWERS_LABEL X_FOLLOWERS_LABEL
 
 # ── Fetch language stats ──────────────────────────────────────────────
 echo ""
@@ -73,9 +136,10 @@ declare -A LANG_BYTES
 declare -A LANG_COLORS
 CURSOR=""
 PAGE=1
+# shellcheck disable=SC2016
 LANG_QUERY='query($login: String!, $after: String) {
   user(login: $login) {
-    repositories(first: 100, after: $after, ownerAffiliations: OWNER, isFork: false) {
+    repositories(first: 100, after: $after, ownerAffiliations: OWNER, isFork: false, privacy: PUBLIC) {
       nodes {
         languages(first: 20, orderBy: {field: SIZE, direction: DESC}) {
           edges { size node { name color } }
@@ -96,7 +160,7 @@ while true; do
   while IFS=$'\t' read -r lang bytes color; do
     [ -z "$lang" ] && continue
     LANG_BYTES[$lang]=$(( ${LANG_BYTES[$lang]:-0} + bytes ))
-    LANG_COLORS[$lang]="${color}"
+    LANG_COLORS[$lang]="$(sanitize_color "$color")"
   done < <(echo "$REPOS_JSON" | jq -r '.data.user.repositories.nodes[].languages.edges[] | [.node.name, .size, (.node.color // "#888888")] | @tsv')
 
   HAS_NEXT=$(echo "$REPOS_JSON" | jq -r '.data.user.repositories.pageInfo.hasNextPage')
@@ -115,29 +179,25 @@ done
 # Build sorted list
 SORTED_LANGS=""
 for lang in "${!LANG_BYTES[@]}"; do
-  SORTED_LANGS+="${LANG_BYTES[$lang]} ${lang}\n"
+  SORTED_LANGS+="${LANG_BYTES[$lang]} ${lang}"$'\n'
 done
-SORTED_LANGS=$(echo -e "$SORTED_LANGS" | sort -rn | head -10)
+SORTED_LANGS=$(printf "%s" "$SORTED_LANGS" | sort -rn | head -10)
 
 echo ""
 echo "Total bytes: $(fmt $TOTAL_BYTES)"
 echo "Top languages:"
 echo "$SORTED_LANGS" | while read -r bytes lang; do
-  pct=$(echo "scale=1; $bytes * 100 / $TOTAL_BYTES" | bc)
-  echo "  $lang: ${pct}% ($(fmt $bytes) bytes)"
+  [ -z "$lang" ] && continue
+  pct=$(calc_pct "$bytes" "$TOTAL_BYTES")
+  echo "  $lang: ${pct}% ($(fmt "$bytes") bytes)"
 done
 
 # Count total repos with language data
-TOTAL_LANG_REPOS=$(gh api graphql -f query='query($login: String!) { user(login: $login) { repositories(ownerAffiliations: OWNER, isFork: false) { totalCount } } }' -f login="$USERNAME" | jq -r '.data.user.repositories.totalCount')
+# shellcheck disable=SC2016
+TOTAL_LANG_REPOS=$(gh api graphql -f query='query($login: String!) { user(login: $login) { repositories(ownerAffiliations: OWNER, isFork: false, privacy: PUBLIC) { totalCount } } }' -f login="$USERNAME" | jq -r '.data.user.repositories.totalCount')
 
 # Calculate bytes in human format
-if [ "$TOTAL_BYTES" -ge 1000000000 ]; then
-  BYTES_HUMAN="$(echo "scale=0; $TOTAL_BYTES / 1000000000" | bc)G"
-elif [ "$TOTAL_BYTES" -ge 1000000 ]; then
-  BYTES_HUMAN="$(echo "scale=0; $TOTAL_BYTES / 1000000" | bc)M"
-else
-  BYTES_HUMAN="$(echo "scale=0; $TOTAL_BYTES / 1000" | bc)K"
-fi
+BYTES_HUMAN="$(human_bytes "$TOTAL_BYTES")"
 
 # ── Generate stats SVGs ──────────────────────────────────────────────
 
@@ -155,7 +215,7 @@ cat > stats-light.svg << SVGEOF
 
   <!-- Row 2: Commits -->
   <circle cx="33" cy="98" r="5" fill="#1a7f37"/>
-  <text x="46" y="102" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Total Commits</text>
+  <text x="46" y="102" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Public Commits</text>
   <text x="190" y="102" fill="#0969da" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${COMMITS_FMT}</text>
 
   <!-- Row 3: Public Repos -->
@@ -199,7 +259,7 @@ cat > stats.svg << SVGEOF
 
   <!-- Row 2: Commits -->
   <circle cx="33" cy="98" r="5" fill="#3fb950"/>
-  <text x="46" y="102" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Total Commits</text>
+  <text x="46" y="102" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Public Commits</text>
   <text x="190" y="102" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${COMMITS_FMT}</text>
 
   <!-- Row 3: Public Repos -->
@@ -235,15 +295,14 @@ SVGEOF
 echo "=== Generating language SVGs ==="
 
 # Build arrays of top 10 languages sorted by bytes
-declare -a TOP_LANGS TOP_BYTES TOP_PCTS TOP_COLORS
+declare -a TOP_LANGS TOP_PCTS TOP_COLORS
 IDX=0
 while read -r bytes lang; do
   [ -z "$lang" ] && continue
-  TOP_LANGS[$IDX]="$lang"
-  TOP_BYTES[$IDX]="$bytes"
-  pct=$(echo "scale=1; $bytes * 100 / $TOTAL_BYTES" | bc)
-  TOP_PCTS[$IDX]="$pct"
-  TOP_COLORS[$IDX]="${LANG_COLORS[$lang]:-#888888}"
+  TOP_LANGS[IDX]="$lang"
+  pct=$(calc_pct "$bytes" "$TOTAL_BYTES")
+  TOP_PCTS[IDX]="$pct"
+  TOP_COLORS[IDX]="${LANG_COLORS[$lang]:-#888888}"
   IDX=$((IDX + 1))
 done <<< "$SORTED_LANGS"
 
@@ -251,9 +310,7 @@ done <<< "$SORTED_LANGS"
 BAR_WIDTH=445
 declare -a BAR_WIDTHS
 for i in "${!TOP_PCTS[@]}"; do
-  w=$(echo "scale=0; ${TOP_PCTS[$i]} * $BAR_WIDTH / 100" | bc)
-  [ "$w" -lt 2 ] && w=2
-  BAR_WIDTHS[$i]=$w
+  BAR_WIDTHS[i]=$(bar_width "${TOP_PCTS[$i]}" "$BAR_WIDTH")
 done
 
 # Take first 5 for left column, next 5 for right column (matching original layout)
@@ -273,7 +330,7 @@ for i in "${!BAR_WIDTHS[@]}"; do
 "
   BAR_SEGMENTS_DARK+="  <rect x=\"$X_POS\" y=\"50\"${RX} width=\"${BAR_WIDTHS[$i]}\" height=\"10\" fill=\"${TOP_COLORS[$i]}\"/>
 "
-  X_POS=$((X_POS + BAR_WIDTHS[$i]))
+  X_POS=$((X_POS + BAR_WIDTHS[i]))
 done
 
 # Build legend entries — calculate text x offset based on lang name length
@@ -283,14 +340,16 @@ build_legend() {
 
   # Left column (first 5)
   for i in $(seq 0 $((LEFT_COUNT - 1))); do
-    [ $i -ge $IDX ] && break
+    [ "$i" -ge "$IDX" ] && break
     local y_offset=$((82 + i * 25))
     local name="${TOP_LANGS[$i]}"
+    local escaped_name
+    escaped_name=$(xml_escape "$name")
     # Approximate text width: ~8px per char
     local text_x=$((18 + ${#name} * 8 + 4))
     entries+="  <g transform=\"translate(25, $y_offset)\">
     <circle cx=\"6\" cy=\"6\" r=\"6\" fill=\"${TOP_COLORS[$i]}\"/>
-    <text x=\"18\" y=\"10\" fill=\"${text_fill}\" font-family=\"'Segoe UI', Ubuntu, sans-serif\" font-size=\"13\">${name}</text>
+    <text x=\"18\" y=\"10\" fill=\"${text_fill}\" font-family=\"'Segoe UI', Ubuntu, sans-serif\" font-size=\"13\">${escaped_name}</text>
     <text x=\"${text_x}\" y=\"10\" fill=\"${pct_fill}\" font-family=\"'Segoe UI', Ubuntu, sans-serif\" font-size=\"13\">${TOP_PCTS[$i]}%</text>
   </g>
 "
@@ -298,13 +357,15 @@ build_legend() {
 
   # Right column (next 5)
   for i in $(seq $LEFT_COUNT $((LEFT_COUNT + RIGHT_COUNT - 1))); do
-    [ $i -ge $IDX ] && break
+    [ "$i" -ge "$IDX" ] && break
     local y_offset=$((82 + (i - LEFT_COUNT) * 25))
     local name="${TOP_LANGS[$i]}"
+    local escaped_name
+    escaped_name=$(xml_escape "$name")
     local text_x=$((18 + ${#name} * 8 + 4))
     entries+="  <g transform=\"translate(260, $y_offset)\">
     <circle cx=\"6\" cy=\"6\" r=\"6\" fill=\"${TOP_COLORS[$i]}\"/>
-    <text x=\"18\" y=\"10\" fill=\"${text_fill}\" font-family=\"'Segoe UI', Ubuntu, sans-serif\" font-size=\"13\">${name}</text>
+    <text x=\"18\" y=\"10\" fill=\"${text_fill}\" font-family=\"'Segoe UI', Ubuntu, sans-serif\" font-size=\"13\">${escaped_name}</text>
     <text x=\"${text_x}\" y=\"10\" fill=\"${pct_fill}\" font-family=\"'Segoe UI', Ubuntu, sans-serif\" font-size=\"13\">${TOP_PCTS[$i]}%</text>
   </g>
 "
@@ -343,4 +404,8 @@ ${BAR_SEGMENTS_DARK}${LEGEND_DARK}  <!-- Summary -->
 SVGEOF
 
 echo ""
-echo "=== Done! All 4 SVGs updated. ==="
+echo "=== Updating README.md ==="
+python3 scripts/update_readme.py
+
+echo ""
+echo "=== Done! README.md and all 4 SVGs updated. ==="
