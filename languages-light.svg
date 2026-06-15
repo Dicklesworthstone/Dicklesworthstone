@@ -16,7 +16,7 @@
   <g transform="translate(25, 82)">
     <circle cx="6" cy="6" r="6" fill="#dea584"/>
     <text x="18" y="10" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">Rust</text>
-    <text x="54" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">61.9%</text>
+    <text x="54" y="10" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">62.0%</text>
   </g>
   <g transform="translate(25, 107)">
     <circle cx="6" cy="6" r="6" fill="#e34c26"/>
