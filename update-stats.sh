@@ -404,8 +404,19 @@ ${BAR_SEGMENTS_DARK}${LEGEND_DARK}  <!-- Summary -->
 SVGEOF
 
 echo ""
+echo "=== Generating star history SVGs ==="
+# Self-hosted: api.star-history.com serves a 503 in place of the image whenever
+# its own GitHub tokens are rate-limited, and takes no token of ours, so there
+# is no fixing it from this side. We build the same chart from GitHub's
+# `starred_at` timestamps instead. Failure here must not sink the whole run —
+# the previous chart stays committed and the other stats still refresh.
+if ! python3 scripts/star_history.py; then
+  echo "WARNING: star history generation failed; keeping the existing chart" >&2
+fi
+
+echo ""
 echo "=== Updating README.md ==="
 python3 scripts/update_readme.py
 
 echo ""
-echo "=== Done! README.md and all 4 SVGs updated. ==="
+echo "=== Done! README.md and all 6 SVGs updated. ==="
