@@ -19,9 +19,9 @@
 
 *Building the tooling that lets dozens of AI agents ship complex projects in days.*
 
-![Stars: 25,960+](https://img.shields.io/static/v1?label=Stars&message=25%2C960%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Stars: 25,980+](https://img.shields.io/static/v1?label=Stars&message=25%2C980%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Repos: 182](https://img.shields.io/static/v1?label=Repos&message=182&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 195,969](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=195%2C969&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 196,009](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=196%2C009&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 2,800+](https://img.shields.io/static/v1?label=Followers&message=2%2C800%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 44.8K](https://img.shields.io/static/v1?label=X+Followers&message=44.8K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -58,7 +58,7 @@
 </p>
 
 > [!NOTE]
-> **195,969 contributions in the past year**, powered by 55 AI coding agent subscription accounts (~$12.5K/month) and the Flywheel tooling below. The vast majority landed since January 2026, when the ecosystem hit critical mass.
+> **196,009 contributions in the past year**, powered by 55 AI coding agent subscription accounts (~$12.5K/month) and the Flywheel tooling below. The vast majority landed since January 2026, when the ecosystem hit critical mass.
 
 ---
 
@@ -73,7 +73,7 @@ A self-reinforcing ecosystem of 14 tools for multi-agent software development. A
 | Tool | Stars | Lang | Purpose |
 |:-----|:-----:|:----:|:--------|
 | [**MCP Agent Mail**](https://github.com/Dicklesworthstone/mcp_agent_mail) | ![Stars](https://img.shields.io/badge/stars-2,022-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmcp_agent_mail) | ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white) | Gmail for coding agents: messaging, file leases, audit trails |
-| [**DCG**](https://github.com/Dicklesworthstone/destructive_command_guard) | ![Stars](https://img.shields.io/badge/stars-2,770-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fdestructive_command_guard) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | SIMD-accelerated guard that blocks `rm -rf` and `git reset --hard` |
+| [**DCG**](https://github.com/Dicklesworthstone/destructive_command_guard) | ![Stars](https://img.shields.io/badge/stars-2,789-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fdestructive_command_guard) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | SIMD-accelerated guard that blocks `rm -rf` and `git reset --hard` |
 | [**Beads Viewer**](https://github.com/Dicklesworthstone/beads_viewer) | ![Stars](https://img.shields.io/badge/stars-1,607-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbeads_viewer) | ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white) | PageRank-powered task prioritization in a keyboard-driven TUI |
 | [**Flywheel Setup**](https://github.com/Dicklesworthstone/agentic_coding_flywheel_setup) | ![Stars](https://img.shields.io/badge/stars-1,538-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fagentic_coding_flywheel_setup) | ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white) | Zero to fully-configured agentic VPS in 30 minutes |
 | [**Beads Rust**](https://github.com/Dicklesworthstone/beads_rust) | ![Stars](https://img.shields.io/badge/stars-990-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbeads_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Local-first, non-invasive issue tracker for git repos |
@@ -143,18 +143,18 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 <!-- BEGIN AUTO-BUILDING-NOW -->
 | Project | Lang | What it does |
 |:--------|:----:|:-------------|
-| [**FrankenSearch**](https://github.com/Dicklesworthstone/frankensearch) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Two-tier hybrid search for Rust: sub-millisecond initial results via potion-128M, quality-refined rankings in 150ms via MiniLM-L6-v2. Combines lexical (Tantivy BM25) and semantic (vector cosine) search with Reciprocal Rank Fusion. Progressive iterator API, f16 SIMD vector index, feature-gated compilation. |
-| [**FrankenNumPy**](https://github.com/Dicklesworthstone/franken_numpy) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe clean-room Rust reimplementation of NumPy with strict/hardened compatibility modes, deterministic stride calculus, differential conformance harnesses, and RaptorQ durability artifacts. |
 | [**FrankenMermaid**](https://github.com/Dicklesworthstone/frankenmermaid) | ![HTML](https://img.shields.io/badge/-HTML-E34F26?style=flat-square&logo=html5&logoColor=white) | Rust-first Mermaid-compatible diagram engine with smarter parsing, deterministic layouts, and high-quality output across CLI, SVG, terminal, and WASM targets |
-| [**Rust Scriptbots**](https://github.com/Dicklesworthstone/rust_scriptbots) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Deterministic artificial-life simulator in Rust: agent-based evolution with pluggable brain implementations, GPU-accelerated UI, DuckDB analytics, and LLM-in-the-loop experimentation |
-| [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Independent ground-up Rust reimplementation of SQLite with concurrent writers and information-theoretic durability |
-| [**FrankenFS**](https://github.com/Dicklesworthstone/frankenfs) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe FUSE reimplementation of ext4 and btrfs in Rust with block-level MVCC and RaptorQ self-healing. 22-crate workspace, zero unsafe code. |
+| [**FrankenNumPy**](https://github.com/Dicklesworthstone/franken_numpy) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe clean-room Rust reimplementation of NumPy with strict/hardened compatibility modes, deterministic stride calculus, differential conformance harnesses, and RaptorQ durability artifacts. |
 | [**FrankenPandas**](https://github.com/Dicklesworthstone/frankenpandas) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe, clean-room Rust reimplementation of pandas with packetized conformance gates, strict/hardened runtime modes, and RaptorQ-backed artifact durability. |
-| [**FrankenLibC**](https://github.com/Dicklesworthstone/frankenlibc) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Rust interposition layer for glibc: transparent safety membrane that incrementally replaces C library functions with memory-safe Rust implementations |
-| [**FrankenRedis**](https://github.com/Dicklesworthstone/frankenredis) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe clean-room Redis reimplementation in Rust with strict/hardened compatibility modes, deterministic replication semantics, differential conformance harnesses, and profile-guided optimization proofs. |
+| [**FrankenFS**](https://github.com/Dicklesworthstone/frankenfs) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe FUSE reimplementation of ext4 and btrfs in Rust with block-level MVCC and RaptorQ self-healing. 22-crate workspace, zero unsafe code. |
 | [**FrankenNetworkX**](https://github.com/Dicklesworthstone/franken_networkx) | ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white) | Memory-safe clean-room Rust reimplementation of NetworkX with deterministic graph semantics, differential conformance, and RaptorQ-backed durability. |
-| [**FrankenSciPy**](https://github.com/Dicklesworthstone/frankenscipy) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Clean-room Rust reimplementation of SciPy with Condition-Aware Solver Portfolio (CASP) — runtime algorithm selection driven by conditioning diagnostics, stability certificates, and decision-theoretic policy controllers |
+| [**Rust Scriptbots**](https://github.com/Dicklesworthstone/rust_scriptbots) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Deterministic artificial-life simulator in Rust: agent-based evolution with pluggable brain implementations, GPU-accelerated UI, DuckDB analytics, and LLM-in-the-loop experimentation |
+| [**FrankenSearch**](https://github.com/Dicklesworthstone/frankensearch) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Two-tier hybrid search for Rust: sub-millisecond initial results via potion-128M, quality-refined rankings in 150ms via MiniLM-L6-v2. Combines lexical (Tantivy BM25) and semantic (vector cosine) search with Reciprocal Rank Fusion. Progressive iterator API, f16 SIMD vector index, feature-gated compilation. |
+| [**FrankenLibC**](https://github.com/Dicklesworthstone/frankenlibc) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Rust interposition layer for glibc: transparent safety membrane that incrementally replaces C library functions with memory-safe Rust implementations |
 | [**FrankenWhisper**](https://github.com/Dicklesworthstone/franken_whisper) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Agent-first Rust ASR orchestration stack: Bayesian backend routing across whisper.cpp/insanely-fast-whisper/whisper-diarization, real-time NDJSON streaming, SQLite persistence, TTY audio transport, conformance harness. 107K lines, 2000+ tests, zero unsafe code. |
+| [**FrankenRedis**](https://github.com/Dicklesworthstone/frankenredis) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe clean-room Redis reimplementation in Rust with strict/hardened compatibility modes, deterministic replication semantics, differential conformance harnesses, and profile-guided optimization proofs. |
+| [**FrankenSciPy**](https://github.com/Dicklesworthstone/frankenscipy) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Clean-room Rust reimplementation of SciPy with Condition-Aware Solver Portfolio (CASP) — runtime algorithm selection driven by conditioning diagnostics, stability certificates, and decision-theoretic policy controllers |
+| [**FrankenOCR**](https://github.com/Dicklesworthstone/franken_ocr) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Pure-Rust, CPU-only OCR engine for Baidu Unlimited-OCR (a DeepSeek-OCR-derived 3B MoE VLM). Five-model zoo, custom int8 kernels, no ML framework, no Python, no GPU. |
 <!-- END AUTO-BUILDING-NOW -->
 
 ### Live Demos
@@ -389,7 +389,7 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
   <picture>
     <source media="(prefers-color-scheme: light)" srcset="star_history-light.svg" />
     <source media="(prefers-color-scheme: dark)" srcset="star_history.svg" />
-    <img src="star_history.svg" width="800" alt="Star History — the ten repos with the most stars and the fastest growth" />
+    <img src="star_history.svg" width="900" alt="Star History — the ten repos with the most stars and the fastest growth" />
   </picture>
 </p>
 
@@ -427,7 +427,7 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 - **[Ryan Sean Adams](https://www.bankless.com/)** (Bankless) called the analysis "one of the most thorough analyses of a company I've ever seen"
 - Front page of **Hacker News** (multiple times)
 - Featured on **Slashdot**, the **Bankless podcast**, **Delphi Digital**, **Farzad Podcast**, and picked up by analysts and fund managers worldwide
-- 25,960+ GitHub stars, 2,800+ GitHub followers, 182 open-source projects, 44.8K X followers
+- 25,980+ GitHub stars, 2,800+ GitHub followers, 182 open-source projects, 44.8K X followers
 
 ---
 

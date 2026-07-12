@@ -32,10 +32,16 @@ USERNAME = "Dicklesworthstone"
 MAX_SERIES = 10
 CANDIDATES = 20  # top-by-stars pool we pull timelines for
 GROWTH_WINDOW_DAYS = 90
-SAMPLES = 140  # points per line; keeps the SVG small and the curve smooth
+SAMPLES = 260  # points per line — dense enough that the curves read as curves
 
-WIDTH, HEIGHT = 900, 420
-PAD_L, PAD_R, PAD_T, PAD_B = 58, 240, 44, 46  # PAD_R leaves room for the legend
+# Drawn large and scaled down by the browser, so the strokes and type stay crisp
+# on a retina display instead of going soft the way a 900px canvas does.
+WIDTH, HEIGHT = 1440, 660
+PAD_L, PAD_R, PAD_T, PAD_B = 78, 366, 92, 62  # PAD_R leaves room for the legend
+FONT = (
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', "
+    "Helvetica, Arial, sans-serif"
+)
 
 # Repo names are what the chart is *about*, but several are too long for the
 # legend and get truncated into mush ("agentic_coding_flywhe…"). These are the
@@ -56,11 +62,14 @@ DISPLAY_NAMES = {
 
 DARK = {
     "bg": "#0d1117",
+    "card_top": "#161b22",
     "border": "#30363d",
     "grid": "#21262d",
-    "text": "#c9d1d9",
+    "axis": "#30363d",
+    "text": "#e6edf3",
     "muted": "#8b949e",
     "faint": "#484f58",
+    "accent": "#3fb950",
     # Ten lines need ten hues a reader can actually tell apart. The obvious
     # GitHub palette collapses at that size — it yields two greens and two
     # purples that are indistinguishable at a 2px stroke — so these are spread
@@ -73,11 +82,14 @@ DARK = {
 }
 LIGHT = {
     "bg": "#ffffff",
+    "card_top": "#f6f8fa",
     "border": "#d0d7de",
     "grid": "#eaeef2",
-    "text": "#24292f",
-    "muted": "#57606a",
-    "faint": "#6e7781",
+    "axis": "#d0d7de",
+    "text": "#1f2328",
+    "muted": "#59636e",
+    "faint": "#818b98",
+    "accent": "#1a7f37",
     "series": [
         "#0969da", "#bc4c00", "#cf222e", "#1b7c83", "#1a7f37",
         "#9a6700", "#8250df", "#bf3989", "#8d5f3d", "#57606a",
@@ -127,6 +139,15 @@ def starred_at(repo: str) -> list[datetime]:
     return stamps
 
 
+def recent_growth(series: dict[str, list[datetime]]) -> dict[str, int]:
+    """Stars gained per repo in the last GROWTH_WINDOW_DAYS."""
+    cutoff = datetime.now(timezone.utc) - timedelta(days=GROWTH_WINDOW_DAYS)
+    return {
+        repo: sum(1 for stamp in stamps if stamp >= cutoff)
+        for repo, stamps in series.items()
+    }
+
+
 def select(series: dict[str, list[datetime]], totals: dict[str, int]) -> list[str]:
     """Pick the repos worth charting: biggest, and fastest-growing.
 
@@ -139,11 +160,7 @@ def select(series: dict[str, list[datetime]], totals: dict[str, int]) -> list[st
     and the top MAX_SERIES by the sum are charted. A repo earns its line by
     being large, by being on a tear, or by being a bit of both.
     """
-    cutoff = datetime.now(timezone.utc) - timedelta(days=GROWTH_WINDOW_DAYS)
-    growth = {
-        repo: sum(1 for stamp in stamps if stamp >= cutoff)
-        for repo, stamps in series.items()
-    }
+    growth = recent_growth(series)
 
     max_total = max(totals[repo] for repo in series) or 1
     max_growth = max(growth.values()) or 1
@@ -188,7 +205,7 @@ def axis_label(value: int) -> str:
 
 
 def render(theme: dict, series: dict[str, list[datetime]], order: list[str],
-           totals: dict[str, int]) -> str:
+           totals: dict[str, int], growth: dict[str, int]) -> str:
     t_min = min(stamps[0] for stamps in series.values())
     t_max = datetime.now(timezone.utc)
     span = (t_max - t_min).total_seconds()
@@ -200,43 +217,14 @@ def render(theme: dict, series: dict[str, list[datetime]], order: list[str],
     y_max = step * Y_DIVISIONS
     plot_w = WIDTH - PAD_L - PAD_R
     plot_h = HEIGHT - PAD_T - PAD_B
+    plot_r = PAD_L + plot_w
+    plot_b = PAD_T + plot_h
 
     def x_of(i: int) -> float:
         return PAD_L + plot_w * i / (SAMPLES - 1)
 
     def y_of(v: int) -> float:
         return PAD_T + plot_h * (1 - v / y_max)
-
-    out: list[str] = [
-        f'<svg width="{WIDTH}" height="{HEIGHT}" viewBox="0 0 {WIDTH} {HEIGHT}" '
-        f'fill="none" xmlns="http://www.w3.org/2000/svg">',
-        f'  <rect x="0.5" y="0.5" rx="4.5" width="{WIDTH - 1}" height="{HEIGHT - 1}" '
-        f'fill="{theme["bg"]}" stroke="{theme["border"]}"/>',
-        f'  <text x="{PAD_L}" y="26" fill="{theme["text"]}" font-family="\'Segoe UI\', Ubuntu, '
-        f'sans-serif" font-weight="600" font-size="15">Star History</text>',
-    ]
-
-    # Horizontal gridlines + y labels.
-    for i in range(Y_DIVISIONS + 1):
-        value = step * i
-        y = y_of(value)
-        out.append(
-            f'  <line x1="{PAD_L}" y1="{y:.1f}" x2="{PAD_L + plot_w}" y2="{y:.1f}" '
-            f'stroke="{theme["grid"]}" stroke-width="1"/>'
-        )
-        out.append(
-            f'  <text x="{PAD_L - 9}" y="{y + 4:.1f}" fill="{theme["muted"]}" '
-            f'font-family="\'Segoe UI\', Ubuntu, sans-serif" font-size="11" '
-            f'text-anchor="end">{axis_label(value)}</text>'
-        )
-
-    # X labels: first, middle, last.
-    for i in (0, (SAMPLES - 1) // 2, SAMPLES - 1):
-        out.append(
-            f'  <text x="{x_of(i):.1f}" y="{PAD_T + plot_h + 20}" fill="{theme["muted"]}" '
-            f'font-family="\'Segoe UI\', Ubuntu, sans-serif" font-size="11" '
-            f'text-anchor="middle">{ticks[i].strftime("%b %Y")}</text>'
-        )
 
     # Colour is keyed to star rank, not draw order: the biggest repo should get
     # the boldest hue, not whichever one happens to fall last in the list.
@@ -246,36 +234,137 @@ def render(theme: dict, series: dict[str, list[datetime]], order: list[str],
         for i, repo in enumerate(ranked)
     }
 
-    # Curves, smallest first, so the biggest lands on top of the pile.
-    for repo in order:
-        points = " ".join(
-            f"{x_of(i):.1f},{y_of(v):.1f}" for i, v in enumerate(curves[repo])
+    out: list[str] = [
+        f'<svg width="{WIDTH}" height="{HEIGHT}" viewBox="0 0 {WIDTH} {HEIGHT}" '
+        f'fill="none" xmlns="http://www.w3.org/2000/svg" '
+        f'role="img" aria-label="Star history for the ten fastest-growing repositories">',
+        "  <defs>",
+    ]
+
+    # No area fills: ten of them overlapping turns the lower half of the plot
+    # into brown mush. With this many series the lines have to carry it alone.
+    out.append(
+        f'    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">'
+        f'<stop offset="0%" stop-color="{theme["card_top"]}"/>'
+        f'<stop offset="100%" stop-color="{theme["bg"]}"/>'
+        f"</linearGradient>"
+    )
+    out.append("  </defs>")
+
+    out.append(
+        f'  <rect x="0.5" y="0.5" rx="12" width="{WIDTH - 1}" height="{HEIGHT - 1}" '
+        f'fill="url(#card)" stroke="{theme["border"]}"/>'
+    )
+
+    # Header.
+    out.append(
+        f'  <text x="{PAD_L}" y="46" fill="{theme["text"]}" font-family="{FONT}" '
+        f'font-weight="600" font-size="21">Star History</text>'
+    )
+    total_stars = sum(totals[r] for r in order)
+    total_growth = sum(growth[r] for r in order)
+    out.append(
+        f'  <text x="{PAD_L}" y="69" fill="{theme["muted"]}" font-family="{FONT}" '
+        f'font-size="13">Top {len(order)} by stars and {GROWTH_WINDOW_DAYS}-day growth'
+        f' &#183; {total_stars:,} stars, {total_growth:,} in the last '
+        f'{GROWTH_WINDOW_DAYS} days</text>'
+    )
+
+    # Gridlines + y labels.
+    for i in range(Y_DIVISIONS + 1):
+        value = step * i
+        y = y_of(value)
+        dash = '' if i == 0 else ' stroke-dasharray="3 5"'
+        colour = theme["axis"] if i == 0 else theme["grid"]
+        out.append(
+            f'  <line x1="{PAD_L}" y1="{y:.1f}" x2="{plot_r}" y2="{y:.1f}" '
+            f'stroke="{colour}" stroke-width="1"{dash}/>'
         )
         out.append(
-            f'  <polyline points="{points}" fill="none" stroke="{colour_of[repo]}" '
-            f'stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'
+            f'  <text x="{PAD_L - 12}" y="{y + 4:.1f}" fill="{theme["muted"]}" '
+            f'font-family="{FONT}" font-size="12" text-anchor="end">'
+            f"{axis_label(value)}</text>"
         )
 
-    # Legend, biggest first so it reads top-down.
-    legend_x = PAD_L + plot_w + 22
-    for row, repo in enumerate(ranked):
-        y = PAD_T + 6 + row * 22
+    # X labels at the start of each calendar year the chart spans, plus today.
+    year_marks: list[tuple[int, str]] = []
+    seen_years: set[int] = set()
+    for i, tick in enumerate(ticks):
+        if tick.year not in seen_years:
+            seen_years.add(tick.year)
+            year_marks.append((i, tick.strftime("%b %Y") if i == 0 else str(tick.year)))
+    year_marks.append((SAMPLES - 1, ticks[-1].strftime("%b %Y")))
+
+    for i, label in year_marks:
+        x = x_of(i)
+        if i not in (0, SAMPLES - 1):
+            out.append(
+                f'  <line x1="{x:.1f}" y1="{PAD_T}" x2="{x:.1f}" y2="{plot_b}" '
+                f'stroke="{theme["grid"]}" stroke-width="1" stroke-dasharray="3 5"/>'
+            )
+        anchor = "start" if i == 0 else ("end" if i == SAMPLES - 1 else "middle")
         out.append(
-            f'  <line x1="{legend_x}" y1="{y}" x2="{legend_x + 16}" y2="{y}" '
-            f'stroke="{colour_of[repo]}" stroke-width="2.5" stroke-linecap="round"/>'
+            f'  <text x="{x:.1f}" y="{plot_b + 24}" fill="{theme["muted"]}" '
+            f'font-family="{FONT}" font-size="12" text-anchor="{anchor}">{label}</text>'
+        )
+
+    # A repo's line starts at its first star, not at the left edge. Drawing from
+    # the edge lays a flat zero line across years in which the repo did not
+    # exist — DCG is three years of nothing followed by a vertical wall — which
+    # is noise pretending to be data.
+    def visible(repo: str) -> list[tuple[float, float]]:
+        curve = curves[repo]
+        first = next((i for i, v in enumerate(curve) if v > 0), len(curve) - 1)
+        start = max(first - 1, 0)  # keep one zero point so the line rises off the axis
+        return [(x_of(i), y_of(curve[i])) for i in range(start, len(curve))]
+
+    paths = {repo: visible(repo) for repo in order}
+
+    for repo in order:
+        pts = " ".join(f"{x:.1f},{y:.1f}" for x, y in paths[repo])
+        out.append(
+            f'  <polyline points="{pts}" fill="none" stroke="{colour_of[repo]}" '
+            f'stroke-width="2.25" stroke-linejoin="round" stroke-linecap="round"/>'
+        )
+
+    # A dot at each series\' present-day value, so the eye can land the line in
+    # the legend without tracing it back.
+    for repo in order:
+        x, y = x_of(SAMPLES - 1), y_of(curves[repo][-1])
+        out.append(
+            f'  <circle cx="{x:.1f}" cy="{y:.1f}" r="4.5" fill="{theme["bg"]}" '
+            f'stroke="{colour_of[repo]}" stroke-width="2.25"/>'
+        )
+
+    # Legend: name, total, and the quarter\'s gain — the growth column is the
+    # whole reason these ten were chosen, so it belongs on the chart.
+    legend_x = plot_r + 34
+    legend_r = WIDTH - 30
+    for row, repo in enumerate(ranked):
+        y = PAD_T + 10 + row * 26
+        colour = colour_of[repo]
+        out.append(
+            f'  <rect x="{legend_x}" y="{y - 5}" width="14" height="4" rx="2" fill="{colour}"/>'
         )
         name = DISPLAY_NAMES.get(repo, repo)
-        if len(name) > 24:
-            name = name[:23] + "…"
+        if len(name) > 26:
+            name = name[:25] + "\u2026"
         out.append(
-            f'  <text x="{legend_x + 24}" y="{y + 4}" fill="{theme["text"]}" '
-            f'font-family="\'Segoe UI\', Ubuntu, sans-serif" font-size="11">{name}</text>'
+            f'  <text x="{legend_x + 24}" y="{y}" fill="{theme["text"]}" '
+            f'font-family="{FONT}" font-size="13">{name}</text>'
+        )
+        gain = growth[repo]
+        gain_text = f"+{gain:,}" if gain else "\u2014"
+        out.append(
+            f'  <text x="{legend_r}" y="{y}" fill="{theme["muted"]}" font-family="{FONT}" '
+            f'font-size="12" text-anchor="end">{totals[repo]:,}'
+            f'  <tspan fill="{theme["accent"]}">{gain_text}</tspan></text>'
         )
 
     out.append(
-        f'  <text x="{PAD_L}" y="{HEIGHT - 12}" fill="{theme["faint"]}" '
-        f'font-family="\'Segoe UI\', Ubuntu, sans-serif" font-size="11">'
-        f'Updated {t_max.strftime("%b %Y")}</text>'
+        f'  <text x="{PAD_L}" y="{HEIGHT - 18}" fill="{theme["faint"]}" '
+        f'font-family="{FONT}" font-size="11">Generated from GitHub stargazer '
+        f'timestamps &#183; updated {t_max.strftime("%d %b %Y")}</text>'
     )
     out.append("</svg>")
     return "\n".join(out) + "\n"
@@ -297,13 +386,17 @@ def main() -> int:
         return 1
 
     order = select(series, totals)
+    growth = recent_growth(series)
     print(
-        "  charting: " + ", ".join(f"{r} ({totals[r]})" for r in reversed(order)),
+        "  charting: "
+        + ", ".join(f"{r} ({totals[r]}, +{growth[r]})" for r in reversed(order)),
         file=sys.stderr,
     )
 
-    (REPO_ROOT / "star_history.svg").write_text(render(DARK, series, order, totals))
-    (REPO_ROOT / "star_history-light.svg").write_text(render(LIGHT, series, order, totals))
+    dark = render(DARK, series, order, totals, growth)
+    light = render(LIGHT, series, order, totals, growth)
+    (REPO_ROOT / "star_history.svg").write_text(dark)
+    (REPO_ROOT / "star_history-light.svg").write_text(light)
     return 0
 
 
