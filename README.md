@@ -19,11 +19,11 @@
 
 *Building the tooling that lets dozens of AI agents ship complex projects in days.*
 
-![Stars: 30,610+](https://img.shields.io/static/v1?label=Stars&message=30%2C610%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Repos: 191](https://img.shields.io/static/v1?label=Repos&message=191&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 233,484](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=233%2C484&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Stars: 30,640+](https://img.shields.io/static/v1?label=Stars&message=30%2C640%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Repos: 192](https://img.shields.io/static/v1?label=Repos&message=192&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 235,693](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=235%2C693&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,100+](https://img.shields.io/static/v1?label=Followers&message=3%2C100%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![X: 44.8K](https://img.shields.io/static/v1?label=X+Followers&message=44.8K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
+![X: 47.2K](https://img.shields.io/static/v1?label=X+Followers&message=47.2K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
 [![Website](https://img.shields.io/badge/jeffreyemanuel.com-2b2b2b?style=flat-square&logo=google-chrome&logoColor=white)](https://www.jeffreyemanuel.com)
 [![Prompts](https://img.shields.io/badge/jeffreysprompts.com-2b2b2b?style=flat-square&logo=bookstack&logoColor=white)](https://jeffreysprompts.com)
@@ -34,7 +34,12 @@
 [![MCPMail](https://img.shields.io/badge/mcpagentmail.com-2b2b2b?style=flat-square&logo=mail.ru&logoColor=white)](https://mcpagentmail.com)
 [![FrankenSQLite](https://img.shields.io/badge/frankensqlite.com-2b2b2b?style=flat-square&logo=sqlite&logoColor=white)](https://frankensqlite.com)
 [![ASupersync](https://img.shields.io/badge/asupersync.com-2b2b2b?style=flat-square&logo=rust&logoColor=white)](https://asupersync.com)
-[![Discord](https://img.shields.io/badge/Flywheel_Hub-1,003_members-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/gnCHsYDR25)
+[![FrankenMarkdown](https://img.shields.io/badge/franken--markdown.com-2b2b2b?style=flat-square&logo=markdown&logoColor=white)](https://franken-markdown.com)
+[![FrankenOCR](https://img.shields.io/badge/franken--ocr.com-2b2b2b?style=flat-square&logo=readthedocs&logoColor=white)](https://franken-ocr.com)
+[![FrankenWhisper](https://img.shields.io/badge/franken--whisper.com-2b2b2b?style=flat-square&logo=audiomack&logoColor=white)](https://franken-whisper.com)
+[![ASImposium](https://img.shields.io/badge/asimposium.org-2b2b2b?style=flat-square&logo=openaccess&logoColor=white)](https://asimposium.org)
+[![ClassicPatents](https://img.shields.io/badge/classic--patents.com-2b2b2b?style=flat-square&logo=bookstack&logoColor=white)](https://classic-patents.com)
+[![Discord](https://img.shields.io/badge/Flywheel_Hub-1,002_members-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/gnCHsYDR25)
 
 `Multi-Agent Coordination` · `Agentic Coding` · `Rust CLI Tools` · `LLM Applications` · `Terminal UI` · `FrankenSuite`
 
@@ -58,13 +63,13 @@
 </p>
 
 > [!NOTE]
-> **233,484 contributions in the past year**, powered by 55 AI coding agent subscription accounts (~$12.5K/month) and the Flywheel tooling below. The vast majority landed since January 2026, when the ecosystem hit critical mass.
+> **235,693 contributions in the past year**, powered by 63 AI coding agent subscription accounts (~$13.5K/month) and the Flywheel tooling below. The vast majority landed since January 2026, when the ecosystem hit critical mass.
 
 ---
 
 ## The Agentic Coding Flywheel
 
-A self-reinforcing ecosystem of 14 tools for multi-agent software development. Agents coordinate via mail, track work via beads, search past sessions, guard against destructive mistakes, and orchestrate across tmux panes. Each tool amplifies the others. Started October 2025; shipping cadence accelerates with every addition. Join the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~1,003 members). Read the [comprehensive guide](https://agent-flywheel.com/complete-guide) or the [beginner-friendly version](https://agent-flywheel.com/core-flywheel).
+A self-reinforcing ecosystem of 14 tools for multi-agent software development. Agents coordinate via mail, track work via beads, search past sessions, guard against destructive mistakes, and orchestrate across tmux panes. Each tool amplifies the others. Started October 2025; shipping cadence accelerates with every addition. Join the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~1,002 members). Read the [comprehensive guide](https://agent-flywheel.com/complete-guide) or the [beginner-friendly version](https://agent-flywheel.com/core-flywheel).
 
 <p align="center">
   <img src="flywheel_diagram.webp" alt="The Agentic Coding Flywheel — 14 interconnected tools for multi-agent development" width="800" />
@@ -72,17 +77,17 @@ A self-reinforcing ecosystem of 14 tools for multi-agent software development. A
 
 | Tool | Stars | Lang | Purpose |
 |:-----|:-----:|:----:|:--------|
-| [**MCP Agent Mail**](https://github.com/Dicklesworthstone/mcp_agent_mail) | ![Stars](https://img.shields.io/badge/stars-2,091-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmcp_agent_mail) | ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white) | Gmail for coding agents: messaging, file leases, audit trails |
-| [**DCG**](https://github.com/Dicklesworthstone/destructive_command_guard) | ![Stars](https://img.shields.io/badge/stars-5,774-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fdestructive_command_guard) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | SIMD-accelerated guard that blocks `rm -rf` and `git reset --hard` |
+| [**MCP Agent Mail**](https://github.com/Dicklesworthstone/mcp_agent_mail) | ![Stars](https://img.shields.io/badge/stars-2,094-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmcp_agent_mail) | ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white) | Gmail for coding agents: messaging, file leases, audit trails |
+| [**DCG**](https://github.com/Dicklesworthstone/destructive_command_guard) | ![Stars](https://img.shields.io/badge/stars-5,778-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fdestructive_command_guard) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | SIMD-accelerated guard that blocks `rm -rf` and `git reset --hard` |
 | [**Beads Viewer**](https://github.com/Dicklesworthstone/beads_viewer) | ![Stars](https://img.shields.io/badge/stars-1,653-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbeads_viewer) | ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white) | PageRank-powered task prioritization in a keyboard-driven TUI |
-| [**Flywheel Setup**](https://github.com/Dicklesworthstone/agentic_coding_flywheel_setup) | ![Stars](https://img.shields.io/badge/stars-1,597-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fagentic_coding_flywheel_setup) | ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white) | Zero to fully-configured agentic VPS in 30 minutes |
+| [**Flywheel Setup**](https://github.com/Dicklesworthstone/agentic_coding_flywheel_setup) | ![Stars](https://img.shields.io/badge/stars-1,598-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fagentic_coding_flywheel_setup) | ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white) | Zero to fully-configured agentic VPS in 30 minutes |
 | [**Beads Rust**](https://github.com/Dicklesworthstone/beads_rust) | ![Stars](https://img.shields.io/badge/stars-1,052-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbeads_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Local-first, non-invasive issue tracker for git repos |
-| [**CASS**](https://github.com/Dicklesworthstone/coding_agent_session_search) | ![Stars](https://img.shields.io/badge/stars-1,067-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcoding_agent_session_search) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Unified search across 22 AI coding tool histories |
-| [**CASS Memory**](https://github.com/Dicklesworthstone/cass_memory_system) | ![Stars](https://img.shields.io/badge/stars-414-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcass_memory_system) | ![TypeScript](https://img.shields.io/badge/-TS-3178C6?style=flat-square&logo=typescript&logoColor=white) | Three-layer cognitive memory: episodic, working, procedural |
-| [**UBS**](https://github.com/Dicklesworthstone/ultimate_bug_scanner) | ![Stars](https://img.shields.io/badge/stars-281-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fultimate_bug_scanner) | ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white) | 1,000+ pattern-based bug scanner, runs before every commit |
+| [**CASS**](https://github.com/Dicklesworthstone/coding_agent_session_search) | ![Stars](https://img.shields.io/badge/stars-1,066-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcoding_agent_session_search) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Unified search across 22 AI coding tool histories |
+| [**CASS Memory**](https://github.com/Dicklesworthstone/cass_memory_system) | ![Stars](https://img.shields.io/badge/stars-415-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcass_memory_system) | ![TypeScript](https://img.shields.io/badge/-TS-3178C6?style=flat-square&logo=typescript&logoColor=white) | Three-layer cognitive memory: episodic, working, procedural |
+| [**UBS**](https://github.com/Dicklesworthstone/ultimate_bug_scanner) | ![Stars](https://img.shields.io/badge/stars-282-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fultimate_bug_scanner) | ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white) | 1,000+ pattern-based bug scanner, runs before every commit |
 | [**NTM**](https://github.com/Dicklesworthstone/ntm) | ![Stars](https://img.shields.io/badge/stars-428-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fntm) | ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white) | Multi-agent tmux orchestration with animated dashboards |
 | [**Meta Skill**](https://github.com/Dicklesworthstone/meta_skill) | ![Stars](https://img.shields.io/badge/stars-187-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmeta_skill) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Skill management platform with CASS mining and MCP server |
-| [**XF**](https://github.com/Dicklesworthstone/xf) | ![Stars](https://img.shields.io/badge/stars-100-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fxf) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Sub-millisecond search over X/Twitter data archives |
+| [**XF**](https://github.com/Dicklesworthstone/xf) | ![Stars](https://img.shields.io/badge/stars-101-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fxf) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Sub-millisecond search over X/Twitter data archives |
 | [**SLB**](https://github.com/Dicklesworthstone/slb) | ![Stars](https://img.shields.io/badge/stars-77-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fslb) | ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white) | Two-person rule: peer approval before dangerous commands |
 | [**RU**](https://github.com/Dicklesworthstone/repo_updater) | ![Stars](https://img.shields.io/badge/stars-107-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Frepo_updater) | ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white) | Keep hundreds of Git repos in sync with one command |
 | [**GIIL**](https://github.com/Dicklesworthstone/giil) | ![Stars](https://img.shields.io/badge/stars-42-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fgiil) | ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white) | Download full-res images from iCloud/Dropbox share links |
@@ -115,9 +120,9 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 | Project | Stars | What it reimplements |
 |:--------|:-----:|:---------------------|
 | [**FrankenOCR**](https://github.com/Dicklesworthstone/franken_ocr) | ![Stars](https://img.shields.io/badge/stars-294-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_ocr) | Baidu Unlimited-OCR (3B MoE VLM) on CPU in pure Rust. Five-model zoo, custom int8 kernels, no Python. |
-| [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | ![Stars](https://img.shields.io/badge/stars-213-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankensqlite) | SQLite with MVCC concurrent writers and RaptorQ self-healing. 27-crate workspace. |
+| [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | ![Stars](https://img.shields.io/badge/stars-214-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankensqlite) | SQLite with MVCC concurrent writers and RaptorQ self-healing. 27-crate workspace. |
 | [**FrankenTUI**](https://github.com/Dicklesworthstone/frankentui) | ![Stars](https://img.shields.io/badge/stars-260-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankentui) | 1M+ lines of Rust, 20 crates, 57 widgets. Kernel-level TUI foundation. |
-| [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | ![Stars](https://img.shields.io/badge/stars-105-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankenterm) | WezTerm fork extended into a swarm-native terminal platform. 77 crates, 57K+ tests. |
+| [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | ![Stars](https://img.shields.io/badge/stars-107-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankenterm) | WezTerm fork extended into a swarm-native terminal platform. 77 crates, 57K+ tests. |
 | [**FrankenMarkdown**](https://github.com/Dicklesworthstone/franken_markdown) | ![Stars](https://img.shields.io/badge/stars-94-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_markdown) | Markdown to HTML and tagged PDF. Zero-dependency engine: own parser, typesetter, font subsetter, PDF writer. |
 | [**FrankenSearch**](https://github.com/Dicklesworthstone/frankensearch) | ![Stars](https://img.shields.io/badge/stars-82-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankensearch) | Two-tier hybrid search: HNSW ANN + Tantivy full-text + cross-encoder reranking. |
 | [**FrankenEngine**](https://github.com/Dicklesworthstone/franken_engine) | ![Stars](https://img.shields.io/badge/stars-30-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_engine) | Native Rust runtime for adversarial extension workloads. Deterministic replay, cryptographic receipts. |
@@ -132,8 +137,13 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 | [**FrankenSciPy**](https://github.com/Dicklesworthstone/frankenscipy) | ![Stars](https://img.shields.io/badge/stars-12-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankenscipy) | SciPy with Condition-Aware Solver Portfolio (CASP). |
 | [**FrankenMermaid**](https://github.com/Dicklesworthstone/frankenmermaid) | ![Stars](https://img.shields.io/badge/stars-23-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankenmermaid) | Mermaid diagram engine. 24 diagram types, deterministic layout, WASM-ready. |
 | [**FrankenWhisper**](https://github.com/Dicklesworthstone/franken_whisper) | ![Stars](https://img.shields.io/badge/stars-61-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_whisper) | Whisper speech recognition in Rust. No Python dependency. |
+| [**FrankenTTS**](https://github.com/Dicklesworthstone/franken_tts) | ![Stars](https://img.shields.io/badge/stars-27-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_tts) | Qwen3-TTS zero-shot voice cloning on CPU in pure Rust. Own int8 kernels, voice cards, WASM/iOS/FFI targets, no Python. |
 | [**FrankenNetworkX**](https://github.com/Dicklesworthstone/franken_networkx) | ![Stars](https://img.shields.io/badge/stars-23-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_networkx) | NetworkX graph library in Rust with Python bindings. |
 | [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Stars](https://img.shields.io/badge/stars-45-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankensim) | Certified simulation substrate: geometry, numerics, meshing, solvers, optimization. 126 crates, each contract-backed. |
+| [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Stars](https://img.shields.io/badge/stars-15-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_lean) | Lean 4 toolchain in Rust: own parser, elaborator, dual-engine kernel, VM, `.olean` and C-ABI twins. 32 crates, in progress. |
+| [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Stars](https://img.shields.io/badge/stars-20-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankengraphdb) | Property-graph storage engine in Rust: MVCC, time-travel, branches, and replication over a fountain-coded commit stream. |
+| [**FrankenOverlap**](https://github.com/Dicklesworthstone/franken_overlap) | ![Stars](https://img.shields.io/badge/stars-19-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_overlap) | Sparse-spectral textual overlap detection and approximate alignment. Rare-feature retrieval, anchor chaining, exact verification. |
+| [**FrankenManim**](https://github.com/Dicklesworthstone/franken_manim) | ![Stars](https://img.shields.io/badge/stars-7-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_manim) | Deterministic rewrite of 3b1b's manim. Native TeX math typesetting (no LaTeX), analytic Bezier renderer, bit-reproducible renders. |
 | [**FrankenSnowflake**](https://github.com/Dicklesworthstone/franken_snowflake) | ![Stars](https://img.shields.io/badge/stars-5-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_snowflake) | The Snowflake driver Rust never had. 14 crates, SQL API direct, no ODBC or JDBC. |
 
 ---
@@ -143,18 +153,18 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 <!-- BEGIN AUTO-BUILDING-NOW -->
 | Project | Lang | What it does |
 |:--------|:----:|:-------------|
-| [**MCP Agent Mail Rust**](https://github.com/Dicklesworthstone/mcp_agent_mail_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Rust MCP server for multi-agent coordination: 34 tools, Git-backed archive, SQLite indexing, advisory file locks, and an interactive TUI console |
-| [**ASupersync**](https://github.com/Dicklesworthstone/asupersync) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Async runtime for Rust where correctness is structural: region-owned tasks, cancel-correct protocols, capability-gated effects, and deterministic replay testing |
+| [**ASImposium**](https://github.com/Dicklesworthstone/asimposium.org) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | A symposium for frontier AI agents: a public scientific ledger where human-sponsored agents propose, refute, and review work in mathematics and physics. |
 | [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Independent ground-up Rust reimplementation of SQLite with concurrent writers and information-theoretic durability |
-| [**Eidetic Engine CLI**](https://github.com/Dicklesworthstone/eidetic_engine_cli) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Durable, local-first, explainable memory for coding agents. A Rust CLI memory substrate built on the franken-stack (Asupersync, FrankenSQLite, Frankensearch, FrankenNetworkX). |
-| [**FrankenFS**](https://github.com/Dicklesworthstone/frankenfs) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe FUSE reimplementation of ext4 and btrfs in Rust with block-level MVCC and RaptorQ self-healing. 22-crate workspace, zero unsafe code. |
-| [**FrankenRedis**](https://github.com/Dicklesworthstone/frankenredis) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe clean-room Redis reimplementation in Rust with strict/hardened compatibility modes, deterministic replication semantics, differential conformance harnesses, and profile-guided optimization proofs. |
+| [**ASupersync**](https://github.com/Dicklesworthstone/asupersync) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Async runtime for Rust where correctness is structural: region-owned tasks, cancel-correct protocols, capability-gated effects, and deterministic replay testing |
 | [**FrankenNumPy**](https://github.com/Dicklesworthstone/franken_numpy) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe clean-room Rust reimplementation of NumPy with strict/hardened compatibility modes, deterministic stride calculus, differential conformance harnesses, and RaptorQ durability artifacts. |
 | [**FrankenLibC**](https://github.com/Dicklesworthstone/frankenlibc) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Rust interposition layer for glibc: transparent safety membrane that incrementally replaces C library functions with memory-safe Rust implementations |
-| [**FrankenNetworkX**](https://github.com/Dicklesworthstone/franken_networkx) | ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white) | Memory-safe clean-room Rust reimplementation of NetworkX with deterministic graph semantics, differential conformance, and RaptorQ-backed durability. |
-| [**FrankenMermaid**](https://github.com/Dicklesworthstone/frankenmermaid) | ![HTML](https://img.shields.io/badge/-HTML-E34F26?style=flat-square&logo=html5&logoColor=white) | Rust-first Mermaid-compatible diagram engine with smarter parsing, deterministic layouts, and high-quality output across CLI, SVG, terminal, and WASM targets |
+| [**FastMCP Rust**](https://github.com/Dicklesworthstone/fastmcp_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Rust framework for building Model Context Protocol servers with cancel-correct async, zero-copy serialization, and first-class tool/resource/prompt abstractions |
+| [**FrankenRedis**](https://github.com/Dicklesworthstone/frankenredis) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe clean-room Redis reimplementation in Rust with strict/hardened compatibility modes, deterministic replication semantics, differential conformance harnesses, and profile-guided optimization proofs. |
 | [**FrankenPandas**](https://github.com/Dicklesworthstone/frankenpandas) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe, clean-room Rust reimplementation of pandas with packetized conformance gates, strict/hardened runtime modes, and RaptorQ-backed artifact durability. |
-| [**FrankenTorch**](https://github.com/Dicklesworthstone/frankentorch) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe clean-room Rust reimplementation of PyTorch with deterministic autograd contracts, strict/hardened compatibility modes, differential conformance harnesses, and RaptorQ-backed durability artifacts. |
+| [**FrankenEngine**](https://github.com/Dicklesworthstone/franken_engine) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Native Rust runtime for adversarial extension workloads with deterministic replay, cryptographic decision receipts, and fleet-scale containment. |
+| [**FrankenSearch**](https://github.com/Dicklesworthstone/frankensearch) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Two-tier hybrid search for Rust: sub-millisecond initial results via potion-128M, quality-refined rankings in 150ms via MiniLM-L6-v2. Combines lexical (Tantivy BM25) and semantic (vector cosine) search with Reciprocal Rank Fusion. Progressive iterator API, f16 SIMD vector index, feature-gated compilation. |
+| [**Classic Patents**](https://github.com/Dicklesworthstone/classic-patents.com) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | An open-source digital museum restoring history's most consequential patents into pristine OCR transcripts, rigorous Plain English engineering breakdowns, and interactive real-time simulations. |
+| [**NTM**](https://github.com/Dicklesworthstone/ntm) | ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white) | Named Tmux Manager: spawn, tile, and coordinate multiple AI coding agents (Claude, Codex, Gemini) across tmux panes with a TUI command palette |
 <!-- END AUTO-BUILDING-NOW -->
 
 ### Live Demos
@@ -211,6 +221,40 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 <sub>The short version of everything I'm working on</sub>
 </td>
 </tr>
+<tr>
+<td align="center" width="33%">
+<a href="https://franken-markdown.com"><img src="https://franken-markdown.com/assets/img/og.png?v=2" alt="FrankenMarkdown" width="100%" /></a><br/>
+<a href="https://franken-markdown.com"><strong>Franken-Markdown.com</strong></a><br/>
+<sub>Markdown to HTML and tagged PDF, as WASM in your browser</sub>
+</td>
+<td align="center" width="33%">
+<a href="https://franken-ocr.com"><img src="https://franken-ocr.com/assets/og.jpg" alt="FrankenOCR" width="100%" /></a><br/>
+<a href="https://franken-ocr.com"><strong>Franken-OCR.com</strong></a><br/>
+<sub>A 3-billion-parameter OCR model running in a browser tab</sub>
+</td>
+<td align="center" width="33%">
+<a href="https://franken-whisper.com"><img src="https://franken-whisper.com/assets/img/og.jpg" alt="FrankenWhisper" width="100%" /></a><br/>
+<a href="https://franken-whisper.com"><strong>Franken-Whisper.com</strong></a><br/>
+<sub>Whisper transcription and speaker diarization, client-side</sub>
+</td>
+</tr>
+<tr>
+<td align="center" width="33%">
+<a href="https://frankentts.com"><img src="https://frankentts.com/assets/img/og.png" alt="FrankenTTS" width="100%" /></a><br/>
+<a href="https://frankentts.com"><strong>FrankenTTS.com</strong></a><br/>
+<sub>Zero-shot voice cloning from a Rust CPU engine</sub>
+</td>
+<td align="center" width="33%">
+<a href="https://classic-patents.com"><img src="https://classic-patents.com/opengraph-image?caa522ea22643bd9" alt="Classic Patents" width="100%" /></a><br/>
+<a href="https://classic-patents.com"><strong>Classic-Patents.com</strong></a><br/>
+<sub>Landmark patents restored, explained, and simulated in 3D</sub>
+</td>
+<td align="center" width="33%">
+<a href="https://asimposium.org"><img src="https://asimposium.org/og.jpg" alt="ASImposium" width="100%" /></a><br/>
+<a href="https://asimposium.org"><strong>ASImposium.org</strong></a><br/>
+<sub>A public scientific ledger where frontier agents publish and referee</sub>
+</td>
+</tr>
 </table>
 
 ---
@@ -230,6 +274,7 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 | ![Stars](https://img.shields.io/badge/stars-149-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fultimate_mcp_client) | **[Ultimate MCP Client](https://github.com/Dicklesworthstone/ultimate_mcp_client)** | Universal bridge for AI models to interact with the real world via MCP. |
 | ![Stars](https://img.shields.io/badge/stars-158-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fultimate_mcp_server) | **[Ultimate MCP Server](https://github.com/Dicklesworthstone/ultimate_mcp_server)** | Unified MCP server exposing dozens of tools to frontier models. |
 | ![Stars](https://img.shields.io/badge/stars-178-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmarkdown_web_browser) | **[Markdown Web Browser](https://github.com/Dicklesworthstone/markdown_web_browser)** | Headless browser that renders modern JavaScript-heavy sites into clean Markdown for agents. |
+| ![Stars](https://img.shields.io/badge/stars-55-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fllm-tournament) | **[LLM Tournament](https://github.com/Dicklesworthstone/llm-tournament)** | Automated multi-round coding tournaments where models critique and merge each other's solutions, scored on complexity and performance. |
 
 ### Systems & Rust
 
@@ -237,11 +282,12 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 |:--|:--|:--|
 | ![Stars](https://img.shields.io/badge/stars-430-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffast_vector_similarity) | **[Fast Vector Similarity](https://github.com/Dicklesworthstone/fast_vector_similarity)** | High-speed Rust library for complex vector similarity metrics with Python bindings. |
 | ![Stars](https://img.shields.io/badge/stars-260-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankentui) | **[FrankenTUI](https://github.com/Dicklesworthstone/frankentui)** | Minimal, high-performance terminal UI kernel. The rendering substrate for CASS and other Rust TUI apps. |
-| ![Stars](https://img.shields.io/badge/stars-213-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankensqlite) | **[FrankenSQLite](https://github.com/Dicklesworthstone/frankensqlite)** | Clean-room Rust reimplementation of SQLite with MVCC page-level versioning and RaptorQ erasure codes. |
-| ![Stars](https://img.shields.io/badge/stars-105-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankenterm) | **[FrankenTerm](https://github.com/Dicklesworthstone/frankenterm)** | WezTerm fork extended into a swarm-native terminal platform. 79 crates, 64K+ tests. |
+| ![Stars](https://img.shields.io/badge/stars-214-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankensqlite) | **[FrankenSQLite](https://github.com/Dicklesworthstone/frankensqlite)** | Clean-room Rust reimplementation of SQLite with MVCC page-level versioning and RaptorQ erasure codes. |
+| ![Stars](https://img.shields.io/badge/stars-107-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankenterm) | **[FrankenTerm](https://github.com/Dicklesworthstone/frankenterm)** | WezTerm fork extended into a swarm-native terminal platform. 79 crates, 64K+ tests. |
 | ![Stars](https://img.shields.io/badge/stars-258-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fasupersync) | **[ASupersync](https://github.com/Dicklesworthstone/asupersync)** | Structured concurrency runtime with regions, cancel-correct protocols, and capability-based context. Foundation for Pi Agent Rust and FastMCP Rust. |
+| ![Stars](https://img.shields.io/badge/stars-5-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fasupersync_ansi_c) | **[ASupersync ANSI C](https://github.com/Dicklesworthstone/asupersync_ansi_c)** | Dependency-free ANSI C port of ASupersync: deterministic replay, strict resource contracts, nine profiles from HFT servers to routers. |
 | ![Stars](https://img.shields.io/badge/stars-82-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Frich_rust) | **[Rich Rust](https://github.com/Dicklesworthstone/rich_rust)** | Port of Python's Rich. Markup syntax, tables, progress bars, syntax highlighting for 75 languages. Zero unsafe. |
-| ![Stars](https://img.shields.io/badge/stars-34-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffastmcp_rust) | **[FastMCP Rust](https://github.com/Dicklesworthstone/fastmcp_rust)** | Zero-boilerplate MCP framework built on ASupersync. Attribute macros for tools/resources, automatic timeout budgets. |
+| ![Stars](https://img.shields.io/badge/stars-35-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffastmcp_rust) | **[FastMCP Rust](https://github.com/Dicklesworthstone/fastmcp_rust)** | Zero-boilerplate MCP framework built on ASupersync. Attribute macros for tools/resources, automatic timeout budgets. |
 | ![Stars](https://img.shields.io/badge/stars-36-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcharmed_rust) | **[Charmed Rust](https://github.com/Dicklesworthstone/charmed_rust)** | Charm's entire Go TUI stack in Rust: Bubble Tea, Lip Gloss, Bubbles, Huh, Glamour, and Wish SSH apps. Zero unsafe. |
 | ![Stars](https://img.shields.io/badge/stars-34-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fopentui_rust) | **[OpenTUI Rust](https://github.com/Dicklesworthstone/opentui_rust)** | Terminal rendering engine, not a widget framework. Real RGBA alpha blending, scissor clipping, diffed double buffers. |
 | ![Stars](https://img.shields.io/badge/stars-27-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ftoon_rust) | **[TOON Rust](https://github.com/Dicklesworthstone/toon_rust)** | Spec-first port of TOON, the token-efficient JSON alternative for LLM context. Streaming decode, no Node runtime. |
@@ -260,6 +306,7 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 | ![Stars](https://img.shields.io/badge/stars-328-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Facip) | **[ACIP](https://github.com/Dicklesworthstone/acip)** | AI Cognitive Inoculation Protocol: defense against prompt injection via external monitoring. |
 | ![Stars](https://img.shields.io/badge/stars-88-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbrenner_bot) | **[Brenner Bot](https://github.com/Dicklesworthstone/brenner_bot)** | Multi-agent research system embodying Sydney Brenner's scientific methodology. |
 | | **[LLM Introspective Compression](https://www.jeffreyemanuel.com/writing/llm_introspective_compression)** | Treating LLM context as a save state: reasoning backtracking and metacognitive control. |
+| ![Stars](https://img.shields.io/badge/stars-22-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fees) | **[Epstein Email Search](https://github.com/Dicklesworthstone/ees)** | Zero-backend browser search over the Epstein email corpus: SQLite-WASM, FlexSearch, and a zlib text pack, entirely client-side. |
 | ![Stars](https://img.shields.io/badge/stars-27-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fphage_explorer) | **[Phage Explorer](https://github.com/Dicklesworthstone/phage_explorer)** | Interactive educational site exploring bacteriophages with 3D visualization. |
 
 ### Developer Tools
@@ -271,18 +318,22 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 | ![Stars](https://img.shields.io/badge/stars-257-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmisc_coding_agent_tips_and_scripts) | **[Coding Agent Tips](https://github.com/Dicklesworthstone/misc_coding_agent_tips_and_scripts)** | Battle-tested solutions for AI coding agent workflows and terminal setup. |
 | ![Stars](https://img.shields.io/badge/stars-156-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcoding_agent_account_manager) | **[Coding Agent Account Manager](https://github.com/Dicklesworthstone/coding_agent_account_manager)** | Sub-100ms auth switching across Claude Max, GPT Pro, and Gemini subscriptions. |
 | ![Stars](https://img.shields.io/badge/stars-85-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fflywheel_connectors) | **[Flywheel Connectors](https://github.com/Dicklesworthstone/flywheel_connectors)** | 176 connectors (~2.5M lines Rust, 72K+ tests). WASI sandboxing, cryptographic capability tokens, zone-based encryption. |
-| ![Stars](https://img.shields.io/badge/stars-1,605-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fpi_agent_rust) | **[Pi Agent Rust](https://github.com/Dicklesworthstone/pi_agent_rust)** | AI coding agent CLI in Rust. Sub-100ms startup, 8 built-in tools, session branching, ~15MB binary. |
-| ![Stars](https://img.shields.io/badge/stars-128-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmcp_agent_mail_rust) | **[MCP Agent Mail Rust](https://github.com/Dicklesworthstone/mcp_agent_mail_rust)** | Ground-up Rust rewrite of Agent Mail. 12-crate workspace, 37 MCP tools, optional FrankenSearch hybrid search. |
-| ![Stars](https://img.shields.io/badge/stars-104-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcross_agent_session_resumer) | **[Cross Agent Session Resumer](https://github.com/Dicklesworthstone/cross_agent_session_resumer)** | Resume AI sessions across Claude Code, Codex, Gemini. Preserves context across providers. |
+| ![Stars](https://img.shields.io/badge/stars-1,613-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fpi_agent_rust) | **[Pi Agent Rust](https://github.com/Dicklesworthstone/pi_agent_rust)** | AI coding agent CLI in Rust. Sub-100ms startup, 8 built-in tools, session branching, ~15MB binary. |
+| ![Stars](https://img.shields.io/badge/stars-129-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmcp_agent_mail_rust) | **[MCP Agent Mail Rust](https://github.com/Dicklesworthstone/mcp_agent_mail_rust)** | Ground-up Rust rewrite of Agent Mail. 12-crate workspace, 37 MCP tools, optional FrankenSearch hybrid search. |
+| ![Stars](https://img.shields.io/badge/stars-105-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcross_agent_session_resumer) | **[Cross Agent Session Resumer](https://github.com/Dicklesworthstone/cross_agent_session_resumer)** | Resume AI sessions across Claude Code, Codex, Gemini. Preserves context across providers. |
 | ![Stars](https://img.shields.io/badge/stars-39-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcloud_benchmarker) | **[Cloud Benchmarker](https://github.com/Dicklesworthstone/cloud_benchmarker)** | Automated cloud instance benchmarking with charts and historical tracking. |
-| ![Stars](https://img.shields.io/badge/stars-78-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcoding_agent_usage_tracker) | **[Coding Agent Usage Tracker](https://github.com/Dicklesworthstone/coding_agent_usage_tracker)** | One command to read remaining quota across 16 AI providers, via PTY, cookies, OAuth, and local logs. |
+| ![Stars](https://img.shields.io/badge/stars-79-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcoding_agent_usage_tracker) | **[Coding Agent Usage Tracker](https://github.com/Dicklesworthstone/coding_agent_usage_tracker)** | One command to read remaining quota across 16 AI providers, via PTY, cookies, OAuth, and local logs. |
 | ![Stars](https://img.shields.io/badge/stars-41-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Feidetic_engine_cli) | **[Eidetic Engine](https://github.com/Dicklesworthstone/eidetic_engine_cli)** | Durable, local-first, explainable memory for coding agents. Built on the franken-stack. |
 | ![Stars](https://img.shields.io/badge/stars-29-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Faadc) | **[AADC](https://github.com/Dicklesworthstone/aadc)** | Realigns broken right borders in ASCII diagrams by padding only — never deletes a character. |
 | ![Stars](https://img.shields.io/badge/stars-26-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbeads_viewer_rust) | **[Beads Viewer Rust](https://github.com/Dicklesworthstone/beads_viewer_rust)** | Graph-theoretic issue triage: PageRank, betweenness, critical path, and slack over your dependency graph. |
 | ![Stars](https://img.shields.io/badge/stars-23-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fflywheel_gateway) | **[Flywheel Gateway](https://github.com/Dicklesworthstone/flywheel_gateway)** | SDK-first agent orchestration server: account rotation, destructive-command guard, WebSocket fleet dashboard. |
 | ![Stars](https://img.shields.io/badge/stars-20-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fsource_to_prompt_tui) | **[Source to Prompt TUI](https://github.com/Dicklesworthstone/source_to_prompt_tui)** | Terminal file picker that builds XML-tagged LLM prompts with live token counts and cost estimates. |
 | ![Stars](https://img.shields.io/badge/stars-20-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fstorage_ballast_helper) | **[Storage Ballast Helper](https://github.com/Dicklesworthstone/storage_ballast_helper)** | Predictive disk-pressure defense: EWMA/PID forecasting, per-volume ballast pools, zero-write emergency mode. |
-| ![Stars](https://img.shields.io/badge/stars-29-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fdoodlestein_self_releaser) | **[Doodlestein Self-Releaser](https://github.com/Dicklesworthstone/doodlestein_self_releaser)** | Builds releases locally from your existing Actions workflow when GitHub's queue stalls. Signed, with SBOMs. |
+| ![Stars](https://img.shields.io/badge/stars-30-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fdoodlestein_self_releaser) | **[Doodlestein Self-Releaser](https://github.com/Dicklesworthstone/doodlestein_self_releaser)** | Builds releases locally from your existing Actions workflow when GitHub's queue stalls. Signed, with SBOMs. |
+| ![Stars](https://img.shields.io/badge/stars-34-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fagent_settings_backup_script) | **[Agent Settings Backup](https://github.com/Dicklesworthstone/agent_settings_backup_script)** | Versioned, encrypted backup and restore of coding-agent config folders, with scheduling, hooks, and JSON output. |
+| ![Stars](https://img.shields.io/badge/stars-25-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fvibe_cockpit) | **[Vibe Cockpit](https://github.com/Dicklesworthstone/vibe_cockpit)** | Fleet console for agent swarms: polls a dozen agent tools across SSH hosts into one DuckDB store, served as TUI, web, MCP, and CLI. |
+| ![Stars](https://img.shields.io/badge/stars-13-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_agent_detection) | **[Franken Agent Detection](https://github.com/Dicklesworthstone/franken_agent_detection)** | Deterministic local detection of installed coding-agent connectors. Filesystem probes, one report shape, on crates.io. |
+| ![Stars](https://img.shields.io/badge/stars-7-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Frust_proxy) | **[Rust Proxy](https://github.com/Dicklesworthstone/rust_proxy)** | Routes only chosen domains (LLM and cloud APIs) through an upstream proxy via iptables and ipset, with no global system change. |
 | ![Stars](https://img.shields.io/badge/stars-77-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fatp) | **[ATP](https://github.com/Dicklesworthstone/atp)** | Fountain-coded file transfer: RaptorQ over UDP/QUIC turns packet loss into a repair budget, not a stall. |
 
 ### Education & Visualization
@@ -305,7 +356,7 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 | ![Stars](https://img.shields.io/badge/stars-68-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fllm-docs) | **[LLM Docs](https://github.com/Dicklesworthstone/llm-docs)** | Documentation optimized for LLM consumption |
 | | **[Grassmann Article](https://www.jeffreyemanuel.com/writing/hermann_grassmann_nature_of_abstractions)** | The story of the self-taught genius who invented linear algebra decades early |
 | ![Stars](https://img.shields.io/badge/stars-15-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fllm_multi_round_coding_tournament) | **[LLM Tournament](https://github.com/Dicklesworthstone/llm_multi_round_coding_tournament)** | Arena where LLMs compete and iterate on coding challenges via peer review |
-| ![Stars](https://img.shields.io/badge/stars-70-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fagent_flywheel_clawdbot_skills_and_integrations) | **[Clawdbot Skills](https://github.com/Dicklesworthstone/agent_flywheel_clawdbot_skills_and_integrations)** | Modular skill library teaching agents to use the Flywheel toolkit |
+| ![Stars](https://img.shields.io/badge/stars-72-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fagent_flywheel_clawdbot_skills_and_integrations) | **[Clawdbot Skills](https://github.com/Dicklesworthstone/agent_flywheel_clawdbot_skills_and_integrations)** | Modular skill library teaching agents to use the Flywheel toolkit |
 | ![Stars](https://img.shields.io/badge/stars-66-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fautomated_plan_reviser_pro) | **[Automated Plan Reviser](https://github.com/Dicklesworthstone/automated_plan_reviser_pro)** | Iterative specification refinement using extended reasoning models |
 | ![Stars](https://img.shields.io/badge/stars-37-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fthe_lighthill_debate_on_ai) | **[The Lighthill Debate on AI](https://github.com/Dicklesworthstone/the_lighthill_debate_on_ai)** | Full transcript of the 1973 debate that nearly killed British AI research |
 | ![Stars](https://img.shields.io/badge/stars-30-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fyoutube_transcript_cleaner) | **[YouTube Transcript Cleaner](https://github.com/Dicklesworthstone/youtube_transcript_cleaner)** | Clean up raw YouTube auto-captions into readable text |
@@ -397,10 +448,10 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 
 ## Products
 
-- 🌐 **[jeffreyemanuel.com](https://www.jeffreyemanuel.com)** — Personal site built with Next.js 16, React Three Fiber, and GSAP. 191 project showcase.
+- 🌐 **[jeffreyemanuel.com](https://www.jeffreyemanuel.com)** — Personal site built with Next.js 16, React Three Fiber, and GSAP. 192 project showcase.
 - 💰 **[Jeffreys-Skills.md](https://jeffreys-skills.md/)** — Paid SaaS for managing, discovering, and deploying Claude Code skills.
 - 📝 **[JeffreysPrompts.com](https://jeffreysprompts.com)** — Free prompt library with a premium section for advanced workflows.
-- ⚡ **[Agent-Flywheel.com](https://agent-flywheel.com)** — Home of the Flywheel methodology. [Comprehensive guide](https://agent-flywheel.com/complete-guide), [beginner-friendly guide](https://agent-flywheel.com/core-flywheel), and the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~1,003 members).
+- ⚡ **[Agent-Flywheel.com](https://agent-flywheel.com)** — Home of the Flywheel methodology. [Comprehensive guide](https://agent-flywheel.com/complete-guide), [beginner-friendly guide](https://agent-flywheel.com/core-flywheel), and the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~1,002 members).
 - 📬 **[MCPAgentMail.com](https://mcpagentmail.com)** — Project site for MCP Agent Mail.
 - 🖥️ **[FrankenTUI.com](https://frankentui.com)** — Project site for FrankenTUI.
 - 🗄️ **[FrankenSQLite.com](https://frankensqlite.com)** — Project site for FrankenSQLite.
@@ -408,6 +459,11 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 - 📄 **[Franken-Markdown.com](https://franken-markdown.com)** — Live WASM playground: Markdown to HTML and PDF, entirely in your browser.
 - 🔬 **[FrankenSim.org](https://frankensim.org)** — Project site for FrankenSim, with 20 Rust kernels compiled to WebAssembly running live.
 - 🔬 **[BrennerBot.org](https://brennerbot.org)** — Multi-agent research orchestration using Sydney Brenner's methods.
+- 🔎 **[Franken-OCR.com](https://franken-ocr.com)** — A 3B-parameter OCR model running entirely in a browser tab.
+- 🎙️ **[Franken-Whisper.com](https://franken-whisper.com)** — Whisper transcription and speaker diarization, client-side.
+- 🗣️ **[FrankenTTS.com](https://frankentts.com)** — Zero-shot voice cloning driven by a pure-Rust CPU engine.
+- 🏛️ **[Classic-Patents.com](https://classic-patents.com)** — A digital museum of landmark patents: verified transcripts, plain-English breakdowns, and interactive physics simulations.
+- 🧪 **[ASImposium.org](https://asimposium.org)** — A symposium for frontier AI agents: a public scientific ledger where sponsored agents propose, refute, and review work in math and physics.
 
 ---
 
@@ -427,7 +483,7 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 - **[Ryan Sean Adams](https://www.bankless.com/)** (Bankless) called the analysis "one of the most thorough analyses of a company I've ever seen"
 - Front page of **Hacker News** (multiple times)
 - Featured on **Slashdot**, the **Bankless podcast**, **Delphi Digital**, **Farzad Podcast**, and picked up by analysts and fund managers worldwide
-- 30,610+ GitHub stars, 3,100+ GitHub followers, 191 open-source projects, 44.8K X followers
+- 30,640+ GitHub stars, 3,100+ GitHub followers, 192 open-source projects, 47.2K X followers
 
 ---
 
