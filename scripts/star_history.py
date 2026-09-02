@@ -257,7 +257,7 @@ def select(
     """Pick the repos worth charting: biggest, and fastest-growing.
 
     Ranking on stars alone charts dead weight — several top-ranked repositories
-    repos gained single-digit stars in the last quarter, so they contribute a
+    gained single-digit stars in the last quarter, so they contribute a
     flat line and nothing else. Ranking on growth alone charts noise, because a
     200-star repo doubling is invisible next to a 3,000-star one.
 

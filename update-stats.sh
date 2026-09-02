@@ -28,6 +28,44 @@ sanitize_color() {
     printf '#888888'
   fi
 }
+require_integer_at_least() {
+  local label="$1" value="$2" minimum="$3"
+  if ! [[ "$value" =~ ^[0-9]+$ ]] || (( 10#$value < minimum )); then
+    echo "GitHub returned an invalid ${label}: ${value:-<empty>}" >&2
+    exit 1
+  fi
+}
+fetch_public_commit_count() {
+  local attempt result count
+  for attempt in 1 2 3; do
+    if result=$(gh api -X GET search/commits -f q="$COMMITS_SEARCH_QUERY" -f per_page=1); then
+      count=$(printf '%s' "$result" | jq -r '
+        if (.incomplete_results == false)
+          and ((.total_count | type) == "number")
+          and (.total_count > 0)
+        then .total_count else empty end
+      ')
+      if [[ "$count" =~ ^[0-9]+$ ]]; then
+        printf '%s' "$count"
+        return 0
+      fi
+    fi
+    echo "  Commit search attempt $attempt returned incomplete or invalid data" >&2
+    [ "$attempt" -lt 3 ] && sleep 2
+  done
+  return 1
+}
+write_atomically() {
+  local target="$1"
+  local directory basename temporary
+  directory=$(dirname "$target")
+  basename=$(basename "$target")
+  temporary=$(mktemp "${directory}/.${basename}.XXXXXX")
+  if ! { cat > "$temporary" && chmod 0644 "$temporary" && mv -f -- "$temporary" "$target"; }; then
+    rm -f -- "$temporary"
+    return 1
+  fi
+}
 
 echo "=== Fetching user profile ==="
 PROFILE=$(gh api "users/${USERNAME}")
@@ -67,9 +105,14 @@ while true; do
   PAGE_STARS=$(echo "$RESULT" | jq '[.data.user.repositories.nodes[].stargazerCount] | add // 0')
   TOTAL_STARS=$((TOTAL_STARS + PAGE_STARS))
   echo "  Page $PAGE: +$PAGE_STARS stars (total: $TOTAL_STARS)"
-  HAS_NEXT=$(echo "$RESULT" | jq -r '.data.user.repositories.pageInfo.hasNextPage')
+  HAS_NEXT=$(echo "$RESULT" | jq -r '.data.user.repositories.pageInfo.hasNextPage | if type == "boolean" then tostring else error("invalid hasNextPage") end')
   [ "$HAS_NEXT" != "true" ] && break
-  CURSOR=$(echo "$RESULT" | jq -r '.data.user.repositories.pageInfo.endCursor')
+  NEXT_CURSOR=$(echo "$RESULT" | jq -r '.data.user.repositories.pageInfo.endCursor | if type == "string" then . else error("invalid endCursor") end')
+  if [ -z "$NEXT_CURSOR" ] || [ "$NEXT_CURSOR" = "$CURSOR" ]; then
+    echo "GitHub returned an invalid repository pagination cursor" >&2
+    exit 1
+  fi
+  CURSOR="$NEXT_CURSOR"
   PAGE=$((PAGE + 1))
 done
 
@@ -82,7 +125,18 @@ README_CONTRIBUTIONS_RAW=$CONTRIBUTIONS
 
 echo "=== Fetching public commits ==="
 COMMITS_SEARCH_QUERY="${COMMITS_SEARCH_QUERY:-author:${USERNAME} is:public}"
-TOTAL_COMMITS=$(gh api -X GET search/commits -f q="$COMMITS_SEARCH_QUERY" -f per_page=1 | jq -r '.total_count')
+if ! TOTAL_COMMITS=$(fetch_public_commit_count); then
+  echo "GitHub commit search did not return a complete positive count; aborting refresh" >&2
+  exit 1
+fi
+
+require_integer_at_least "star count" "$TOTAL_STARS" 1
+require_integer_at_least "commit count" "$TOTAL_COMMITS" 1
+require_integer_at_least "public repository count" "$PUBLIC_REPOS" 1
+require_integer_at_least "open-source project count" "$OPEN_SOURCE_PROJECTS" 1
+require_integer_at_least "follower count" "$FOLLOWERS" 1
+require_integer_at_least "contribution count" "$CONTRIBUTIONS" 1
+require_integer_at_least "following count" "$FOLLOWING" 0
 
 echo ""
 echo "Stars:         $(fmt $TOTAL_STARS)"
@@ -113,6 +167,10 @@ if [ -z "$DISCORD_MEMBERS" ]; then
     DISCORD_MEMBERS=$(echo "$DISCORD_JSON" | jq -r '.approximate_member_count // empty')
   fi
 fi
+if [ -n "$DISCORD_MEMBERS" ] && ! [[ "$DISCORD_MEMBERS" =~ ^[0-9]+$ ]]; then
+  echo "Discord returned an invalid member count; leaving the README fallback in place" >&2
+  DISCORD_MEMBERS=""
+fi
 if [ -n "$DISCORD_MEMBERS" ]; then
   DISCORD_MEMBERS_FMT=$(fmt "$DISCORD_MEMBERS")
   export DISCORD_MEMBERS_FMT
@@ -139,6 +197,7 @@ echo "=== Fetching language stats (this takes a moment) ==="
 
 declare -A LANG_BYTES
 declare -A LANG_COLORS
+TOTAL_LANG_REPOS=0
 CURSOR=""
 PAGE=1
 # shellcheck disable=SC2016
@@ -146,7 +205,7 @@ LANG_QUERY='query($login: String!, $after: String) {
   user(login: $login) {
     repositories(first: 100, after: $after, ownerAffiliations: OWNER, isFork: false, privacy: PUBLIC) {
       nodes {
-        languages(first: 20, orderBy: {field: SIZE, direction: DESC}) {
+        languages(first: 100, orderBy: {field: SIZE, direction: DESC}) {
           edges { size node { name color } }
         }
       }
@@ -168,10 +227,18 @@ while true; do
     LANG_COLORS[$lang]="$(sanitize_color "$color")"
   done < <(echo "$REPOS_JSON" | jq -r '.data.user.repositories.nodes[].languages.edges[] | [.node.name, .size, (.node.color // "#888888")] | @tsv')
 
-  HAS_NEXT=$(echo "$REPOS_JSON" | jq -r '.data.user.repositories.pageInfo.hasNextPage')
+  PAGE_LANG_REPOS=$(echo "$REPOS_JSON" | jq '[.data.user.repositories.nodes[] | select((.languages.edges | length) > 0)] | length')
+  TOTAL_LANG_REPOS=$((TOTAL_LANG_REPOS + PAGE_LANG_REPOS))
+
+  HAS_NEXT=$(echo "$REPOS_JSON" | jq -r '.data.user.repositories.pageInfo.hasNextPage | if type == "boolean" then tostring else error("invalid hasNextPage") end')
   echo "  Language page $PAGE done"
   [ "$HAS_NEXT" != "true" ] && break
-  CURSOR=$(echo "$REPOS_JSON" | jq -r '.data.user.repositories.pageInfo.endCursor')
+  NEXT_CURSOR=$(echo "$REPOS_JSON" | jq -r '.data.user.repositories.pageInfo.endCursor | if type == "string" then . else error("invalid endCursor") end')
+  if [ -z "$NEXT_CURSOR" ] || [ "$NEXT_CURSOR" = "$CURSOR" ]; then
+    echo "GitHub returned an invalid language pagination cursor" >&2
+    exit 1
+  fi
+  CURSOR="$NEXT_CURSOR"
   PAGE=$((PAGE + 1))
 done
 
@@ -197,10 +264,6 @@ echo "$SORTED_LANGS" | while read -r bytes lang; do
   echo "  $lang: ${pct}% ($(fmt "$bytes") bytes)"
 done
 
-# Count total repos with language data
-# shellcheck disable=SC2016
-TOTAL_LANG_REPOS=$(gh api graphql -f query='query($login: String!) { user(login: $login) { repositories(ownerAffiliations: OWNER, isFork: false, privacy: PUBLIC) { totalCount } } }' -f login="$USERNAME" | jq -r '.data.user.repositories.totalCount')
-
 # Calculate bytes in human format
 BYTES_HUMAN="$(human_bytes "$TOTAL_BYTES")"
 
@@ -208,7 +271,7 @@ BYTES_HUMAN="$(human_bytes "$TOTAL_BYTES")"
 
 echo ""
 echo "=== Generating stats-light.svg ==="
-cat > stats-light.svg << SVGEOF
+write_atomically stats-light.svg << SVGEOF
 <svg width="495" height="195" viewBox="0 0 495 195" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="0.5" y="0.5" rx="4.5" width="494" height="194" fill="#ffffff" stroke="#d0d7de"/>
   <text x="25" y="35" fill="#24292f" font-family="'Segoe UI', Ubuntu, 'Helvetica Neue', sans-serif" font-weight="600" font-size="18">Jeffrey Emanuel's GitHub Stats</text>
@@ -252,7 +315,7 @@ cat > stats-light.svg << SVGEOF
 SVGEOF
 
 echo "=== Generating stats.svg (dark) ==="
-cat > stats.svg << SVGEOF
+write_atomically stats.svg << SVGEOF
 <svg width="495" height="195" viewBox="0 0 495 195" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="0.5" y="0.5" rx="4.5" width="494" height="194" fill="#0d1117" stroke="#30363d"/>
   <text x="25" y="35" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, 'Helvetica Neue', sans-serif" font-weight="600" font-size="18">Jeffrey Emanuel's GitHub Stats</text>
@@ -338,7 +401,8 @@ for i in "${!BAR_WIDTHS[@]}"; do
   X_POS=$((X_POS + BAR_WIDTHS[i]))
 done
 
-# Build legend entries — calculate text x offset based on lang name length
+# Build legend entries with fixed percentage columns so short and long names
+# have consistent spacing instead of running into their values.
 build_legend() {
   local text_fill="$1" pct_fill="$2"
   local entries=""
@@ -350,12 +414,10 @@ build_legend() {
     local name="${TOP_LANGS[$i]}"
     local escaped_name
     escaped_name=$(xml_escape "$name")
-    # Approximate text width: ~8px per char
-    local text_x=$((18 + ${#name} * 8 + 4))
     entries+="  <g transform=\"translate(25, $y_offset)\">
     <circle cx=\"6\" cy=\"6\" r=\"6\" fill=\"${TOP_COLORS[$i]}\"/>
     <text x=\"18\" y=\"10\" fill=\"${text_fill}\" font-family=\"'Segoe UI', Ubuntu, sans-serif\" font-size=\"13\">${escaped_name}</text>
-    <text x=\"${text_x}\" y=\"10\" fill=\"${pct_fill}\" font-family=\"'Segoe UI', Ubuntu, sans-serif\" font-size=\"13\">${TOP_PCTS[$i]}%</text>
+    <text x=\"105\" y=\"10\" fill=\"${pct_fill}\" font-family=\"'Segoe UI', Ubuntu, sans-serif\" font-size=\"13\">${TOP_PCTS[$i]}%</text>
   </g>
 "
   done
@@ -367,11 +429,10 @@ build_legend() {
     local name="${TOP_LANGS[$i]}"
     local escaped_name
     escaped_name=$(xml_escape "$name")
-    local text_x=$((18 + ${#name} * 8 + 4))
     entries+="  <g transform=\"translate(260, $y_offset)\">
     <circle cx=\"6\" cy=\"6\" r=\"6\" fill=\"${TOP_COLORS[$i]}\"/>
     <text x=\"18\" y=\"10\" fill=\"${text_fill}\" font-family=\"'Segoe UI', Ubuntu, sans-serif\" font-size=\"13\">${escaped_name}</text>
-    <text x=\"${text_x}\" y=\"10\" fill=\"${pct_fill}\" font-family=\"'Segoe UI', Ubuntu, sans-serif\" font-size=\"13\">${TOP_PCTS[$i]}%</text>
+    <text x=\"150\" y=\"10\" fill=\"${pct_fill}\" font-family=\"'Segoe UI', Ubuntu, sans-serif\" font-size=\"13\">${TOP_PCTS[$i]}%</text>
   </g>
 "
   done
@@ -382,7 +443,7 @@ build_legend() {
 LEGEND_LIGHT=$(build_legend "#24292f" "#57606a")
 LEGEND_DARK=$(build_legend "#c9d1d9" "#8b949e")
 
-cat > languages-light.svg << SVGEOF
+write_atomically languages-light.svg << SVGEOF
 <svg width="495" height="285" viewBox="0 0 495 285" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="0.5" y="0.5" rx="4.5" width="494" height="284" fill="#ffffff" stroke="#d0d7de"/>
   <text x="25" y="35" fill="#24292f" font-family="'Segoe UI', Ubuntu, 'Helvetica Neue', sans-serif" font-weight="600" font-size="18">Top Languages (by code volume)</text>
@@ -395,7 +456,7 @@ ${BAR_SEGMENTS_LIGHT}${LEGEND_LIGHT}  <!-- Summary -->
 </svg>
 SVGEOF
 
-cat > languages.svg << SVGEOF
+write_atomically languages.svg << SVGEOF
 <svg width="495" height="285" viewBox="0 0 495 285" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="0.5" y="0.5" rx="4.5" width="494" height="284" fill="#0d1117" stroke="#30363d"/>
   <text x="25" y="35" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, 'Helvetica Neue', sans-serif" font-weight="600" font-size="18">Top Languages (by code volume)</text>
@@ -415,7 +476,9 @@ echo "=== Generating star history SVGs ==="
 # is no fixing it from this side. We build the same chart from GitHub's
 # `starred_at` timestamps instead. Failure here must not sink the whole run —
 # the previous chart stays committed and the other stats still refresh.
+STAR_HISTORY_UPDATED=true
 if ! python3 scripts/star_history.py; then
+  STAR_HISTORY_UPDATED=false
   echo "WARNING: star history generation failed; keeping the existing chart" >&2
 fi
 
@@ -424,4 +487,8 @@ echo "=== Updating README.md ==="
 python3 scripts/update_readme.py
 
 echo ""
-echo "=== Done! README.md and all 6 SVGs updated. ==="
+if $STAR_HISTORY_UPDATED; then
+  echo "=== Done! README.md and all 6 SVGs refreshed. ==="
+else
+  echo "=== Done! README.md and 4 SVGs refreshed; existing star-history charts preserved. ==="
+fi

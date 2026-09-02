@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import html
+import http.client
 import json
 import math
 import os
@@ -11,7 +12,6 @@ import re
 import stat
 import sys
 import tempfile
-import urllib.error
 import urllib.request
 from datetime import datetime
 from pathlib import Path
@@ -23,6 +23,7 @@ README = ROOT / "README.md"
 WRITING_URL = os.environ.get("WRITING_URL", "https://www.jeffreyemanuel.com/writing")
 SITE_ROOT = "https://www.jeffreyemanuel.com"
 JSON_DECODER = json.JSONDecoder()
+MAX_WRITING_BYTES = 4 * 1024 * 1024
 
 
 LANG_LOGOS = {
@@ -131,12 +132,32 @@ def replace_line_any(text: str, prefixes: list[str], replacement: str) -> str:
         r"^(?:" + "|".join(re.escape(prefix) for prefix in prefixes) + r").*$",
         re.MULTILINE,
     )
-    updated, count = pattern.subn(replacement, text, count=1)
-    if count != 1:
+    matches = list(pattern.finditer(text))
+    if len(matches) != 1:
         raise SystemExit(
-            "Could not find README line starting with one of: " + ", ".join(prefixes)
+            "Expected exactly one README line starting with one of: "
+            + ", ".join(prefixes)
         )
-    return updated
+    return pattern.sub(lambda _match: replacement, text)
+
+
+def replace_pattern_exact(
+    text: str,
+    pattern: str,
+    replacement: str,
+    *,
+    expected: int | None = 1,
+) -> str:
+    """Replace schema-bound matches; ``None`` means one or more occurrences."""
+    compiled = re.compile(pattern, re.MULTILINE)
+    matches = list(compiled.finditer(text))
+    valid_count = bool(matches) if expected is None else len(matches) == expected
+    if not valid_count:
+        expectation = "at least 1" if expected is None else str(expected)
+        raise SystemExit(
+            f"Expected {expectation} README match(es), found {len(matches)}: {pattern}"
+        )
+    return compiled.sub(lambda _match: replacement, text)
 
 
 def existing_match(text: str, pattern: str, default: str) -> str:
@@ -185,6 +206,8 @@ def recent_activity_payload() -> str | None:
 
 
 def between_markers(text: str, start: str, end: str, block: str) -> str:
+    if text.count(start) != 1 or text.count(end) != 1:
+        raise SystemExit(f"Expected one README marker pair: {start} / {end}")
     marker_pattern = re.compile(
         rf"{re.escape(start)}\n.*?\n{re.escape(end)}",
         re.DOTALL,
@@ -269,7 +292,9 @@ def static_star_badge(repo_name: str, stars: int, color: str) -> str:
 
 
 def markdown_escape(value: object) -> str:
-    value = html.unescape(str(value)).replace("\n", " ").strip()
+    value = html.unescape(str(value))
+    value = "".join(" " if ord(character) < 32 else character for character in value)
+    value = value.strip()
     escaped = (
         value.replace("\\", "\\\\")
         .replace("|", "\\|")
@@ -636,10 +661,14 @@ def fetch_writing_items() -> list[dict[str, Any]]:
         return []
     try:
         with urllib.request.urlopen(WRITING_URL, timeout=20) as response:
-            raw = response.read().decode("utf-8", errors="replace")
-    except (urllib.error.URLError, TimeoutError) as exc:
+            payload = response.read(MAX_WRITING_BYTES + 1)
+    except (OSError, http.client.HTTPException) as exc:
         print(f"warning: could not fetch writing page: {exc}", file=sys.stderr)
         return []
+    if len(payload) > MAX_WRITING_BYTES:
+        print("warning: writing page exceeded the response size limit", file=sys.stderr)
+        return []
+    raw = payload.decode("utf-8", errors="replace")
 
     decoded = unescape_next_payload(raw)
     items = []
@@ -819,11 +848,10 @@ def main() -> None:
     )
 
     contribution_text = env("README_CONTRIBUTIONS", existing_contributions)
-    text = re.sub(
+    text = replace_pattern_exact(
+        text,
         r"> \*\*[\d,]+ contributions in the past year\*\*",
         f"> **{contribution_text} contributions in the past year**",
-        text,
-        count=1,
     )
 
     open_source_projects = env("OPEN_SOURCE_PROJECTS", existing_projects)
@@ -833,25 +861,24 @@ def main() -> None:
         f"{open_source_projects} open-source projects, "
         f"{env('X_FOLLOWERS_LABEL', existing_x_label)} X followers"
     )
-    text = re.sub(
+    text = replace_pattern_exact(
+        text,
         r"- [\d,.kK+]+ GitHub stars, [\d,.kK+]+ GitHub followers, "
         r"\d+ open-source projects, [\d,.kK+]+ X followers",
         stats_sentence,
-        text,
-        count=1,
     )
 
-    text = re.sub(
+    text = replace_pattern_exact(
+        text,
         r"Next\.js 16, React Three Fiber, and GSAP\. \d+ project showcase\.",
         f"Next.js 16, React Three Fiber, and GSAP. {open_source_projects} project showcase.",
-        text,
-        count=1,
     )
 
-    text = re.sub(
+    text = replace_pattern_exact(
+        text,
         r"~[\d,]+ members",
         f"~{discord_members} members",
-        text,
+        expected=None,
     )
 
     text = text.replace("label=\u2b50", "label=%E2%AD%90")

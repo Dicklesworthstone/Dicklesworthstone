@@ -1,20 +1,23 @@
 from __future__ import annotations
 
+import http.client
 import json
 import os
 import stat
 import tempfile
 import unittest
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
-from unittest.mock import patch
+from typing import Any
+from unittest.mock import MagicMock, patch
 
 from scripts import recent_activity, star_history, update_readme
 
 UTC = timezone.utc
 
 
-def repo_payload(name: str = "example", **activity_overrides: object) -> dict:
+def repo_payload(name: str = "example", **activity_overrides: object) -> dict[str, Any]:
     activity = {
         "windowDays": 14,
         "windowStart": "2026-08-19T00:00:00+00:00",
@@ -168,7 +171,7 @@ class RecentActivityTests(unittest.TestCase):
 
 
 class ReadmeActivityTests(unittest.TestCase):
-    def load(self, repos: list[dict]) -> list[dict]:
+    def load(self, repos: list[dict[str, Any]]) -> list[dict[str, Any]]:
         with patch.dict(
             os.environ,
             {"RECENT_ACTIVITY_JSON_CONTENT": json.dumps(repos)},
@@ -218,6 +221,36 @@ class ReadmeActivityTests(unittest.TestCase):
             update_readme.markdown_escape("<img src=x>|[label]"),
             "&lt;img src=x&gt;\\|\\[label\\]",
         )
+        self.assertEqual(
+            update_readme.markdown_escape("one\r\ntwo\tthree"), "one  two three"
+        )
+
+    def test_schema_bound_replacements_reject_duplicates(self) -> None:
+        with self.assertRaises(SystemExit):
+            update_readme.replace_line_any(
+                "![Stars](one)\n![Stars](two)\n",
+                ["![Stars]("],
+                "replacement",
+            )
+        with self.assertRaises(SystemExit):
+            update_readme.replace_pattern_exact("value value", "value", "new")
+        self.assertEqual(
+            update_readme.replace_pattern_exact(
+                "value value", "value", "new", expected=None
+            ),
+            "new new",
+        )
+
+    def test_marker_replacement_requires_one_complete_pair(self) -> None:
+        start = "<!-- BEGIN AUTO-TEST -->"
+        end = "<!-- END AUTO-TEST -->"
+        duplicated = f"{start}\nold\n{end}\n{start}\nold\n{end}\n"
+        with self.assertRaises(SystemExit):
+            update_readme.between_markers(duplicated, start, end, "new")
+        self.assertEqual(
+            update_readme.between_markers(f"{start}\nold\n{end}", start, end, "new"),
+            f"{start}\nnew\n{end}",
+        )
 
     def test_readme_atomic_write_preserves_permissions(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -237,6 +270,20 @@ class ReadmeActivityTests(unittest.TestCase):
             update_readme.normalize_writing_href("https://example.com/phishing")
         )
         self.assertIsNone(update_readme.normalize_writing_href("https://[malformed"))
+
+    def test_writing_fetch_is_bounded_and_network_failures_are_nonfatal(self) -> None:
+        response = MagicMock()
+        response.__enter__.return_value.read.return_value = b"x" * (
+            update_readme.MAX_WRITING_BYTES + 1
+        )
+        with patch.object(urllib.request, "urlopen", return_value=response):
+            self.assertEqual(update_readme.fetch_writing_items(), [])
+
+        response.__enter__.return_value.read.side_effect = http.client.IncompleteRead(
+            b"partial"
+        )
+        with patch.object(urllib.request, "urlopen", return_value=response):
+            self.assertEqual(update_readme.fetch_writing_items(), [])
 
 
 class StarHistoryTests(unittest.TestCase):
