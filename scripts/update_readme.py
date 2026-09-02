@@ -166,6 +166,17 @@ def repo_metadata_payload() -> str | None:
     return Path(path).read_text(encoding="utf-8")
 
 
+def recent_activity_payload() -> str | None:
+    content = env("RECENT_ACTIVITY_JSON_CONTENT")
+    if content:
+        return content
+
+    path = env("RECENT_ACTIVITY_JSON")
+    if not path:
+        return None
+    return Path(path).read_text(encoding="utf-8")
+
+
 def between_markers(text: str, start: str, end: str, block: str) -> str:
     marker_pattern = re.compile(
         rf"{re.escape(start)}\n.*?\n{re.escape(end)}",
@@ -271,7 +282,7 @@ def is_draft(value: object) -> bool:
 
 def load_recent_repos() -> list[dict]:
     try:
-        payload = repo_metadata_payload()
+        payload = recent_activity_payload()
     except OSError as exc:
         print(f"warning: could not load repo metadata: {exc}", file=sys.stderr)
         return []
@@ -287,9 +298,17 @@ def load_recent_repos() -> list[dict]:
     if not isinstance(repos, list):
         print("warning: repo metadata was not a JSON array", file=sys.stderr)
         return []
-    repo_items = [repo for repo in repos if isinstance(repo, dict)]
+    repo_items = [
+        repo
+        for repo in repos
+        if isinstance(repo, dict) and isinstance(repo.get("recentActivity"), dict)
+    ]
     repo_items.sort(
-        key=lambda repo: repo.get("pushedAt") or repo.get("updatedAt") or "",
+        key=lambda repo: (
+            repo["recentActivity"].get("score", 0),
+            repo["recentActivity"].get("commitCount", 0),
+            repo["recentActivity"].get("changedLines", 0),
+        ),
         reverse=True,
     )
     selected = []
@@ -383,8 +402,10 @@ def build_recent_repos_table() -> str:
     if not repos:
         return ""
     lines = [
-        "| Project | Lang | What it does |",
-        "|:--------|:----:|:-------------|",
+        "*Ranked by trailing 14-day local Git activity: commits × log₂(2 + changed lines), with sustained active days as a small tie-breaker.*",
+        "",
+        "| Project | Lang | 14-day activity | What it does |",
+        "|:--------|:----:|:----------------|:-------------|",
     ]
     for repo in repos:
         name = repo.get("name")
@@ -394,12 +415,18 @@ def build_recent_repos_table() -> str:
         lang = repo.get("primaryLanguage") or {}
         if not isinstance(lang, dict):
             lang = {}
+        activity = repo.get("recentActivity") or {}
+        commits = int(activity.get("commitCount") or 0)
+        additions = int(activity.get("additions") or 0)
+        deletions = int(activity.get("deletions") or 0)
         desc = markdown_escape(repo.get("description") or "Recently active public project")
         lines.append(
             "| "
             f"[**{markdown_escape(display_name(name))}**]({url})"
             " | "
             f"{lang_badge(lang.get('name'), lang.get('color'))}"
+            " | "
+            f"{commits:,} commits<br>+{additions:,} / −{deletions:,} lines"
             " | "
             f"{desc} |"
         )

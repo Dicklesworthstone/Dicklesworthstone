@@ -126,6 +126,11 @@ RECENT_REPOS_JSON_CONTENT=$(gh repo list "$USERNAME" \
   --visibility public \
   --json name,description,primaryLanguage,pushedAt,updatedAt,stargazerCount,isArchived,isFork,url)
 export RECENT_REPOS_JSON_CONTENT
+if RECENT_ACTIVITY_JSON_CONTENT=$(printf '%s' "$RECENT_REPOS_JSON_CONTENT" | python3 scripts/recent_activity.py); then
+  export RECENT_ACTIVITY_JSON_CONTENT
+else
+  echo "Recent activity measurement unavailable; preserving the existing Building Now section"
+fi
 export OPEN_SOURCE_PROJECTS README_CONTRIBUTIONS README_STARS_LABEL README_FOLLOWERS_LABEL X_FOLLOWERS_LABEL
 
 # ── Fetch language stats ──────────────────────────────────────────────
