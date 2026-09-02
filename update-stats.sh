@@ -124,7 +124,7 @@ fi
 RECENT_REPOS_JSON_CONTENT=$(gh repo list "$USERNAME" \
   --limit 1000 \
   --visibility public \
-  --json name,description,primaryLanguage,pushedAt,updatedAt,stargazerCount,isArchived,isFork,url)
+  --json name,description,primaryLanguage,defaultBranchRef,pushedAt,updatedAt,stargazerCount,isArchived,isFork,url)
 export RECENT_REPOS_JSON_CONTENT
 if RECENT_ACTIVITY_JSON_CONTENT=$(printf '%s' "$RECENT_REPOS_JSON_CONTENT" | python3 scripts/recent_activity.py); then
   export RECENT_ACTIVITY_JSON_CONTENT

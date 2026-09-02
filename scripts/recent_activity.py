@@ -62,25 +62,38 @@ def discover_clones(root: Path, wanted: set[str]) -> dict[str, Path]:
         return clones
 
     wanted_lower = {name.lower(): name for name in wanted}
+    children_by_name = {child.name.lower(): child for child in children}
+    for lowered, canonical in wanted_lower.items():
+        child = children_by_name.get(lowered)
+        if child and child.is_dir() and (child / ".git").exists():
+            clones[canonical] = child
+
+    if len(clones) == len(wanted):
+        return clones
+
     for child in children:
         if not child.is_dir() or not (child / ".git").exists():
             continue
         name = remote_repo_name(child)
         canonical = wanted_lower.get((name or child.name).lower())
-        if canonical and (
-            canonical not in clones or child.name.lower() == canonical.lower()
-        ):
+        if canonical and canonical not in clones:
             clones[canonical] = child
     return clones
 
 
-def default_branch_ref(repo: Path) -> str:
-    for ref in ("main", "master"):
+def default_branch_ref(repo: Path, preferred: str | None = None) -> str:
+    candidates = []
+    if preferred:
+        candidates.extend(
+            (f"refs/heads/{preferred}", f"refs/remotes/origin/{preferred}")
+        )
+    candidates.extend(("refs/heads/main", "refs/heads/master"))
+    for qualified in dict.fromkeys(candidates):
         try:
-            git(repo, "rev-parse", "--verify", f"{ref}^{{commit}}")
+            git(repo, "rev-parse", "--verify", f"{qualified}^{{commit}}")
         except (subprocess.SubprocessError, OSError):
             continue
-        return ref
+        return qualified
     try:
         remote_head = git(repo, "symbolic-ref", "refs/remotes/origin/HEAD").strip()
         if remote_head:
@@ -90,53 +103,83 @@ def default_branch_ref(repo: Path) -> str:
     return "HEAD"
 
 
-def measure(repo: Path, cutoff: datetime, window_days: int) -> dict[str, int | float]:
-    ref = default_branch_ref(repo)
-    output = git(
-        repo,
-        "log",
-        ref,
-        f"--since={cutoff.isoformat()}",
-        "--no-renames",
-        f"--format={COMMIT_PREFIX}%H%x09%cI",
-        "--shortstat",
-    )
-    commits: set[str] = set()
-    active_days: set[str] = set()
+def metadata_default_branch(repo: dict) -> str | None:
+    branch = repo.get("defaultBranchRef")
+    if not isinstance(branch, dict):
+        return None
+    name = branch.get("name")
+    return name if isinstance(name, str) and name else None
+
+
+def parse_shortstat(output: str) -> tuple[int, int]:
     additions = 0
     deletions = 0
     for line in output.splitlines():
-        if line.startswith(COMMIT_PREFIX):
-            fields = line.split("\t")
-            if len(fields) >= 3:
-                commits.add(fields[1])
-                active_days.add(fields[2][:10])
-            continue
         insertion_match = re.search(r"(\d+) insertion", line)
         deletion_match = re.search(r"(\d+) deletion", line)
         if insertion_match:
             additions += int(insertion_match.group(1))
         if deletion_match:
             deletions += int(deletion_match.group(1))
+    return additions, deletions
 
-    commit_count = len(commits)
-    churn = additions + deletions
-    # Count is the primary activity signal; log-scaled churn rewards substantive
-    # changes without allowing one generated-file import to swamp two weeks of
-    # sustained work. Active days break near-ties in favor of ongoing projects.
-    score = (
+
+def activity_score(
+    commit_count: int, changed_lines: int, active_days: int, window_days: int
+) -> float:
+    return (
         commit_count
-        * math.log2(2 + churn)
-        * (1 + 0.25 * len(active_days) / window_days)
+        * math.log2(2 + changed_lines)
+        * (1 + 0.25 * min(active_days, window_days) / window_days)
     )
+
+
+def summarize(
+    repo: Path, cutoff: datetime, window_days: int, preferred_branch: str | None
+) -> dict[str, object]:
+    ref = default_branch_ref(repo, preferred_branch)
+    output = git(
+        repo,
+        "log",
+        ref,
+        f"--since={cutoff.isoformat()}",
+        f"--format={COMMIT_PREFIX}%H%x09%cI",
+        "--",
+    )
+    commits: set[str] = set()
+    active_days: set[str] = set()
+    for line in output.splitlines():
+        if line.startswith(COMMIT_PREFIX):
+            fields = line.split("\t")
+            if len(fields) >= 3:
+                commits.add(fields[1])
+                active_days.add(fields[2][:10])
+
+    base = git(
+        repo,
+        "rev-list",
+        "-1",
+        f"--before={cutoff.isoformat()}",
+        ref,
+        "--",
+    ).strip()
+    if not base:
+        base = git(repo, "hash-object", "-t", "tree", "/dev/null").strip()
+    net_additions, net_deletions = parse_shortstat(
+        git(repo, "diff", "--shortstat", "--no-renames", base, ref, "--")
+    )
+    net_churn = net_additions + net_deletions
     return {
         "windowDays": window_days,
-        "commitCount": commit_count,
-        "additions": additions,
-        "deletions": deletions,
-        "changedLines": churn,
+        "commitCount": len(commits),
+        "additions": net_additions,
+        "deletions": net_deletions,
+        "changedLines": net_churn,
         "activeDays": len(active_days),
-        "score": round(score, 6),
+        "score": round(
+            activity_score(len(commits), net_churn, len(active_days), window_days),
+            6,
+        ),
     }
 
 
@@ -186,7 +229,13 @@ def main() -> int:
     worker_count = min(8, max(1, len(repos_by_name)))
     with ThreadPoolExecutor(max_workers=worker_count) as pool:
         futures = {
-            pool.submit(measure, clones[name], cutoff, args.days): name
+            pool.submit(
+                summarize,
+                clones[name],
+                cutoff,
+                args.days,
+                metadata_default_branch(repos_by_name[name]),
+            ): name
             for name in repos_by_name
         }
         for future in as_completed(futures):
@@ -194,14 +243,9 @@ def main() -> int:
             try:
                 activity = future.result()
             except (subprocess.SubprocessError, OSError) as exc:
-                print(f"warning: could not measure {name}: {exc}", file=sys.stderr)
+                print(f"warning: could not summarize {name}: {exc}", file=sys.stderr)
                 continue
-            print(
-                f"Measured {name}: {activity['commitCount']} commits, "
-                f"{activity['changedLines']} changed lines",
-                file=sys.stderr,
-            )
-            if activity["commitCount"] <= 0:
+            if int(activity["commitCount"]) <= 0:
                 continue
             item = dict(repos_by_name[name])
             item["recentActivity"] = activity

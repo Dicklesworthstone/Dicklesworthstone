@@ -18,7 +18,8 @@ and regenerate it.
   claims about project readiness and capabilities honest to each project's
   current README and implementation.
 - Build "What I'm Building Now" from actual Git activity over the trailing 14
-  days, using both unique default-branch commit count and additions/deletions.
+  days, using both unique default-branch commit count and net
+  additions/deletions across the window.
   Never rank that section by `pushedAt` or `updatedAt` alone. Show the raw
   activity totals in the README so readers can audit the ranking. The current
   implementation uses local clones under `~/projects` and

@@ -402,7 +402,7 @@ def build_recent_repos_table() -> str:
     if not repos:
         return ""
     lines = [
-        "*Ranked by trailing 14-day local Git activity: commits × log₂(2 + changed lines), with sustained active days as a small tie-breaker.*",
+        "*Ranked by trailing 14-day local Git activity: commits × log₂(2 + net changed lines), with sustained active days as a small tie-breaker.*",
         "",
         "| Project | Lang | 14-day activity | What it does |",
         "|:--------|:----:|:----------------|:-------------|",
@@ -419,6 +419,7 @@ def build_recent_repos_table() -> str:
         commits = int(activity.get("commitCount") or 0)
         additions = int(activity.get("additions") or 0)
         deletions = int(activity.get("deletions") or 0)
+        commit_label = "commit" if commits == 1 else "commits"
         desc = markdown_escape(repo.get("description") or "Recently active public project")
         lines.append(
             "| "
@@ -426,7 +427,7 @@ def build_recent_repos_table() -> str:
             " | "
             f"{lang_badge(lang.get('name'), lang.get('color'))}"
             " | "
-            f"{commits:,} commits<br>+{additions:,} / −{deletions:,} lines"
+            f"{commits:,} {commit_label}<br>+{additions:,} / −{deletions:,} net lines"
             " | "
             f"{desc} |"
         )

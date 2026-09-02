@@ -21,7 +21,7 @@
 
 ![Stars: 31,380+](https://img.shields.io/static/v1?label=Stars&message=31%2C380%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Repos: 198](https://img.shields.io/static/v1?label=Repos&message=198&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 260,663](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=260%2C663&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 260,757](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=260%2C757&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,200+](https://img.shields.io/static/v1?label=Followers&message=3%2C200%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 48.7K](https://img.shields.io/static/v1?label=X+Followers&message=48.7K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -66,7 +66,7 @@
 </p>
 
 > [!NOTE]
-> **260,663 contributions in the past year**, powered by 63 AI coding agent subscription accounts (~$13.5K/month) and the Flywheel tooling below. The vast majority landed since January 2026, when the ecosystem hit critical mass.
+> **260,757 contributions in the past year**, powered by 63 AI coding agent subscription accounts (~$13.5K/month) and the Flywheel tooling below. The vast majority landed since January 2026, when the ecosystem hit critical mass.
 
 ---
 
@@ -158,20 +158,22 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 ## What I'm Building Now
 
 <!-- BEGIN AUTO-BUILDING-NOW -->
-| Project | Lang | What it does |
-|:--------|:----:|:-------------|
-| [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Independent ground-up Rust reimplementation of SQLite with concurrent writers and information-theoretic durability |
-| [**Beads Rust**](https://github.com/Dicklesworthstone/beads_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Fast Rust port of Steve Yegge's beads: local-first, non-invasive issue tracker storing tasks in SQLite with JSONL export for git collaboration |
-| [**Jazz Chord Progression Editor Html**](https://github.com/Dicklesworthstone/jazz_chord_progression_editor_html) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | Create and explore jazz chord progressions, with annotations and sequences, import/export, presets, and more. |
-| [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Terminal hypervisor for AI agent swarms: real-time pane capture, state-machine pattern detection, and a JSON API for coordinating fleets of coding agents across WezTerm |
-| [**FrankenNumPy**](https://github.com/Dicklesworthstone/franken_numpy) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Memory-safe clean-room Rust reimplementation of NumPy with strict/hardened compatibility modes, deterministic stride calculus, differential conformance harnesses, and RaptorQ durability artifacts. |
-| [**Model Guided Research**](https://github.com/Dicklesworthstone/model_guided_research) | ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white) | Systematic investigation of 11 exotic math frameworks (Lie groups, tropical algebra, p-adic numbers, etc.) applied to deep learning, with dual JAX and PyTorch implementations |
-| [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Plan-first Rust continuum for certified geometry, physics simulation, optimization, and rendering. |
-| [**Beads Viewer**](https://github.com/Dicklesworthstone/beads_viewer) | ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white) | Graph-aware TUI for the Beads issue tracker: PageRank, critical path, kanban, dependency DAG visualization, and robot-mode JSON API |
-| [**Automated Flywheel Setup Checker**](https://github.com/Dicklesworthstone/automated_flywheel_setup_checker) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Automated testing framework for ACFS installer scripts — runs all 41 installers in isolated Docker containers with error classification, parallel execution, and Claude-powered auto-remediation |
-| [**MCP Agent Mail Rust**](https://github.com/Dicklesworthstone/mcp_agent_mail_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Rust MCP server for multi-agent coordination: 34 tools, Git-backed archive, SQLite indexing, advisory file locks, and an interactive TUI console |
-| [**FrankenSearch**](https://github.com/Dicklesworthstone/frankensearch) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Two-tier hybrid search for Rust: sub-millisecond initial results via potion-128M, quality-refined rankings in 150ms via MiniLM-L6-v2. Combines lexical (Tantivy BM25) and semantic (vector cosine) search with Reciprocal Rank Fusion. Progressive iterator API, f16 SIMD vector index, feature-gated compilation. |
-| [**Phage Explorer**](https://github.com/Dicklesworthstone/phage_explorer) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | Learn and explore the world of phages, the viruses that attack bacteria. A window into the world of genetics. |
+*Ranked by trailing 14-day local Git activity: commits × log₂(2 + net changed lines), with sustained active days as a small tie-breaker.*
+
+| Project | Lang | 14-day activity | What it does |
+|:--------|:----:|:----------------|:-------------|
+| [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 2,054 commits<br>+149,544 / −3,920 net lines | A ground-up, native-Rust reimplementation of the entire Lean 4 toolchain — drop-in at the binary surfaces (.olean, C ABI, LSP, CLI), deterministic under parallelism, declaration-granular incremental, with a ≤12 KLOC dual-engine kernel that ships receipts. |
+| [**FrankenGit**](https://github.com/Dicklesworthstone/frankengit) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 2,028 commits<br>+444,729 / −0 net lines | Git-compatible, agent-native, repairable, self-hostable code forge and GitHub alternative. |
+| [**Pi Agent Rust**](https://github.com/Dicklesworthstone/pi_agent_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,104 commits<br>+288,209 / −18,175 net lines | High-performance AI coding agent CLI written in Rust with zero unsafe code |
+| [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 975 commits<br>+88,988 / −8,472 net lines | Independent ground-up Rust reimplementation of SQLite with concurrent writers and information-theoretic durability |
+| [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 904 commits<br>+216,843 / −10,877 net lines | Plan-first Rust continuum for certified geometry, physics simulation, optimization, and rendering. |
+| [**FrankenMermaid**](https://github.com/Dicklesworthstone/frankenmermaid) | ![HTML](https://img.shields.io/badge/-HTML-E34F26?style=flat-square&logo=html5&logoColor=white) | 675 commits<br>+3,207,898 / −11,403 net lines | Next-gen Rust diagram engine with 15 layout algorithms, deterministic output, intent-aware recovery, and WASM/SVG/Canvas/terminal renderers |
+| [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 757 commits<br>+346,060 / −91,883 net lines | Terminal hypervisor for AI agent swarms: real-time pane capture, state-machine pattern detection, and a JSON API for coordinating fleets of coding agents across WezTerm |
+| [**FrankenManim**](https://github.com/Dicklesworthstone/franken_manim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 860 commits<br>+77,062 / −10,003 net lines | A sovereign, deterministic rewrite of 3b1b's manim in pure Rust — native TeX math typesetting (no LaTeX), an analytic Bézier renderer with the 3b1b look, certified bit-reproducible renders, and source compatibility with existing manimlib scenes. One binary; ffmpeg is the only external tool. |
+| [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 789 commits<br>+86,439 / −10,597 net lines | A blank-slate, memory-safe, ultra-high-performance property-graph database in Rust — unified MVCC/time-travel/branches/replication over a fountain-coded commit stream, WCO+factorized execution, incremental everything, and deterministic auditable results. |
+| [**ASImposium**](https://github.com/Dicklesworthstone/asimposium.org) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | 753 commits<br>+87,671 / −10,730 net lines | A symposium for frontier AI agents: a public scientific ledger where human-sponsored agents propose, refute, and review work in mathematics and physics. |
+| [**FrankenTorch**](https://github.com/Dicklesworthstone/frankentorch) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 712 commits<br>+80,981 / −29,246 net lines | Memory-safe clean-room Rust reimplementation of PyTorch with deterministic autograd contracts, strict/hardened compatibility modes, differential conformance harnesses, and RaptorQ-backed durability artifacts. |
+| [**Classic Patents**](https://github.com/Dicklesworthstone/classic-patents.com) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | 671 commits<br>+316,359 / −30,526 net lines | An open-source digital museum restoring history's most consequential patents into pristine OCR transcripts, rigorous Plain English engineering breakdowns, and interactive real-time simulations. |
 <!-- END AUTO-BUILDING-NOW -->
 
 ### Live Demos
