@@ -20,9 +20,12 @@ Fourteen lines still fit the dedicated legend without crowding the plot.
 from __future__ import annotations
 
 import bisect
+import html
 import json
+import os
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -48,6 +51,13 @@ FONT = (
 # names the README already uses for the same projects.
 DISPLAY_NAMES = {
     "destructive_command_guard": "DCG",
+    "llm_aided_ocr": "LLM Aided OCR",
+    "pi_agent_rust": "Pi Agent Rust",
+    "beads_viewer": "Beads Viewer",
+    "beads_rust": "Beads Rust",
+    "swiss_army_llama": "Swiss Army Llama",
+    "ntm": "NTM",
+    "franken_ocr": "FrankenOCR",
     "coding_agent_session_search": "CASS",
     "cass_memory_system": "CASS Memory",
     "agentic_coding_flywheel_setup": "Flywheel Setup",
@@ -70,15 +80,26 @@ DARK = {
     "muted": "#8b949e",
     "faint": "#484f58",
     "accent": "#3fb950",
-# Fourteen lines need fourteen hues a reader can actually tell apart. The
-# obvious GitHub palette collapses at that size — it yields nearby greens and
-# purples that are indistinguishable at a 2px stroke — so these are spread
-    # around the wheel instead, in the same order for both themes so a repo
-    # keeps its colour whichever one you are looking at.
+    # Fourteen lines need fourteen hues a reader can actually tell apart. The
+    # obvious GitHub palette collapses at that size — it yields nearby greens
+    # and purples that are indistinguishable at a 2px stroke — so these are
+    # spread around the wheel instead, in the same order for both themes so a
+    # repo keeps its colour whichever one you are looking at.
     "series": [
-        "#6cb6ff", "#f0883e", "#ff7b72", "#5ed4c8", "#5bc46b",
-        "#e3b341", "#c297d8", "#ff9db8", "#c49a7a", "#9aa4b0",
-        "#56d4ff", "#d4ef64", "#ff6ec7", "#8b9cff",
+        "#6cb6ff",
+        "#f0883e",
+        "#ff7b72",
+        "#5ed4c8",
+        "#5bc46b",
+        "#e3b341",
+        "#c297d8",
+        "#ff9db8",
+        "#c49a7a",
+        "#9aa4b0",
+        "#56d4ff",
+        "#d4ef64",
+        "#ff6ec7",
+        "#8b9cff",
     ],
 }
 LIGHT = {
@@ -92,17 +113,31 @@ LIGHT = {
     "faint": "#818b98",
     "accent": "#1a7f37",
     "series": [
-        "#0969da", "#bc4c00", "#cf222e", "#1b7c83", "#1a7f37",
-        "#9a6700", "#8250df", "#bf3989", "#8d5f3d", "#57606a",
-        "#007a99", "#597a00", "#a40e66", "#4056b4",
+        "#0969da",
+        "#bc4c00",
+        "#cf222e",
+        "#1b7c83",
+        "#1a7f37",
+        "#9a6700",
+        "#8250df",
+        "#bf3989",
+        "#8d5f3d",
+        "#57606a",
+        "#007a99",
+        "#597a00",
+        "#a40e66",
+        "#4056b4",
     ],
 }
 
 
 def gh(args: list[str]) -> str:
-    result = subprocess.run(
-        ["gh", *args], capture_output=True, text=True, check=False
-    )
+    try:
+        result = subprocess.run(
+            ["gh", *args], capture_output=True, text=True, check=False, timeout=180
+        )
+    except subprocess.TimeoutExpired as exc:
+        raise RuntimeError("GitHub API request timed out") from exc
     if result.returncode != 0:
         raise RuntimeError(f"gh {' '.join(args)} failed: {result.stderr.strip()}")
     return result.stdout
@@ -110,33 +145,79 @@ def gh(args: list[str]) -> str:
 
 def candidate_repos() -> list[tuple[str, int]]:
     """Public, non-fork repos ordered by stars — one request."""
-    query = """
-    query($login: String!) {
-      user(login: $login) {
-        repositories(privacy: PUBLIC, isFork: false, first: %d,
-                     orderBy: {field: STARGAZERS, direction: DESC}) {
-          nodes { name stargazerCount }
-        }
-      }
-    }
-    """ % CANDIDATES
-    payload = json.loads(gh(["api", "graphql", "-f", f"query={query}", "-f", f"login={USERNAME}"]))
-    nodes = payload["data"]["user"]["repositories"]["nodes"]
-    return [(n["name"], n["stargazerCount"]) for n in nodes]
+    query = f"""
+    query($login: String!) {{
+      user(login: $login) {{
+        repositories(privacy: PUBLIC, isFork: false, first: {CANDIDATES},
+                     orderBy: {{field: STARGAZERS, direction: DESC}}) {{
+          nodes {{ name stargazerCount }}
+        }}
+      }}
+    }}
+    """
+    try:
+        payload = json.JSONDecoder().decode(
+            gh(
+                [
+                    "api",
+                    "graphql",
+                    "-f",
+                    f"query={query}",
+                    "-f",
+                    f"login={USERNAME}",
+                ]
+            )
+        )
+        nodes = payload["data"]["user"]["repositories"]["nodes"]
+    except (json.JSONDecodeError, KeyError, TypeError) as exc:
+        raise RuntimeError("GitHub returned invalid repository metadata") from exc
+    if not isinstance(nodes, list):
+        raise TypeError("GitHub repository metadata nodes must be a list")
+    candidates = []
+    for node in nodes:
+        if not isinstance(node, dict):
+            raise TypeError("GitHub repository metadata node must be an object")
+        name = node.get("name")
+        stars = node.get("stargazerCount")
+        if (
+            not isinstance(name, str)
+            or not isinstance(stars, int)
+            or isinstance(stars, bool)
+        ):
+            raise TypeError("GitHub returned invalid repository field types")
+        if not name or stars < 0:
+            raise ValueError("GitHub returned invalid repository field values")
+        candidates.append((name, stars))
+    return candidates
 
 
 def starred_at(repo: str) -> list[datetime]:
     """Every star's timestamp, oldest first."""
-    raw = gh([
-        "api", f"repos/{USERNAME}/{repo}/stargazers",
-        "-H", "Accept: application/vnd.github.star+json",
-        "--paginate", "--jq", ".[].starred_at",
-    ])
-    stamps = [
-        datetime.fromisoformat(line.replace("Z", "+00:00"))
-        for line in raw.splitlines()
-        if line.strip()
-    ]
+    raw = gh(
+        [
+            "api",
+            f"repos/{USERNAME}/{repo}/stargazers",
+            "-H",
+            "Accept: application/vnd.github.star+json",
+            "--paginate",
+            "--jq",
+            ".[] | [.user.login, .starred_at] | @tsv",
+        ]
+    )
+    by_login: dict[str, datetime] = {}
+    for line in raw.splitlines():
+        fields = line.split("\t", 1)
+        if len(fields) != 2 or not fields[0] or not fields[1]:
+            raise RuntimeError(f"GitHub returned invalid stargazer data for {repo}")
+        try:
+            by_login[fields[0]] = datetime.fromisoformat(
+                fields[1].replace("Z", "+00:00")
+            )
+        except ValueError as exc:
+            raise RuntimeError(
+                f"GitHub returned invalid stargazer data for {repo}"
+            ) from exc
+    stamps = list(by_login.values())
     stamps.sort()
     return stamps
 
@@ -206,13 +287,20 @@ def axis_label(value: int) -> str:
     return str(value)
 
 
-def render(theme: dict, series: dict[str, list[datetime]], order: list[str],
-           totals: dict[str, int], growth: dict[str, int]) -> str:
-    t_min = min(stamps[0] for stamps in series.values())
+def render(
+    theme: dict,
+    series: dict[str, list[datetime]],
+    order: list[str],
+    totals: dict[str, int],
+    growth: dict[str, int],
+) -> str:
+    t_min = min(series[repo][0] for repo in order)
     t_max = datetime.now(timezone.utc)
-    span = (t_max - t_min).total_seconds()
+    span = max((t_max - t_min).total_seconds(), 1)
 
-    ticks = [t_min + timedelta(seconds=span * i / (SAMPLES - 1)) for i in range(SAMPLES)]
+    ticks = [
+        t_min + timedelta(seconds=span * i / (SAMPLES - 1)) for i in range(SAMPLES)
+    ]
     curves = {repo: cumulative(series[repo], ticks) for repo in order}
 
     step = axis_step(max(max(curve) for curve in curves.values()))
@@ -232,14 +320,15 @@ def render(theme: dict, series: dict[str, list[datetime]], order: list[str],
     # the boldest hue, not whichever one happens to fall last in the list.
     ranked = sorted(order, key=lambda r: totals[r], reverse=True)
     colour_of = {
-        repo: theme["series"][i % len(theme["series"])]
-        for i, repo in enumerate(ranked)
+        repo: theme["series"][i % len(theme["series"])] for i, repo in enumerate(ranked)
     }
 
     out: list[str] = [
-        f'<svg width="{WIDTH}" height="{HEIGHT}" viewBox="0 0 {WIDTH} {HEIGHT}" '
-        f'fill="none" xmlns="http://www.w3.org/2000/svg" '
-        f'role="img" aria-label="Star history for {len(order)} leading repositories">',
+        (
+            f'<svg width="{WIDTH}" height="{HEIGHT}" viewBox="0 0 {WIDTH} {HEIGHT}" '
+            f'fill="none" xmlns="http://www.w3.org/2000/svg" '
+            f'role="img" aria-label="Star history for {len(order)} leading repositories">'
+        ),
         "  <defs>",
     ]
 
@@ -268,15 +357,15 @@ def render(theme: dict, series: dict[str, list[datetime]], order: list[str],
     out.append(
         f'  <text x="{PAD_L}" y="69" fill="{theme["muted"]}" font-family="{FONT}" '
         f'font-size="13">Top {len(order)} by stars and {GROWTH_WINDOW_DAYS}-day growth'
-        f' &#183; {total_stars:,} stars, {total_growth:,} in the last '
-        f'{GROWTH_WINDOW_DAYS} days</text>'
+        f" &#183; {total_stars:,} stars, {total_growth:,} in the last "
+        f"{GROWTH_WINDOW_DAYS} days</text>"
     )
 
     # Gridlines + y labels.
     for i in range(Y_DIVISIONS + 1):
         value = step * i
         y = y_of(value)
-        dash = '' if i == 0 else ' stroke-dasharray="3 5"'
+        dash = "" if i == 0 else ' stroke-dasharray="3 5"'
         colour = theme["axis"] if i == 0 else theme["grid"]
         out.append(
             f'  <line x1="{PAD_L}" y1="{y:.1f}" x2="{plot_r}" y2="{y:.1f}" '
@@ -351,6 +440,7 @@ def render(theme: dict, series: dict[str, list[datetime]], order: list[str],
         name = DISPLAY_NAMES.get(repo, repo)
         if len(name) > 26:
             name = name[:25] + "\u2026"
+        name = html.escape(name)
         out.append(
             f'  <text x="{legend_x + 24}" y="{y}" fill="{theme["text"]}" '
             f'font-family="{FONT}" font-size="13">{name}</text>'
@@ -366,10 +456,25 @@ def render(theme: dict, series: dict[str, list[datetime]], order: list[str],
     out.append(
         f'  <text x="{PAD_L}" y="{HEIGHT - 18}" fill="{theme["faint"]}" '
         f'font-family="{FONT}" font-size="11">Generated from GitHub stargazer '
-        f'timestamps &#183; updated {t_max.strftime("%d %b %Y")}</text>'
+        f"timestamps &#183; updated {t_max.strftime('%d %b %Y')}</text>"
     )
     out.append("</svg>")
     return "\n".join(out) + "\n"
+
+
+def write_atomically(path: Path, content: str) -> None:
+    """Replace an SVG only after its complete new contents are on disk."""
+    fd, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
+    temporary_path = Path(temporary)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as handle:
+            os.fchmod(handle.fileno(), 0o644)
+            handle.write(content)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary_path, path)
+    finally:
+        temporary_path.unlink(missing_ok=True)
 
 
 def main() -> int:
@@ -382,6 +487,7 @@ def main() -> int:
         stamps = starred_at(repo)
         if stamps:
             series[repo] = stamps
+            totals[repo] = len(stamps)
 
     if not series:
         print("no stargazer data; leaving the chart untouched", file=sys.stderr)
@@ -397,8 +503,8 @@ def main() -> int:
 
     dark = render(DARK, series, order, totals, growth)
     light = render(LIGHT, series, order, totals, growth)
-    (REPO_ROOT / "star_history.svg").write_text(dark)
-    (REPO_ROOT / "star_history-light.svg").write_text(light)
+    write_atomically(REPO_ROOT / "star_history.svg", dark)
+    write_atomically(REPO_ROOT / "star_history-light.svg", light)
     return 0
 
 

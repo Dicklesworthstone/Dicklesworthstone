@@ -18,12 +18,14 @@ and regenerate it.
   claims about project readiness and capabilities honest to each project's
   current README and implementation.
 - Build "What I'm Building Now" from actual Git activity over the trailing 14
-  days, using both unique default-branch commit count and net
-  additions/deletions across the window.
+  days, using both default-branch commit count and the aggregate
+  additions/deletions between the default branch's first-parent state at the
+  window boundary and its current tip.
   Never rank that section by `pushedAt` or `updatedAt` alone. Show the raw
   activity totals in the README so readers can audit the ranking. The current
-  implementation uses local clones under `~/projects` and
-  `scripts/recent_activity.py`.
+  implementation fetches current GitHub default branches, then measures one
+  fixed time window through `scripts/recent_activity.py`; never measure
+  potentially stale local refs.
 - Keep the star-history chart at 14 repositories unless the profile layout is
   deliberately redesigned. Select the leading series from both total stars
   and recent growth, then regenerate both light and dark SVGs.

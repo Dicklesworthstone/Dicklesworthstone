@@ -1,270 +1,393 @@
 #!/usr/bin/env python3
-"""Enrich public-repository metadata with trailing local Git activity.
+"""Rank public repositories by recent, live default-branch Git activity.
 
 The profile's "What I'm Building Now" section should reflect substantive work,
-not whichever repository most recently received a maintenance push.  This
-script joins GitHub repository metadata to clones below ``~/projects`` and
-measures unique default-branch commits plus added/deleted lines over a trailing
-window.
+not whichever repository most recently received a maintenance push. This
+script joins metadata from ``gh repo list`` to clones below ``~/projects``,
+fetches every candidate's current default branch, and measures commit count
+plus the aggregate line diff over one fixed snapshot window.
+
+Missing local clones are measured in an isolated temporary bare clone. The
+command fails rather than emitting a partial ranking if any candidate cannot
+be fetched or measured, so the README generator preserves the last complete
+section.
 """
 
 from __future__ import annotations
 
 import argparse
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timedelta, timezone
 import json
 import math
 import os
-from pathlib import Path
 import re
 import subprocess
 import sys
-
+import tempfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from typing import Any
 
 OWNER = "Dicklesworthstone"
-COMMIT_PREFIX = "__PROFILE_COMMIT__\t"
-EXCLUDED = {"Dicklesworthstone", "homebrew-tap", "scoop-bucket"}
+DEFAULT_WINDOW_DAYS = 14
+DEFAULT_LIMIT = 12
+MAX_WORKERS = 6
+MAX_TEMPORARY_CLONES = 5
+EXCLUDED = {"dicklesworthstone", "homebrew-tap", "scoop-bucket"}
+GITHUB_COMPONENT = re.compile(r"^[A-Za-z0-9_.-]+$")
 
 
 def git(repo: Path, *args: str) -> str:
+    """Run Git without exposing remote URLs in diagnostics."""
     result = subprocess.run(
         ["git", "-C", str(repo), *args],
         check=True,
         capture_output=True,
         text=True,
-        env={**os.environ, "LC_ALL": "C"},
-        timeout=120,
+        env={**os.environ, "GIT_TERMINAL_PROMPT": "0", "LC_ALL": "C"},
+        timeout=180,
     )
     return result.stdout
 
 
-def remote_repo_name(repo: Path) -> str | None:
-    """Return the GitHub repository name without ever printing remote URLs."""
+def parse_github_timestamp(value: object) -> datetime | None:
+    if not isinstance(value, str) or not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def is_excluded(name: str) -> bool:
+    lowered = name.lower()
+    return (
+        lowered in EXCLUDED
+        or "12_west" in lowered
+        or "12-west" in lowered
+        or "12west" in lowered
+    )
+
+
+def is_safe_github_component(value: str) -> bool:
+    return value not in {".", ".."} and GITHUB_COMPONENT.fullmatch(value) is not None
+
+
+def recent_candidates(repos: object, since: datetime) -> dict[str, dict[str, Any]]:
+    if not isinstance(repos, list):
+        raise TypeError("repository metadata must be a JSON array")
+    selected: dict[str, dict[str, Any]] = {}
+    seen_names: set[str] = set()
+    for repo in repos:
+        if not isinstance(repo, dict):
+            raise TypeError("repository metadata entry must be an object")
+        name = repo.get("name")
+        if not isinstance(name, str) or not is_safe_github_component(name):
+            raise TypeError("repository metadata contains an invalid name")
+        lowered = name.lower()
+        if lowered in seen_names:
+            raise TypeError("repository metadata contains a duplicate name")
+        seen_names.add(lowered)
+        if not isinstance(repo.get("isArchived"), bool) or not isinstance(
+            repo.get("isFork"), bool
+        ):
+            raise TypeError("repository metadata contains invalid visibility flags")
+        pushed_value = repo.get("pushedAt")
+        pushed_at = parse_github_timestamp(pushed_value)
+        if pushed_value is not None and pushed_at is None:
+            raise TypeError("repository metadata contains an invalid push timestamp")
+        if repo["isArchived"] or repo["isFork"] or is_excluded(name):
+            continue
+        if pushed_at is None or pushed_at < since:
+            continue
+        selected[name] = repo
+    return selected
+
+
+def remote_repo_name(repo: Path, owner: str) -> str | None:
+    """Return the owner's GitHub repository name without printing its URL."""
     try:
         remote = git(repo, "config", "--get", "remote.origin.url").strip()
     except (subprocess.SubprocessError, OSError):
         return None
     match = re.search(
-        rf"github\.com[/:]{re.escape(OWNER)}/([^/?#]+?)(?:\.git)?/?$",
+        rf"github\.com[/:]{re.escape(owner)}/([^/?#]+?)(?:\.git)?/?$",
         remote,
         flags=re.IGNORECASE,
     )
     return match.group(1) if match else None
 
 
-def discover_clones(root: Path, wanted: set[str]) -> dict[str, Path]:
-    clones: dict[str, Path] = {}
+def discover_clones(root: Path, owner: str, wanted: set[str]) -> dict[str, Path]:
     try:
         children = list(root.iterdir())
     except OSError as exc:
-        print(f"warning: could not scan projects root {root}: {exc}", file=sys.stderr)
-        return clones
+        raise RuntimeError(f"could not scan projects root {root}: {exc}") from exc
 
     wanted_lower = {name.lower(): name for name in wanted}
-    children_by_name = {child.name.lower(): child for child in children}
-    for lowered, canonical in wanted_lower.items():
-        child = children_by_name.get(lowered)
-        if child and child.is_dir() and (child / ".git").exists():
-            clones[canonical] = child
-
-    if len(clones) == len(wanted):
-        return clones
-
+    clones: dict[str, Path] = {}
     for child in children:
         if not child.is_dir() or not (child / ".git").exists():
             continue
-        name = remote_repo_name(child)
-        canonical = wanted_lower.get((name or child.name).lower())
+        remote_name = remote_repo_name(child, owner)
+        canonical = wanted_lower.get((remote_name or "").lower())
         if canonical and canonical not in clones:
             clones[canonical] = child
     return clones
 
 
-def default_branch_ref(repo: Path, preferred: str | None = None) -> str:
-    candidates = []
-    if preferred:
-        candidates.extend(
-            (f"refs/heads/{preferred}", f"refs/remotes/origin/{preferred}")
-        )
-    candidates.extend(("refs/heads/main", "refs/heads/master"))
-    for qualified in dict.fromkeys(candidates):
-        try:
-            git(repo, "rev-parse", "--verify", f"{qualified}^{{commit}}")
-        except (subprocess.SubprocessError, OSError):
-            continue
-        return qualified
-    try:
-        remote_head = git(repo, "symbolic-ref", "refs/remotes/origin/HEAD").strip()
-        if remote_head:
-            return remote_head
-    except (subprocess.SubprocessError, OSError):
-        pass
-    return "HEAD"
-
-
-def metadata_default_branch(repo: dict) -> str | None:
+def metadata_default_branch(repo: dict[str, Any]) -> str:
     branch = repo.get("defaultBranchRef")
-    if not isinstance(branch, dict):
-        return None
-    name = branch.get("name")
-    return name if isinstance(name, str) and name else None
+    name = branch.get("name") if isinstance(branch, dict) else None
+    if not isinstance(name, str) or not name:
+        raise RuntimeError("GitHub metadata omitted the default branch")
+    return name
 
 
-def parse_shortstat(output: str) -> tuple[int, int]:
-    additions = 0
-    deletions = 0
-    for line in output.splitlines():
-        insertion_match = re.search(r"(\d+) insertion", line)
-        deletion_match = re.search(r"(\d+) deletion", line)
-        if insertion_match:
-            additions += int(insertion_match.group(1))
-        if deletion_match:
-            deletions += int(deletion_match.group(1))
-    return additions, deletions
-
-
-def activity_score(
-    commit_count: int, changed_lines: int, active_days: int, window_days: int
-) -> float:
-    return (
-        commit_count
-        * math.log2(2 + changed_lines)
-        * (1 + 0.25 * min(active_days, window_days) / window_days)
+def fetch_default_branch(repo: Path, branch: str) -> str:
+    """Fetch and return the current remote-tracking default-branch ref."""
+    git(repo, "check-ref-format", "--branch", branch)
+    remote_ref = f"refs/remotes/origin/{branch}"
+    git(
+        repo,
+        "fetch",
+        "--quiet",
+        "--no-tags",
+        "origin",
+        f"+refs/heads/{branch}:{remote_ref}",
     )
+    git(repo, "rev-parse", "--verify", f"{remote_ref}^{{commit}}")
+    return remote_ref
+
+
+def clone_for_measurement(
+    root: Path,
+    owner: str,
+    name: str,
+    metadata: dict[str, Any],
+) -> Path:
+    """Make a temporary bare clone when a recent public repo is not local."""
+    if not is_safe_github_component(owner) or not is_safe_github_component(name):
+        raise RuntimeError(f"unsafe GitHub owner or repository name: {name}")
+    branch = metadata_default_branch(metadata)
+    destination = root / name
+    try:
+        result = subprocess.run(
+            [
+                "git",
+                "clone",
+                "--bare",
+                "--quiet",
+                "--single-branch",
+                "--branch",
+                branch,
+                f"https://github.com/{owner}/{name}.git",
+                str(destination),
+            ],
+            check=False,
+            capture_output=True,
+            text=True,
+            env={**os.environ, "GIT_TERMINAL_PROMPT": "0", "LC_ALL": "C"},
+            timeout=600,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise RuntimeError(f"could not clone {name}") from exc
+    if result.returncode != 0:
+        raise RuntimeError(f"could not clone {name}")
+    return destination
+
+
+def activity_score(commit_count: int, changed_lines: int) -> float:
+    """Favor sustained work while log-scaling churn from generated files."""
+    return commit_count * math.log2(2 + changed_lines)
 
 
 def summarize(
-    repo: Path, cutoff: datetime, window_days: int, preferred_branch: str | None
-) -> dict[str, object]:
-    ref = default_branch_ref(repo, preferred_branch)
-    output = git(
+    repo: Path,
+    ref: str,
+    since: datetime,
+    until: datetime,
+) -> dict[str, int | float | str] | None:
+    tip = git(
         repo,
-        "log",
+        "rev-list",
+        "--first-parent",
+        "-1",
+        f"--before={until.isoformat()}",
         ref,
-        f"--since={cutoff.isoformat()}",
-        f"--format={COMMIT_PREFIX}%H%x09%cI",
         "--",
-    )
-    commits: set[str] = set()
-    active_days: set[str] = set()
-    for line in output.splitlines():
-        if line.startswith(COMMIT_PREFIX):
-            fields = line.split("\t")
-            if len(fields) >= 3:
-                commits.add(fields[1])
-                active_days.add(fields[2][:10])
+    ).strip()
+    if not tip:
+        return None
+
+    commit_count_text = git(
+        repo,
+        "rev-list",
+        "--count",
+        f"--since={since.isoformat()}",
+        f"--until={until.isoformat()}",
+        tip,
+        "--",
+    ).strip()
+    try:
+        commit_count = int(commit_count_text)
+    except ValueError as exc:
+        raise RuntimeError("Git returned an invalid commit count") from exc
+    if commit_count <= 0:
+        return None
 
     base = git(
         repo,
         "rev-list",
+        "--first-parent",
         "-1",
-        f"--before={cutoff.isoformat()}",
-        ref,
+        f"--before={since.isoformat()}",
+        tip,
         "--",
     ).strip()
     if not base:
         base = git(repo, "hash-object", "-t", "tree", "/dev/null").strip()
-    net_additions, net_deletions = parse_shortstat(
-        git(repo, "diff", "--shortstat", "--no-renames", base, ref, "--")
-    )
-    net_churn = net_additions + net_deletions
+
+    additions = 0
+    deletions = 0
+    diff_output = git(repo, "diff", "--numstat", "--no-renames", base, tip, "--")
+    for line in diff_output.splitlines():
+        fields = line.split("\t", 2)
+        if len(fields) == 3 and fields[0].isdigit() and fields[1].isdigit():
+            additions += int(fields[0])
+            deletions += int(fields[1])
+
+    changed_lines = additions + deletions
     return {
-        "windowDays": window_days,
-        "commitCount": len(commits),
-        "additions": net_additions,
-        "deletions": net_deletions,
-        "changedLines": net_churn,
-        "activeDays": len(active_days),
-        "score": round(
-            activity_score(len(commits), net_churn, len(active_days), window_days),
-            6,
-        ),
+        "windowDays": (until - since).days,
+        "windowStart": since.isoformat(timespec="seconds"),
+        "windowEnd": until.isoformat(timespec="seconds"),
+        "commitCount": commit_count,
+        "additions": additions,
+        "deletions": deletions,
+        "changedLines": changed_lines,
+        "score": round(activity_score(commit_count, changed_lines), 6),
     }
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--projects-root",
-        type=Path,
-        default=Path(os.environ.get("PROJECTS_ROOT", "~/projects")).expanduser(),
-    )
-    parser.add_argument("--days", type=int, default=14)
-    return parser.parse_args()
+def measure_repository(
+    repo: Path,
+    metadata: dict[str, Any],
+    since: datetime,
+    until: datetime,
+) -> dict[str, int | float | str] | None:
+    branch = metadata_default_branch(metadata)
+    ref = fetch_default_branch(repo, branch)
+    return summarize(repo, ref, since, until)
 
 
-def main() -> int:
-    args = parse_args()
-    if args.days < 1:
-        raise SystemExit("--days must be at least 1")
-    try:
-        repos = json.load(sys.stdin)
-    except json.JSONDecodeError as exc:
-        raise SystemExit(f"repository metadata is not valid JSON: {exc}") from exc
-    if not isinstance(repos, list):
-        raise SystemExit("repository metadata must be a JSON array")
-
-    cutoff = datetime.now(timezone.utc) - timedelta(days=args.days)
-    candidates = {
-        str(repo.get("name"))
-        for repo in repos
-        if isinstance(repo, dict)
-        and repo.get("name")
-        and not repo.get("isArchived")
-        and not repo.get("isFork")
-        and repo.get("name") not in EXCLUDED
-        and "12_west" not in str(repo.get("name")).lower()
-        and "12-west" not in str(repo.get("name")).lower()
-        and "12west" not in str(repo.get("name")).lower()
-        and str(repo.get("pushedAt") or "") >= cutoff.isoformat()
-    }
-    clones = discover_clones(args.projects_root, candidates)
-    repos_by_name = {
-        str(repo["name"]): repo
-        for repo in repos
-        if isinstance(repo, dict) and repo.get("name") in clones
-    }
-    enriched = []
-    worker_count = min(8, max(1, len(repos_by_name)))
+def measure_all(
+    candidates: dict[str, dict[str, Any]],
+    clones: dict[str, Path],
+    since: datetime,
+    until: datetime,
+) -> dict[str, dict[str, int | float | str]]:
+    activities: dict[str, dict[str, int | float | str]] = {}
+    failures: list[str] = []
+    worker_count = min(MAX_WORKERS, max(1, len(candidates)))
     with ThreadPoolExecutor(max_workers=worker_count) as pool:
         futures = {
             pool.submit(
-                summarize,
+                measure_repository,
                 clones[name],
-                cutoff,
-                args.days,
-                metadata_default_branch(repos_by_name[name]),
+                metadata,
+                since,
+                until,
             ): name
-            for name in repos_by_name
+            for name, metadata in candidates.items()
         }
         for future in as_completed(futures):
             name = futures[future]
             try:
                 activity = future.result()
-            except (subprocess.SubprocessError, OSError) as exc:
-                print(f"warning: could not summarize {name}: {exc}", file=sys.stderr)
+            except (RuntimeError, subprocess.SubprocessError, OSError):
+                failures.append(name)
                 continue
-            if int(activity["commitCount"]) <= 0:
-                continue
-            item = dict(repos_by_name[name])
-            item["recentActivity"] = activity
-            enriched.append(item)
+            if activity is not None:
+                activities[name] = activity
+    if failures:
+        names = ", ".join(sorted(failures, key=str.lower))
+        raise RuntimeError(f"could not fetch or measure: {names}")
+    return activities
 
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--owner", default=OWNER)
+    parser.add_argument(
+        "--projects-root",
+        type=Path,
+        default=Path(os.environ.get("PROJECTS_ROOT", "~/projects")).expanduser(),
+    )
+    parser.add_argument("--days", type=int, default=DEFAULT_WINDOW_DAYS)
+    parser.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = parse_args()
+    if not is_safe_github_component(args.owner):
+        raise SystemExit("--owner must be a valid GitHub account name")
+    if args.days < 1:
+        raise SystemExit("--days must be at least 1")
+    if args.limit < 1:
+        raise SystemExit("--limit must be at least 1")
+    try:
+        repos = json.JSONDecoder().decode(sys.stdin.read())
+    except (json.JSONDecodeError, OSError) as exc:
+        raise SystemExit(f"repository metadata is not valid JSON: {exc}") from exc
+
+    window_end = datetime.now(timezone.utc).replace(microsecond=0)
+    window_start = window_end - timedelta(days=args.days)
+    try:
+        candidates = recent_candidates(repos, window_start)
+        clones = discover_clones(args.projects_root, args.owner, set(candidates))
+        missing = set(candidates) - set(clones)
+        if len(missing) > MAX_TEMPORARY_CLONES:
+            raise RuntimeError(
+                f"{len(missing)} recent repositories are missing locally; "
+                f"refusing more than {MAX_TEMPORARY_CLONES} temporary clones"
+            )
+        with tempfile.TemporaryDirectory(prefix="profile-activity-") as temporary:
+            temporary_root = Path(temporary)
+            for name in sorted(missing, key=str.lower):
+                print(f"Temporarily cloning recent repository {name}.", file=sys.stderr)
+                clones[name] = clone_for_measurement(
+                    temporary_root, args.owner, name, candidates[name]
+                )
+            activities = measure_all(candidates, clones, window_start, window_end)
+    except (RuntimeError, TypeError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+
+    enriched = []
+    for name, activity in activities.items():
+        item = dict(candidates[name])
+        item["recentActivity"] = activity
+        enriched.append(item)
     enriched.sort(
         key=lambda repo: (
             repo["recentActivity"]["score"],
             repo["recentActivity"]["commitCount"],
             repo["recentActivity"]["changedLines"],
+            repo["name"],
         ),
         reverse=True,
     )
     print(
-        f"Measured {len(enriched)} active public clones over {args.days} days "
-        f"({len(clones)}/{len(candidates)} recent repositories found locally).",
+        f"Measured {len(enriched)} active public default branches over "
+        f"{args.days} days; emitting the top {min(args.limit, len(enriched))}.",
         file=sys.stderr,
     )
-    json.dump(enriched, sys.stdout, separators=(",", ":"))
+    json.dump(enriched[: args.limit], sys.stdout, separators=(",", ":"))
     return 0
 
 

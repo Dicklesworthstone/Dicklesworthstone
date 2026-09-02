@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # update-stats.sh — Fetches live GitHub stats and refreshes profile artifacts.
-# Used by the daily GitHub Actions workflow and can be run manually.
+# Used by the local daily updater and the manual GitHub Actions fallback.
 # Requires: gh CLI authenticated, jq, python3, curl
 
 USERNAME="Dicklesworthstone"

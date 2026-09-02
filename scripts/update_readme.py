@@ -5,14 +5,15 @@ from __future__ import annotations
 
 import html
 import json
+import math
 import os
 import re
 import sys
 import urllib.error
 import urllib.request
+from datetime import datetime
 from pathlib import Path
-from urllib.parse import parse_qsl, quote, urlencode
-
+from urllib.parse import parse_qsl, quote, urlencode, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
@@ -110,7 +111,7 @@ DISPLAY_NAMES = {
 }
 
 RECENT_EXCLUDE = {
-    "Dicklesworthstone",
+    "dicklesworthstone",
     "homebrew-tap",
     "scoop-bucket",
 }
@@ -185,7 +186,9 @@ def between_markers(text: str, start: str, end: str, block: str) -> str:
     replacement = f"{start}\n{block.rstrip()}\n{end}"
     updated, count = marker_pattern.subn(replacement, text, count=1)
     if count != 1:
-        raise SystemExit(f"Could not locate complete README marker pair: {start} / {end}")
+        raise SystemExit(
+            f"Could not locate complete README marker pair: {start} / {end}"
+        )
     return updated
 
 
@@ -280,6 +283,27 @@ def is_draft(value: object) -> bool:
     return str(value).strip().lower() == "true"
 
 
+def is_nonnegative_number(value: object) -> bool:
+    return (
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and math.isfinite(value)
+        and value >= 0
+    )
+
+
+def parse_activity_timestamp(value: object) -> datetime | None:
+    if not isinstance(value, str) or not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        return None
+    return parsed
+
+
 def load_recent_repos() -> list[dict]:
     try:
         payload = recent_activity_payload()
@@ -298,11 +322,67 @@ def load_recent_repos() -> list[dict]:
     if not isinstance(repos, list):
         print("warning: repo metadata was not a JSON array", file=sys.stderr)
         return []
-    repo_items = [
-        repo
-        for repo in repos
-        if isinstance(repo, dict) and isinstance(repo.get("recentActivity"), dict)
-    ]
+    repo_items = []
+    seen_names: set[str] = set()
+    for repo in repos:
+        if not isinstance(repo, dict):
+            print("warning: recent activity entry was not an object", file=sys.stderr)
+            return []
+        activity = repo.get("recentActivity")
+        if not isinstance(activity, dict):
+            print("warning: recent activity entry omitted metrics", file=sys.stderr)
+            return []
+        name = repo.get("name")
+        url = repo.get("url")
+        integer_fields = (
+            "commitCount",
+            "additions",
+            "deletions",
+            "changedLines",
+        )
+        window_days = activity.get("windowDays")
+        window_start = activity.get("windowStart")
+        window_end = activity.get("windowEnd")
+        window_start_at = parse_activity_timestamp(window_start)
+        window_end_at = parse_activity_timestamp(window_end)
+        integer_values = [activity.get(field) for field in integer_fields]
+        if (
+            not isinstance(name, str)
+            or not name
+            or name.lower() in seen_names
+            or not isinstance(url, str)
+            or url != f"https://github.com/Dicklesworthstone/{name}"
+            or repo.get("isArchived") is not False
+            or repo.get("isFork") is not False
+            or not isinstance(window_days, int)
+            or isinstance(window_days, bool)
+            or window_days < 1
+            or window_start_at is None
+            or window_end_at is None
+            or not is_nonnegative_number(activity.get("score"))
+            or any(
+                not isinstance(value, int) or isinstance(value, bool) or value < 0
+                for value in integer_values
+            )
+            or activity.get("commitCount") < 1
+        ):
+            print("warning: recent activity entry was malformed", file=sys.stderr)
+            return []
+        changed_lines = activity["changedLines"]
+        if (
+            changed_lines != activity["additions"] + activity["deletions"]
+            or (window_end_at - window_start_at).total_seconds() != window_days * 86_400
+            or not math.isclose(
+                activity["score"],
+                activity["commitCount"] * math.log2(2 + changed_lines),
+                rel_tol=0,
+                abs_tol=0.000001,
+            )
+        ):
+            print("warning: recent activity metrics were inconsistent", file=sys.stderr)
+            return []
+        seen_names.add(name.lower())
+        repo_items.append(repo)
     repo_items.sort(
         key=lambda repo: (
             repo["recentActivity"].get("score", 0),
@@ -315,14 +395,12 @@ def load_recent_repos() -> list[dict]:
     for repo in repo_items:
         name = repo.get("name", "")
         lowered = name.lower()
-        if repo.get("isArchived"):
-            continue
-        if repo.get("isFork"):
-            continue
-        if name in RECENT_EXCLUDE:
-            continue
+        if lowered in RECENT_EXCLUDE:
+            print("warning: recent activity included an excluded repo", file=sys.stderr)
+            return []
         if "12_west" in lowered or "12-west" in lowered or "12west" in lowered:
-            continue
+            print("warning: recent activity included an excluded repo", file=sys.stderr)
+            return []
         selected.append(repo)
         if len(selected) >= 12:
             break
@@ -369,7 +447,10 @@ def replace_star_badges(text: str, star_counts: dict[str, int]) -> str:
         repo = match.group("repo")
         stars = star_counts.get(repo)
         if stars is None:
-            print(f"warning: no star count found for {repo}; leaving dynamic badge", file=sys.stderr)
+            print(
+                f"warning: no star count found for {repo}; leaving dynamic badge",
+                file=sys.stderr,
+            )
             return match.group(0)
         query = dict(parse_qsl(match.group("query"), keep_blank_values=True))
         return static_star_badge(repo, stars, query.get("color", "blue"))
@@ -389,7 +470,10 @@ def replace_star_badges(text: str, star_counts: dict[str, int]) -> str:
         repo = owner_repo.removeprefix(prefix)
         stars = star_counts.get(repo)
         if stars is None:
-            print(f"warning: no star count found for {repo}; leaving static badge", file=sys.stderr)
+            print(
+                f"warning: no star count found for {repo}; leaving static badge",
+                file=sys.stderr,
+            )
             return match.group(0)
         return static_star_badge(repo, stars, match.group("color"))
 
@@ -401,10 +485,26 @@ def build_recent_repos_table() -> str:
     repos = load_recent_repos()
     if not repos:
         return ""
+    windows = {
+        (
+            repo["recentActivity"]["windowDays"],
+            repo["recentActivity"]["windowStart"],
+            repo["recentActivity"]["windowEnd"],
+        )
+        for repo in repos
+    }
+    if len(windows) != 1:
+        print("warning: recent activity windows do not match", file=sys.stderr)
+        return ""
+    window_days, _, _ = windows.pop()
     lines = [
-        "*Ranked by trailing 14-day local Git activity: commits × log₂(2 + net changed lines), with sustained active days as a small tie-breaker.*",
+        (
+            f"*Ranked by live default-branch activity over the trailing {window_days} "
+            "days: commits × log₂(2 + aggregate changed lines). Line totals compare "
+            "the branch at the start and end of the window.*"
+        ),
         "",
-        "| Project | Lang | 14-day activity | What it does |",
+        f"| Project | Lang | {window_days}-day activity | What it does |",
         "|:--------|:----:|:----------------|:-------------|",
     ]
     for repo in repos:
@@ -420,14 +520,16 @@ def build_recent_repos_table() -> str:
         additions = int(activity.get("additions") or 0)
         deletions = int(activity.get("deletions") or 0)
         commit_label = "commit" if commits == 1 else "commits"
-        desc = markdown_escape(repo.get("description") or "Recently active public project")
+        desc = markdown_escape(
+            repo.get("description") or "Recently active public project"
+        )
         lines.append(
             "| "
             f"[**{markdown_escape(display_name(name))}**]({url})"
             " | "
             f"{lang_badge(lang.get('name'), lang.get('color'))}"
             " | "
-            f"{commits:,} {commit_label}<br>+{additions:,} / −{deletions:,} net lines"
+            f"{commits:,} {commit_label}<br>+{additions:,} / −{deletions:,} lines"
             " | "
             f"{desc} |"
         )
@@ -479,6 +581,10 @@ def extract_json_array(text: str, marker: str) -> list[dict]:
 
 
 def fetch_writing_items() -> list[dict]:
+    parsed_url = urlparse(WRITING_URL)
+    if parsed_url.scheme not in {"http", "https"} or not parsed_url.netloc:
+        print("warning: writing URL must use HTTP or HTTPS", file=sys.stderr)
+        return []
     try:
         with urllib.request.urlopen(WRITING_URL, timeout=20) as response:
             raw = response.read().decode("utf-8", errors="replace")
@@ -586,14 +692,18 @@ def main() -> None:
         ],
         round_badge_line(
             "Contributions (1yr)",
-            env("README_CONTRIBUTIONS", env("CONTRIBUTIONS_FMT", existing_contributions)),
+            env(
+                "README_CONTRIBUTIONS", env("CONTRIBUTIONS_FMT", existing_contributions)
+            ),
             alt_label="Contributions",
         ),
     )
     text = replace_line_any(
         text,
         ["![Followers](", "![Followers:"],
-        round_badge_line("Followers", env("README_FOLLOWERS_LABEL", existing_followers_label)),
+        round_badge_line(
+            "Followers", env("README_FOLLOWERS_LABEL", existing_followers_label)
+        ),
     )
     text = replace_line_any(
         text,
