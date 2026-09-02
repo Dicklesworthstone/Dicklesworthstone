@@ -169,6 +169,25 @@ class RecentActivityTests(unittest.TestCase):
                 )
         self.assertEqual(set(found), {"right"})
 
+    def test_discovery_prefers_the_canonical_directory_among_duplicate_clones(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            canonical = root / "example"
+            alternate = root / "release-example"
+            for clone in (alternate, canonical):
+                (clone / ".git").mkdir(parents=True)
+            with patch.object(
+                recent_activity,
+                "remote_repo_name",
+                return_value="example",
+            ):
+                found = recent_activity.discover_clones(
+                    root, "Dicklesworthstone", {"example"}
+                )
+        self.assertEqual(found, {"example": canonical})
+
 
 class ReadmeActivityTests(unittest.TestCase):
     def load(self, repos: list[dict[str, Any]]) -> list[dict[str, Any]]:

@@ -160,13 +160,26 @@ def discover_clones(root: Path, owner: str, wanted: set[str]) -> dict[str, Path]
 
     wanted_lower = {name.lower(): name for name in wanted}
     clones: dict[str, Path] = {}
-    for child in children:
+    for child in sorted(children, key=lambda path: (path.name.casefold(), path.name)):
         if not child.is_dir() or not (child / ".git").exists():
             continue
         remote_name = remote_repo_name(child, owner)
         canonical = wanted_lower.get((remote_name or "").lower())
-        if canonical and canonical not in clones:
-            clones[canonical] = child
+        if canonical:
+            existing = clones.get(canonical)
+            candidate_rank = (
+                child.name.casefold() != canonical.casefold(),
+                child.name.casefold(),
+                child.name,
+            )
+            existing_rank = (
+                existing is None
+                or existing.name.casefold() != canonical.casefold(),
+                existing.name.casefold() if existing is not None else "",
+                existing.name if existing is not None else "",
+            )
+            if existing is None or candidate_rank < existing_rank:
+                clones[canonical] = child
     return clones
 
 
