@@ -395,6 +395,43 @@ class ReadmeActivityTests(unittest.TestCase):
             ],
         )
 
+    def test_malformed_writing_item_preserves_existing_section(self) -> None:
+        items = [
+            {
+                "title": "Valid",
+                "href": "https://www.jeffreyemanuel.com/writing/valid",
+                "blurb": "Complete metadata.",
+            },
+            {
+                "href": "https://www.jeffreyemanuel.com/writing/missing-title",
+                "blurb": "Incomplete metadata.",
+            },
+        ]
+        with patch.object(update_readme, "fetch_writing_items", return_value=items):
+            self.assertEqual(update_readme.build_writing_block(), "")
+
+    def test_main_is_idempotent_with_a_million_scale_follower_label(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            target = Path(temporary) / "README.md"
+            target.write_text(update_readme.README.read_text(encoding="utf-8"))
+            with (
+                patch.object(update_readme, "README", target),
+                patch.object(update_readme, "load_repo_star_counts", return_value={}),
+                patch.object(update_readme, "build_recent_repos_table", return_value=""),
+                patch.object(update_readme, "build_writing_block", return_value=""),
+                patch.dict(
+                    os.environ,
+                    {"X_FOLLOWERS_LABEL": "1.2M"},
+                    clear=False,
+                ),
+            ):
+                update_readme.main()
+                first_pass = target.read_text(encoding="utf-8")
+                update_readme.main()
+            self.assertEqual(target.read_text(encoding="utf-8"), first_pass)
+            self.assertIn("![X: 1.2M]", first_pass)
+            self.assertIn("1.2M X followers", first_pass)
+
 
 class StarHistoryTests(unittest.TestCase):
     def test_github_api_call_retries_a_transient_failure(self) -> None:
@@ -481,6 +518,17 @@ class StarHistoryTests(unittest.TestCase):
         self.assertEqual(len(stamps), 2)
         self.assertLess(stamps[0], stamps[1])
 
+    def test_conflicting_duplicate_stargazer_is_rejected(self) -> None:
+        raw = (
+            "Alice\t2026-01-01T00:00:00Z\n"
+            "alice\t2026-01-02T00:00:00Z\n"
+        )
+        with (
+            patch.object(star_history, "gh", return_value=raw),
+            self.assertRaises(RuntimeError),
+        ):
+            star_history.starred_at("example")
+
     def test_stargazer_timestamps_must_include_a_timezone(self) -> None:
         with (
             patch.object(
@@ -517,6 +565,32 @@ class StarHistoryTests(unittest.TestCase):
             star_history.write_atomically(target, "new\n")
             self.assertEqual(target.read_text(encoding="utf-8"), "new\n")
             self.assertEqual(stat.S_IMODE(target.stat().st_mode), 0o644)
+
+    def test_svg_pair_rolls_back_first_theme_if_second_write_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            dark = root / "dark.svg"
+            light = root / "light.svg"
+            dark.write_text("old dark", encoding="utf-8")
+            light.write_text("old light", encoding="utf-8")
+            real_write = star_history.write_atomically
+
+            def fail_new_light(path: Path, content: str) -> None:
+                if path == light and content == "new light":
+                    raise OSError("simulated disk failure")
+                real_write(path, content)
+
+            with (
+                patch.object(
+                    star_history, "write_atomically", side_effect=fail_new_light
+                ),
+                self.assertRaises(OSError),
+            ):
+                star_history.write_svg_pair(
+                    [(dark, "new dark"), (light, "new light")]
+                )
+            self.assertEqual(dark.read_text(encoding="utf-8"), "old dark")
+            self.assertEqual(light.read_text(encoding="utf-8"), "old light")
 
 
 if __name__ == "__main__":

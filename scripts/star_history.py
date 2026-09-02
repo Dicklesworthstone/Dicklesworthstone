@@ -283,7 +283,12 @@ def starred_at(repo: str) -> list[datetime]:
             ) from exc
         if stamp.tzinfo is None or stamp.utcoffset() is None:
             raise RuntimeError(f"GitHub returned invalid stargazer data for {repo}")
-        by_login[fields[0]] = stamp.astimezone(timezone.utc)
+        login = fields[0].casefold()
+        stamp = stamp.astimezone(timezone.utc)
+        previous = by_login.get(login)
+        if previous is not None and previous != stamp:
+            raise RuntimeError(f"GitHub returned conflicting stargazer data for {repo}")
+        by_login[login] = stamp
     stamps = list(by_login.values())
     stamps.sort()
     return stamps
@@ -590,6 +595,36 @@ def write_atomically(path: Path, content: str) -> None:
         temporary_path.unlink(missing_ok=True)
 
 
+def write_svg_pair(artifacts: list[tuple[Path, str]]) -> None:
+    """Write a theme pair together, restoring the old pair on any failure."""
+    originals = {
+        path: path.read_text(encoding="utf-8") if path.exists() else None
+        for path, _content in artifacts
+    }
+    written: list[Path] = []
+    try:
+        for path, content in artifacts:
+            write_atomically(path, content)
+            written.append(path)
+    except BaseException as exc:
+        rollback_failures: list[str] = []
+        for path in reversed(written):
+            try:
+                original = originals[path]
+                if original is None:
+                    path.unlink(missing_ok=True)
+                else:
+                    write_atomically(path, original)
+            except OSError:
+                rollback_failures.append(path.name)
+        if rollback_failures:
+            names = ", ".join(rollback_failures)
+            raise RuntimeError(
+                f"could not restore star-history artifact(s): {names}"
+            ) from exc
+        raise
+
+
 def main() -> int:
     candidates = candidate_repos()
     totals = dict(candidates)
@@ -600,6 +635,10 @@ def main() -> int:
     for index, (repo, stars) in enumerate(candidates):
         print(f"  fetching {repo} ({stars} stars)...", file=sys.stderr)
         stamps = starred_at(repo)
+        # Anchor the chart after the response arrives so a star added while a
+        # timeline is being fetched cannot be counted in the legend while
+        # being clipped from the plotted endpoint.
+        snapshot_at = datetime.now(timezone.utc)
         if stars > 0 and not stamps:
             raise RuntimeError(
                 f"GitHub returned no stargazer timestamps for {repo} "
@@ -608,7 +647,7 @@ def main() -> int:
         if stamps:
             series[repo] = stamps
             totals[repo] = len(stamps)
-            growth = recent_growth(series, snapshot_at)
+        growth = recent_growth(series, snapshot_at)
         fetched_count = index + 1
         if fetched_count >= INITIAL_CANDIDATES and remaining_cannot_qualify(
             candidates[fetched_count:], series, totals, growth
@@ -633,8 +672,12 @@ def main() -> int:
 
     dark = render(DARK, series, order, totals, growth, snapshot_at)
     light = render(LIGHT, series, order, totals, growth, snapshot_at)
-    write_atomically(REPO_ROOT / "star_history.svg", dark)
-    write_atomically(REPO_ROOT / "star_history-light.svg", light)
+    write_svg_pair(
+        [
+            (REPO_ROOT / "star_history.svg", dark),
+            (REPO_ROOT / "star_history-light.svg", light),
+        ]
+    )
     return 0
 
 

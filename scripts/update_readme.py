@@ -842,7 +842,8 @@ def build_writing_block() -> str:
             or not href
             or (blurb_raw is not None and not isinstance(blurb_raw, str))
         ):
-            continue
+            print("warning: writing metadata item was malformed", file=sys.stderr)
+            return ""
         title = markdown_escape(title_raw)
         blurb = markdown_escape(blurb_raw or "")
         lines.append(f"- **[{title}]({href})** \u2014 {blurb}")
@@ -921,7 +922,9 @@ def main() -> None:
     text = replace_line_any(
         text,
         ["![Repos](", "![Repos:", "![Projects](", "![Projects:"],
-        round_badge_line("Repos", env("OPEN_SOURCE_PROJECTS", existing_projects)),
+        round_badge_line(
+            "Projects", env("OPEN_SOURCE_PROJECTS", existing_projects)
+        ),
     )
     text = replace_line_any(
         text,
@@ -979,15 +982,17 @@ def main() -> None:
     )
     text = replace_pattern_exact(
         text,
-        r"- [\d,.kK+]+ GitHub stars, [\d,.kK+]+ GitHub followers, "
-        r"\d+ open-source projects, [\d,.kK+]+ X followers",
+        r"- [\d,.kKmM+]+ GitHub stars, [\d,.kKmM+]+ GitHub followers, "
+        r"\d+ open-source projects, [\d,.kKmM+]+ X followers",
         stats_sentence,
     )
 
     text = replace_pattern_exact(
         text,
-        r"Next\.js 16, React Three Fiber, and GSAP\. \d+ project showcase\.",
-        f"Next.js 16, React Three Fiber, and GSAP. {open_source_projects} project showcase.",
+        r"Next\.js 16, React Three Fiber, and GSAP\. "
+        r"(?:\d+ project showcase|(?:A )?showcase of \d+ projects)\.",
+        f"Next.js 16, React Three Fiber, and GSAP. "
+        f"A showcase of {open_source_projects} projects.",
     )
 
     text = replace_pattern_exact(

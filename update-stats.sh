@@ -103,18 +103,43 @@ PAGE=1
 STARS_QUERY='query($login: String!, $after: String) {
   user(login: $login) {
     repositories(first: 100, after: $after, ownerAffiliations: OWNER, privacy: PUBLIC) {
+      totalCount
       nodes { stargazerCount }
       pageInfo { endCursor hasNextPage }
     }
   }
 }'
+STAR_REPO_COUNT=0
+EXPECTED_STAR_REPOS=""
 while true; do
   if [ -z "$CURSOR" ]; then
     RESULT=$(gh_api graphql -f query="$STARS_QUERY" -f login="$USERNAME")
   else
     RESULT=$(gh_api graphql -f query="$STARS_QUERY" -f login="$USERNAME" -f after="$CURSOR")
   fi
-  PAGE_STARS=$(echo "$RESULT" | jq '[.data.user.repositories.nodes[].stargazerCount] | add // 0')
+  PAGE_STARS=$(printf '%s' "$RESULT" | jq -er '
+    .data.user.repositories.nodes as $nodes
+    | if (($nodes | type) == "array")
+      and all($nodes[];
+        ((.stargazerCount | type) == "number")
+        and (.stargazerCount >= 0)
+        and (.stargazerCount == (.stargazerCount | floor)))
+      then [$nodes[].stargazerCount] | add // 0
+      else error("invalid repository star metadata") end
+  ')
+  PAGE_STAR_REPOS=$(printf '%s' "$RESULT" | jq -er '.data.user.repositories.nodes | length')
+  PAGE_TOTAL_REPOS=$(printf '%s' "$RESULT" | jq -er '
+    .data.user.repositories.totalCount
+    | if (type == "number") and (. >= 0) and (. == floor)
+      then . else error("invalid totalCount") end
+  ')
+  if [ -z "$EXPECTED_STAR_REPOS" ]; then
+    EXPECTED_STAR_REPOS="$PAGE_TOTAL_REPOS"
+  elif (( 10#$PAGE_TOTAL_REPOS != 10#$EXPECTED_STAR_REPOS )); then
+    echo "GitHub repository count changed during star pagination" >&2
+    exit 1
+  fi
+  STAR_REPO_COUNT=$((STAR_REPO_COUNT + PAGE_STAR_REPOS))
   TOTAL_STARS=$((TOTAL_STARS + PAGE_STARS))
   echo "  Page $PAGE: +$PAGE_STARS stars (total: $TOTAL_STARS)"
   HAS_NEXT=$(echo "$RESULT" | jq -r '.data.user.repositories.pageInfo.hasNextPage | if type == "boolean" then tostring else error("invalid hasNextPage") end')
@@ -127,6 +152,10 @@ while true; do
   CURSOR="$NEXT_CURSOR"
   PAGE=$((PAGE + 1))
 done
+if (( 10#$EXPECTED_STAR_REPOS != 10#$PUBLIC_REPOS || STAR_REPO_COUNT != 10#$EXPECTED_STAR_REPOS )); then
+  echo "GitHub returned incomplete repository star metadata: expected ${PUBLIC_REPOS}, received ${STAR_REPO_COUNT}" >&2
+  exit 1
+fi
 
 echo "=== Fetching contributions ==="
 # shellcheck disable=SC2016
@@ -227,8 +256,10 @@ PAGE=1
 LANG_QUERY='query($login: String!, $after: String) {
   user(login: $login) {
     repositories(first: 100, after: $after, ownerAffiliations: OWNER, isFork: false, privacy: PUBLIC) {
+      totalCount
       nodes {
         languages(first: 100, orderBy: {field: SIZE, direction: DESC}) {
+          totalCount
           edges { size node { name color } }
         }
       }
@@ -236,6 +267,8 @@ LANG_QUERY='query($login: String!, $after: String) {
     }
   }
 }'
+LANG_REPO_COUNT=0
+EXPECTED_LANG_REPOS=""
 while true; do
   if [ -z "$CURSOR" ]; then
     REPOS_JSON=$(gh_api graphql -f query="$LANG_QUERY" -f login="$USERNAME")
@@ -243,14 +276,57 @@ while true; do
     REPOS_JSON=$(gh_api graphql -f query="$LANG_QUERY" -f login="$USERNAME" -f after="$CURSOR")
   fi
 
-  # Aggregate language bytes and colors
+  if ! printf '%s' "$REPOS_JSON" | jq -e '
+    .data.user.repositories.nodes as $nodes
+    | (($nodes | type) == "array")
+      and all($nodes[];
+        ((.languages | type) == "object")
+        and ((.languages.totalCount | type) == "number")
+        and (.languages.totalCount >= 0)
+        and (.languages.totalCount == (.languages.totalCount | floor))
+        and ((.languages.edges | type) == "array")
+        and (.languages.totalCount == (.languages.edges | length))
+        and all(.languages.edges[];
+          ((.size | type) == "number")
+          and (.size >= 0)
+          and (.size == (.size | floor))
+          and ((.node.name | type) == "string")
+          and (.node.name != "")
+          and ((.node.color == null) or ((.node.color | type) == "string"))))
+  ' >/dev/null; then
+    echo "GitHub returned invalid or incomplete language metadata" >&2
+    exit 1
+  fi
+  if ! LANG_ROWS=$(printf '%s' "$REPOS_JSON" | jq -r '.data.user.repositories.nodes[].languages.edges[] | [.node.name, .size, (.node.color // "#888888")] | @tsv'); then
+    echo "Could not decode GitHub language metadata" >&2
+    exit 1
+  fi
+
+  # Aggregate language bytes and colors.
   while IFS=$'\t' read -r lang bytes color; do
     [ -z "$lang" ] && continue
+    if ! [[ "$bytes" =~ ^[0-9]+$ ]]; then
+      echo "GitHub returned an invalid language byte count" >&2
+      exit 1
+    fi
     LANG_BYTES[$lang]=$(( ${LANG_BYTES[$lang]:-0} + bytes ))
     LANG_COLORS[$lang]="$(sanitize_color "$color")"
-  done < <(echo "$REPOS_JSON" | jq -r '.data.user.repositories.nodes[].languages.edges[] | [.node.name, .size, (.node.color // "#888888")] | @tsv')
+  done <<< "$LANG_ROWS"
 
-  PAGE_LANG_REPOS=$(echo "$REPOS_JSON" | jq '[.data.user.repositories.nodes[] | select((.languages.edges | length) > 0)] | length')
+  PAGE_REPOS=$(printf '%s' "$REPOS_JSON" | jq -er '.data.user.repositories.nodes | length')
+  PAGE_TOTAL_REPOS=$(printf '%s' "$REPOS_JSON" | jq -er '
+    .data.user.repositories.totalCount
+    | if (type == "number") and (. >= 0) and (. == floor)
+      then . else error("invalid totalCount") end
+  ')
+  if [ -z "$EXPECTED_LANG_REPOS" ]; then
+    EXPECTED_LANG_REPOS="$PAGE_TOTAL_REPOS"
+  elif (( 10#$PAGE_TOTAL_REPOS != 10#$EXPECTED_LANG_REPOS )); then
+    echo "GitHub repository count changed during language pagination" >&2
+    exit 1
+  fi
+  LANG_REPO_COUNT=$((LANG_REPO_COUNT + PAGE_REPOS))
+  PAGE_LANG_REPOS=$(printf '%s' "$REPOS_JSON" | jq -er '[.data.user.repositories.nodes[] | select((.languages.edges | length) > 0)] | length')
   TOTAL_LANG_REPOS=$((TOTAL_LANG_REPOS + PAGE_LANG_REPOS))
 
   HAS_NEXT=$(echo "$REPOS_JSON" | jq -r '.data.user.repositories.pageInfo.hasNextPage | if type == "boolean" then tostring else error("invalid hasNextPage") end')
@@ -264,6 +340,10 @@ while true; do
   CURSOR="$NEXT_CURSOR"
   PAGE=$((PAGE + 1))
 done
+if (( 10#$EXPECTED_LANG_REPOS != 10#$OPEN_SOURCE_PROJECTS || LANG_REPO_COUNT != 10#$EXPECTED_LANG_REPOS )); then
+  echo "GitHub returned incomplete language repository metadata: expected ${OPEN_SOURCE_PROJECTS}, received ${LANG_REPO_COUNT}" >&2
+  exit 1
+fi
 
 # Sort languages by bytes descending, take top 10
 TOTAL_BYTES=0
