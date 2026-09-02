@@ -8,12 +8,15 @@ import json
 import math
 import os
 import re
+import stat
 import sys
+import tempfile
 import urllib.error
 import urllib.request
 from datetime import datetime
 from pathlib import Path
-from urllib.parse import parse_qsl, quote, urlencode, urlparse
+from typing import Any
+from urllib.parse import parse_qsl, quote, urlencode, urljoin, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
@@ -115,6 +118,8 @@ RECENT_EXCLUDE = {
     "homebrew-tap",
     "scoop-bucket",
 }
+GITHUB_REPO_NAME = re.compile(r"^[A-Za-z0-9_.-]+$")
+HEX_COLOR = re.compile(r"^#[0-9A-Fa-f]{6}$")
 
 
 def env(name: str, default: str = "") -> str:
@@ -147,8 +152,9 @@ def existing_badge_message(
     )
     for match in static_pattern.finditer(text):
         params = dict(parse_qsl(match.group("query"), keep_blank_values=True))
-        if params.get("label") in labels and params.get("message"):
-            return params["message"]
+        message = params.get("message")
+        if params.get("label") in labels and isinstance(message, str) and message:
+            return message
     return existing_match(text, legacy_pattern, default)
 
 
@@ -237,9 +243,12 @@ def discord_badge_line(member_count: str) -> str:
 
 
 def lang_badge(language: str | None, color: str | None) -> str:
-    name = language or "Code"
+    name = language if isinstance(language, str) and language else "Code"
     logo = LANG_LOGOS.get(name, "")
-    color_value = (color or LANG_COLORS.get(name) or "#2b2b2b").lstrip("#") or "2b2b2b"
+    supplied_color = (
+        color if isinstance(color, str) and HEX_COLOR.fullmatch(color) else None
+    )
+    color_value = (supplied_color or LANG_COLORS.get(name) or "#2b2b2b").lstrip("#")
     logo_part = f"&logo={quote(logo)}&logoColor=white" if logo else ""
     return (
         f"![{name}](https://img.shields.io/badge/-{quote(name)}-{color_value}"
@@ -261,12 +270,13 @@ def static_star_badge(repo_name: str, stars: int, color: str) -> str:
 
 def markdown_escape(value: object) -> str:
     value = html.unescape(str(value)).replace("\n", " ").strip()
-    return (
+    escaped = (
         value.replace("\\", "\\\\")
         .replace("|", "\\|")
         .replace("[", "\\[")
         .replace("]", "\\]")
     )
+    return html.escape(escaped, quote=False)
 
 
 def display_name(repo_name: str) -> str:
@@ -304,7 +314,7 @@ def parse_activity_timestamp(value: object) -> datetime | None:
     return parsed
 
 
-def load_recent_repos() -> list[dict]:
+def load_recent_repos() -> list[dict[str, Any]]:
     try:
         payload = recent_activity_payload()
     except OSError as exc:
@@ -334,6 +344,10 @@ def load_recent_repos() -> list[dict]:
             return []
         name = repo.get("name")
         url = repo.get("url")
+        description = repo.get("description")
+        language = repo.get("primaryLanguage")
+        language_name = language.get("name") if isinstance(language, dict) else None
+        language_color = language.get("color") if isinstance(language, dict) else None
         integer_fields = (
             "commitCount",
             "additions",
@@ -349,11 +363,28 @@ def load_recent_repos() -> list[dict]:
         if (
             not isinstance(name, str)
             or not name
+            or GITHUB_REPO_NAME.fullmatch(name) is None
             or name.lower() in seen_names
             or not isinstance(url, str)
             or url != f"https://github.com/Dicklesworthstone/{name}"
             or repo.get("isArchived") is not False
             or repo.get("isFork") is not False
+            or (description is not None and not isinstance(description, str))
+            or (language is not None and not isinstance(language, dict))
+            or (
+                isinstance(language, dict)
+                and (
+                    not isinstance(language_name, str)
+                    or not language_name
+                    or (
+                        language_color is not None
+                        and (
+                            not isinstance(language_color, str)
+                            or HEX_COLOR.fullmatch(language_color) is None
+                        )
+                    )
+                )
+            )
             or not isinstance(window_days, int)
             or isinstance(window_days, bool)
             or window_days < 1
@@ -364,7 +395,8 @@ def load_recent_repos() -> list[dict]:
                 not isinstance(value, int) or isinstance(value, bool) or value < 0
                 for value in integer_values
             )
-            or activity.get("commitCount") < 1
+            or not is_nonnegative_number(activity.get("commitCount"))
+            or activity.get("commitCount") == 0
         ):
             print("warning: recent activity entry was malformed", file=sys.stderr)
             return []
@@ -425,14 +457,27 @@ def load_repo_star_counts() -> dict[str, int]:
     if not isinstance(repos, list):
         print("warning: repo star metadata was not a JSON array", file=sys.stderr)
         return {}
-    counts = {}
+    counts: dict[str, int] = {}
+    seen_names: set[str] = set()
     for repo in repos:
         if not isinstance(repo, dict):
-            continue
+            print("warning: repo star metadata entry was malformed", file=sys.stderr)
+            return {}
         name = repo.get("name")
         stars = repo.get("stargazerCount")
-        if isinstance(name, str) and isinstance(stars, int):
-            counts[name] = stars
+        if (
+            not isinstance(name, str)
+            or not name
+            or GITHUB_REPO_NAME.fullmatch(name) is None
+            or name.lower() in seen_names
+            or not isinstance(stars, int)
+            or isinstance(stars, bool)
+            or stars < 0
+        ):
+            print("warning: repo star metadata entry was malformed", file=sys.stderr)
+            return {}
+        seen_names.add(name.lower())
+        counts[name] = stars
     return counts
 
 
@@ -541,7 +586,7 @@ def unescape_next_payload(text: str) -> str:
     return re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m.group(1), 16)), text)
 
 
-def extract_json_array(text: str, marker: str) -> list[dict]:
+def extract_json_array(text: str, marker: str) -> list[dict[str, Any]]:
     start = text.find(marker)
     if start < 0:
         return []
@@ -580,8 +625,12 @@ def extract_json_array(text: str, marker: str) -> list[dict]:
     return []
 
 
-def fetch_writing_items() -> list[dict]:
-    parsed_url = urlparse(WRITING_URL)
+def fetch_writing_items() -> list[dict[str, Any]]:
+    try:
+        parsed_url = urlparse(WRITING_URL)
+    except ValueError:
+        print("warning: writing URL was malformed", file=sys.stderr)
+        return []
     if parsed_url.scheme not in {"http", "https"} or not parsed_url.netloc:
         print("warning: writing URL must use HTTP or HTTPS", file=sys.stderr)
         return []
@@ -599,14 +648,37 @@ def fetch_writing_items() -> list[dict]:
         for item in extract_json_array(decoded, marker):
             if not isinstance(item, dict):
                 continue
-            href = item.get("href", "")
-            if not href or href in seen:
+            href = normalize_writing_href(item.get("href"))
+            if href is None or href in seen:
                 continue
             if is_draft(item.get("draft")):
                 continue
             seen.add(href)
-            items.append(item)
+            normalized = dict(item)
+            normalized["href"] = href
+            items.append(normalized)
     return items
+
+
+def normalize_writing_href(value: object) -> str | None:
+    """Accept only same-site HTTP(S) links and encode Markdown delimiters."""
+    if not isinstance(value, str) or not value or any(ord(ch) < 32 for ch in value):
+        return None
+    try:
+        absolute = urljoin(SITE_ROOT, value)
+        parsed = urlparse(absolute)
+        hostname = parsed.hostname
+    except ValueError:
+        return None
+    if (
+        parsed.scheme not in {"http", "https"}
+        or (hostname or "").lower()
+        not in {"jeffreyemanuel.com", "www.jeffreyemanuel.com"}
+        or parsed.username is not None
+        or parsed.password is not None
+    ):
+        return None
+    return quote(absolute, safe=":/?#[]@!$&'*+,;=%~._-")
 
 
 def build_writing_block() -> str:
@@ -617,14 +689,38 @@ def build_writing_block() -> str:
     for item in items:
         title_raw = item.get("title")
         href = item.get("href", "")
-        if not title_raw or not href:
+        blurb_raw = item.get("blurb")
+        if (
+            not isinstance(title_raw, str)
+            or not title_raw.strip()
+            or not isinstance(href, str)
+            or not href
+            or (blurb_raw is not None and not isinstance(blurb_raw, str))
+        ):
             continue
         title = markdown_escape(title_raw)
-        blurb = markdown_escape(item.get("blurb") or "")
-        if href.startswith("/"):
-            href = f"{SITE_ROOT}{href}"
+        blurb = markdown_escape(blurb_raw or "")
         lines.append(f"- **[{title}]({href})** \u2014 {blurb}")
     return "\n".join(lines)
+
+
+def write_atomically(path: Path, content: str) -> None:
+    """Replace a text artifact only after its complete contents are durable."""
+    try:
+        mode = stat.S_IMODE(path.stat().st_mode)
+    except FileNotFoundError:
+        mode = 0o644
+    fd, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
+    temporary_path = Path(temporary)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as handle:
+            os.fchmod(handle.fileno(), mode)
+            handle.write(content)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary_path, path)
+    finally:
+        temporary_path.unlink(missing_ok=True)
 
 
 def main() -> None:
@@ -793,7 +889,7 @@ def main() -> None:
             )
 
     if text != original:
-        README.write_text(text, encoding="utf-8")
+        write_atomically(README, text)
 
 
 if __name__ == "__main__":

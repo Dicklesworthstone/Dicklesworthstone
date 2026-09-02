@@ -84,23 +84,70 @@ class RecentActivityTests(unittest.TestCase):
         self.assertEqual(summary["windowDays"], 14)
         self.assertIn("--first-parent", git_mock.call_args_list[0].args)
         self.assertIn("--first-parent", git_mock.call_args_list[2].args)
+        self.assertTrue(
+            any(
+                str(arg).startswith("--since-as-filter=")
+                for arg in git_mock.call_args_list[1].args
+            )
+        )
 
     def test_fetch_default_branch_forces_only_the_named_remote_ref(self) -> None:
         calls: list[tuple[str, ...]] = []
 
         def fake_git(_repo: Path, *args: str) -> str:
             calls.append(args)
+            if args == ("rev-parse", "--is-shallow-repository"):
+                return "false\n"
             return ""
 
         with patch.object(recent_activity, "git", side_effect=fake_git):
             ref = recent_activity.fetch_default_branch(Path("/repo"), "main")
         self.assertEqual(ref, "refs/remotes/origin/main")
         self.assertEqual(calls[0], ("check-ref-format", "--branch", "main"))
+        self.assertEqual(calls[1], ("rev-parse", "--is-shallow-repository"))
         self.assertIn(
             "+refs/heads/main:refs/remotes/origin/main",
-            calls[1],
+            calls[2],
         )
-        self.assertEqual(calls[2][-1], "refs/remotes/origin/main^{commit}")
+        self.assertNotIn("--unshallow", calls[2])
+        self.assertEqual(calls[3][-1], "refs/remotes/origin/main^{commit}")
+
+    def test_fetch_default_branch_unshallows_before_measurement(self) -> None:
+        calls: list[tuple[str, ...]] = []
+
+        def fake_git(_repo: Path, *args: str) -> str:
+            calls.append(args)
+            if args == ("rev-parse", "--is-shallow-repository"):
+                return "true\n"
+            return ""
+
+        with patch.object(recent_activity, "git", side_effect=fake_git):
+            recent_activity.fetch_default_branch(Path("/repo"), "main")
+        self.assertIn("--unshallow", calls[2])
+
+    def test_remote_parser_rejects_lookalike_hosts(self) -> None:
+        parse = recent_activity.github_remote_repo_name
+        self.assertEqual(
+            parse(
+                "git@github.com:Dicklesworthstone/example.git",
+                "Dicklesworthstone",
+            ),
+            "example",
+        )
+        self.assertEqual(
+            parse(
+                "ssh://git@github.com/Dicklesworthstone/example.git",
+                "Dicklesworthstone",
+            ),
+            "example",
+        )
+        self.assertIsNone(
+            parse(
+                "https://evilgithub.com/Dicklesworthstone/example.git",
+                "Dicklesworthstone",
+            )
+        )
+        self.assertIsNone(parse("https://[malformed", "Dicklesworthstone"))
 
     def test_discovery_requires_a_matching_owner_remote(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -161,6 +208,36 @@ class ReadmeActivityTests(unittest.TestCase):
         self.assertIn("| Project | Lang | 7-day activity |", table)
         self.assertIn("3 commits<br>+20 / −5 lines", table)
 
+    def test_malformed_language_metadata_fails_closed(self) -> None:
+        malformed = repo_payload("malformed")
+        malformed["primaryLanguage"] = {"name": "Rust", "color": 123}
+        self.assertEqual(self.load([malformed]), [])
+
+    def test_markdown_escape_neutralizes_html(self) -> None:
+        self.assertEqual(
+            update_readme.markdown_escape("<img src=x>|[label]"),
+            "&lt;img src=x&gt;\\|\\[label\\]",
+        )
+
+    def test_readme_atomic_write_preserves_permissions(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            target = Path(temporary) / "README.md"
+            target.write_text("old", encoding="utf-8")
+            target.chmod(0o640)
+            update_readme.write_atomically(target, "new\n")
+            self.assertEqual(target.read_text(encoding="utf-8"), "new\n")
+            self.assertEqual(stat.S_IMODE(target.stat().st_mode), 0o640)
+
+    def test_writing_links_are_same_site_and_markdown_safe(self) -> None:
+        self.assertEqual(
+            update_readme.normalize_writing_href("/writing/a_(careful)_title"),
+            "https://www.jeffreyemanuel.com/writing/a_%28careful%29_title",
+        )
+        self.assertIsNone(
+            update_readme.normalize_writing_href("https://example.com/phishing")
+        )
+        self.assertIsNone(update_readme.normalize_writing_href("https://[malformed"))
+
 
 class StarHistoryTests(unittest.TestCase):
     def test_stargazer_pages_are_deduplicated_by_login(self) -> None:
@@ -174,6 +251,17 @@ class StarHistoryTests(unittest.TestCase):
         self.assertEqual(len(stamps), 2)
         self.assertLess(stamps[0], stamps[1])
 
+    def test_stargazer_timestamps_must_include_a_timezone(self) -> None:
+        with (
+            patch.object(
+                star_history,
+                "gh",
+                return_value="alice\t2026-01-01T00:00:00\n",
+            ),
+            self.assertRaises(RuntimeError),
+        ):
+            star_history.starred_at("example")
+
     def test_render_uses_only_selected_series_for_the_time_axis(self) -> None:
         selected = "selected&safe"
         series = {
@@ -186,6 +274,7 @@ class StarHistoryTests(unittest.TestCase):
             [selected],
             {selected: 1, "unselected": 1},
             {selected: 0, "unselected": 0},
+            datetime(2026, 9, 2, tzinfo=UTC),
         )
         self.assertIn("Jan 2025", svg)
         self.assertNotIn("Jan 2020", svg)

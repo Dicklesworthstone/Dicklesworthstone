@@ -27,6 +27,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 OWNER = "Dicklesworthstone"
 DEFAULT_WINDOW_DAYS = 14
@@ -57,8 +58,8 @@ def parse_github_timestamp(value: object) -> datetime | None:
         parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
     except ValueError:
         return None
-    if parsed.tzinfo is None:
-        parsed = parsed.replace(tzinfo=timezone.utc)
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        return None
     return parsed.astimezone(timezone.utc)
 
 
@@ -107,18 +108,47 @@ def recent_candidates(repos: object, since: datetime) -> dict[str, dict[str, Any
     return selected
 
 
-def remote_repo_name(repo: Path, owner: str) -> str | None:
-    """Return the owner's GitHub repository name without printing its URL."""
-    try:
-        remote = git(repo, "config", "--get", "remote.origin.url").strip()
-    except (subprocess.SubprocessError, OSError):
-        return None
-    match = re.search(
-        rf"github\.com[/:]{re.escape(owner)}/([^/?#]+?)(?:\.git)?/?$",
+def github_remote_repo_name(remote: str, owner: str) -> str | None:
+    """Parse an exact github.com origin in URL or scp-style SSH syntax."""
+    remote = remote.strip()
+    scp_match = re.fullmatch(
+        r"(?:[^@\s/:]+@)?github\.com:(?P<path>[^?#]+)",
         remote,
         flags=re.IGNORECASE,
     )
-    return match.group(1) if match else None
+    if scp_match:
+        remote_path = scp_match.group("path")
+    else:
+        try:
+            parsed = urlparse(remote)
+            hostname = parsed.hostname
+        except ValueError:
+            return None
+        if (
+            parsed.scheme.lower() not in {"git", "http", "https", "ssh"}
+            or (hostname or "").lower() != "github.com"
+            or parsed.query
+            or parsed.fragment
+        ):
+            return None
+        remote_path = parsed.path
+
+    parts = remote_path.strip("/").split("/")
+    if len(parts) != 2 or parts[0].casefold() != owner.casefold():
+        return None
+    name = parts[1]
+    if name.lower().endswith(".git"):
+        name = name[:-4]
+    return name if is_safe_github_component(name) else None
+
+
+def remote_repo_name(repo: Path, owner: str) -> str | None:
+    """Return the owner's GitHub repository name without printing its URL."""
+    try:
+        remote = git(repo, "config", "--get", "remote.origin.url")
+    except (subprocess.SubprocessError, OSError):
+        return None
+    return github_remote_repo_name(remote, owner)
 
 
 def discover_clones(root: Path, owner: str, wanted: set[str]) -> dict[str, Path]:
@@ -150,15 +180,17 @@ def metadata_default_branch(repo: dict[str, Any]) -> str:
 def fetch_default_branch(repo: Path, branch: str) -> str:
     """Fetch and return the current remote-tracking default-branch ref."""
     git(repo, "check-ref-format", "--branch", branch)
+    shallow = git(repo, "rev-parse", "--is-shallow-repository").strip()
+    if shallow not in {"true", "false"}:
+        raise RuntimeError("Git returned an invalid shallow-repository status")
     remote_ref = f"refs/remotes/origin/{branch}"
-    git(
-        repo,
-        "fetch",
-        "--quiet",
-        "--no-tags",
-        "origin",
-        f"+refs/heads/{branch}:{remote_ref}",
-    )
+    fetch_args = ["fetch", "--quiet", "--no-tags"]
+    if shallow == "true":
+        # Otherwise a window that predates the shallow boundary is diffed
+        # against an empty tree and looks much larger than it really is.
+        fetch_args.append("--unshallow")
+    fetch_args.extend(("origin", f"+refs/heads/{branch}:{remote_ref}"))
+    git(repo, *fetch_args)
     git(repo, "rev-parse", "--verify", f"{remote_ref}^{{commit}}")
     return remote_ref
 
@@ -227,7 +259,10 @@ def summarize(
         repo,
         "rev-list",
         "--count",
-        f"--since={since.isoformat()}",
+        # Unlike --since, this visits the full reachable graph before
+        # filtering, so one old, clock-skewed commit cannot hide newer-dated
+        # ancestors behind it.
+        f"--since-as-filter={since.isoformat()}",
         f"--until={until.isoformat()}",
         tip,
         "--",

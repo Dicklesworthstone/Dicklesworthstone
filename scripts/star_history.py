@@ -28,6 +28,7 @@ import sys
 import tempfile
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from typing import TypedDict
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 USERNAME = "Dicklesworthstone"
@@ -45,6 +46,20 @@ FONT = (
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', "
     "Helvetica, Arial, sans-serif"
 )
+
+
+class Theme(TypedDict):
+    bg: str
+    card_top: str
+    border: str
+    grid: str
+    axis: str
+    text: str
+    muted: str
+    faint: str
+    accent: str
+    series: list[str]
+
 
 # Repo names are what the chart is *about*, but several are too long for the
 # legend and get truncated into mush ("agentic_coding_flywhe…"). These are the
@@ -70,7 +85,7 @@ DISPLAY_NAMES = {
     "sqlalchemy_data_model_visualizer": "SQLAlchemy Visualizer",
 }
 
-DARK = {
+DARK: Theme = {
     "bg": "#0d1117",
     "card_top": "#161b22",
     "border": "#30363d",
@@ -102,7 +117,7 @@ DARK = {
         "#8b9cff",
     ],
 }
-LIGHT = {
+LIGHT: Theme = {
     "bg": "#ffffff",
     "card_top": "#f6f8fa",
     "border": "#d0d7de",
@@ -210,28 +225,35 @@ def starred_at(repo: str) -> list[datetime]:
         if len(fields) != 2 or not fields[0] or not fields[1]:
             raise RuntimeError(f"GitHub returned invalid stargazer data for {repo}")
         try:
-            by_login[fields[0]] = datetime.fromisoformat(
-                fields[1].replace("Z", "+00:00")
-            )
+            stamp = datetime.fromisoformat(fields[1].replace("Z", "+00:00"))
         except ValueError as exc:
             raise RuntimeError(
                 f"GitHub returned invalid stargazer data for {repo}"
             ) from exc
+        if stamp.tzinfo is None or stamp.utcoffset() is None:
+            raise RuntimeError(f"GitHub returned invalid stargazer data for {repo}")
+        by_login[fields[0]] = stamp.astimezone(timezone.utc)
     stamps = list(by_login.values())
     stamps.sort()
     return stamps
 
 
-def recent_growth(series: dict[str, list[datetime]]) -> dict[str, int]:
+def recent_growth(
+    series: dict[str, list[datetime]], snapshot_at: datetime
+) -> dict[str, int]:
     """Stars gained per repo in the last GROWTH_WINDOW_DAYS."""
-    cutoff = datetime.now(timezone.utc) - timedelta(days=GROWTH_WINDOW_DAYS)
+    cutoff = snapshot_at - timedelta(days=GROWTH_WINDOW_DAYS)
     return {
         repo: sum(1 for stamp in stamps if stamp >= cutoff)
         for repo, stamps in series.items()
     }
 
 
-def select(series: dict[str, list[datetime]], totals: dict[str, int]) -> list[str]:
+def select(
+    series: dict[str, list[datetime]],
+    totals: dict[str, int],
+    growth: dict[str, int],
+) -> list[str]:
     """Pick the repos worth charting: biggest, and fastest-growing.
 
     Ranking on stars alone charts dead weight — several top-ranked repositories
@@ -243,8 +265,6 @@ def select(series: dict[str, list[datetime]], totals: dict[str, int]) -> list[st
     and the top MAX_SERIES by the sum are charted. A repo earns its line by
     being large, by being on a tear, or by being a bit of both.
     """
-    growth = recent_growth(series)
-
     max_total = max(totals[repo] for repo in series) or 1
     max_growth = max(growth.values()) or 1
 
@@ -288,14 +308,15 @@ def axis_label(value: int) -> str:
 
 
 def render(
-    theme: dict,
+    theme: Theme,
     series: dict[str, list[datetime]],
     order: list[str],
     totals: dict[str, int],
     growth: dict[str, int],
+    snapshot_at: datetime,
 ) -> str:
     t_min = min(series[repo][0] for repo in order)
-    t_max = datetime.now(timezone.utc)
+    t_max = snapshot_at
     span = max((t_max - t_min).total_seconds(), 1)
 
     ticks = [
@@ -384,7 +405,11 @@ def render(
         if tick.year not in seen_years:
             seen_years.add(tick.year)
             year_marks.append((i, tick.strftime("%b %Y") if i == 0 else str(tick.year)))
-    year_marks.append((SAMPLES - 1, ticks[-1].strftime("%b %Y")))
+    final_mark = (SAMPLES - 1, ticks[-1].strftime("%b %Y"))
+    if year_marks[-1][0] == final_mark[0]:
+        year_marks[-1] = final_mark
+    else:
+        year_marks.append(final_mark)
 
     for i, label in year_marks:
         x = x_of(i)
@@ -493,16 +518,17 @@ def main() -> int:
         print("no stargazer data; leaving the chart untouched", file=sys.stderr)
         return 1
 
-    order = select(series, totals)
-    growth = recent_growth(series)
+    snapshot_at = datetime.now(timezone.utc)
+    growth = recent_growth(series, snapshot_at)
+    order = select(series, totals, growth)
     print(
         "  charting: "
         + ", ".join(f"{r} ({totals[r]}, +{growth[r]})" for r in reversed(order)),
         file=sys.stderr,
     )
 
-    dark = render(DARK, series, order, totals, growth)
-    light = render(LIGHT, series, order, totals, growth)
+    dark = render(DARK, series, order, totals, growth, snapshot_at)
+    light = render(LIGHT, series, order, totals, growth, snapshot_at)
     write_atomically(REPO_ROOT / "star_history.svg", dark)
     write_atomically(REPO_ROOT / "star_history-light.svg", light)
     return 0
