@@ -158,27 +158,27 @@ def discover_clones(root: Path, owner: str, wanted: set[str]) -> dict[str, Path]
     except OSError as exc:
         raise RuntimeError(f"could not scan projects root {root}: {exc}") from exc
 
-    wanted_lower = {name.lower(): name for name in wanted}
+    wanted_lower = {name.casefold(): name for name in wanted}
     clones: dict[str, Path] = {}
+
+    def clone_rank(path: Path, canonical: str) -> tuple[bool, str, str]:
+        """Prefer the canonical directory name, then a stable lexical fallback."""
+        return (
+            path.name.casefold() != canonical.casefold(),
+            path.name.casefold(),
+            path.name,
+        )
+
     for child in sorted(children, key=lambda path: (path.name.casefold(), path.name)):
         if not child.is_dir() or not (child / ".git").exists():
             continue
         remote_name = remote_repo_name(child, owner)
-        canonical = wanted_lower.get((remote_name or "").lower())
+        canonical = wanted_lower.get((remote_name or "").casefold())
         if canonical:
             existing = clones.get(canonical)
-            candidate_rank = (
-                child.name.casefold() != canonical.casefold(),
-                child.name.casefold(),
-                child.name,
-            )
-            existing_rank = (
-                existing is None
-                or existing.name.casefold() != canonical.casefold(),
-                existing.name.casefold() if existing is not None else "",
-                existing.name if existing is not None else "",
-            )
-            if existing is None or candidate_rank < existing_rank:
+            if existing is None or clone_rank(child, canonical) < clone_rank(
+                existing, canonical
+            ):
                 clones[canonical] = child
     return clones
 

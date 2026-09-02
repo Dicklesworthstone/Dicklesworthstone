@@ -4,6 +4,7 @@ import http.client
 import json
 import os
 import stat
+import subprocess
 import tempfile
 import unittest
 import urllib.request
@@ -127,6 +128,32 @@ class RecentActivityTests(unittest.TestCase):
         with patch.object(recent_activity, "git", side_effect=fake_git):
             recent_activity.fetch_default_branch(Path("/repo"), "main")
         self.assertIn("--unshallow", calls[2])
+
+    def test_fetch_default_branch_retries_a_transient_fetch_failure(self) -> None:
+        calls: list[tuple[str, ...]] = []
+        fetch_attempts = 0
+
+        def fake_git(_repo: Path, *args: str) -> str:
+            nonlocal fetch_attempts
+            calls.append(args)
+            if args == ("rev-parse", "--is-shallow-repository"):
+                return "false\n"
+            if args and args[0] == "fetch":
+                fetch_attempts += 1
+                if fetch_attempts == 1:
+                    raise subprocess.CalledProcessError(1, args)
+            return ""
+
+        with (
+            patch.object(recent_activity, "git", side_effect=fake_git),
+            patch.object(recent_activity.time, "sleep") as sleep_mock,
+        ):
+            recent_activity.fetch_default_branch(Path("/repo"), "main")
+        self.assertEqual(fetch_attempts, 2)
+        self.assertEqual(
+            calls.count(("rev-parse", "--is-shallow-repository")), 2
+        )
+        sleep_mock.assert_called_once_with(2)
 
     def test_remote_parser_rejects_lookalike_hosts(self) -> None:
         parse = recent_activity.github_remote_repo_name
@@ -370,6 +397,21 @@ class ReadmeActivityTests(unittest.TestCase):
 
 
 class StarHistoryTests(unittest.TestCase):
+    def test_github_api_call_retries_a_transient_failure(self) -> None:
+        failed = subprocess.CompletedProcess([], 1, "", "HTTP 502")
+        succeeded = subprocess.CompletedProcess([], 0, "payload", "")
+        with (
+            patch.object(
+                star_history.subprocess,
+                "run",
+                side_effect=[failed, succeeded],
+            ) as run_mock,
+            patch.object(star_history.time, "sleep") as sleep_mock,
+        ):
+            self.assertEqual(star_history.gh(["api", "endpoint"]), "payload")
+        self.assertEqual(run_mock.call_count, 2)
+        sleep_mock.assert_called_once_with(2)
+
     def test_candidate_pagination_requires_complete_unique_metadata(self) -> None:
         pages = [
             {

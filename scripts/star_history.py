@@ -173,18 +173,18 @@ def gh(args: list[str]) -> str:
 
 def candidate_repos() -> list[tuple[str, int]]:
     """All public, non-fork repos ordered by stars."""
-    query = f"""
-    query($login: String!, $after: String) {{
-      user(login: $login) {{
+    query = """
+    query($login: String!, $after: String) {
+      user(login: $login) {
         repositories(privacy: PUBLIC, isFork: false, ownerAffiliations: OWNER,
                      first: 100, after: $after,
-                     orderBy: {{field: STARGAZERS, direction: DESC}}) {{
+                     orderBy: {field: STARGAZERS, direction: DESC}) {
           totalCount
-          nodes {{ name stargazerCount }}
-          pageInfo {{ endCursor hasNextPage }}
-        }}
-      }}
-    }}
+          nodes { name stargazerCount }
+          pageInfo { endCursor hasNextPage }
+        }
+      }
+    }
     """
     candidates: list[tuple[str, int]] = []
     seen: set[str] = set()
