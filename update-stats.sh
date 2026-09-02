@@ -158,6 +158,10 @@ FOLLOWING_FMT=$(fmt "$FOLLOWING")
 README_STARS_LABEL="$(fmt $(( (TOTAL_STARS / 10) * 10 )))+"
 README_FOLLOWERS_LABEL="$(fmt $(( (FOLLOWERS / 100) * 100 )))+"
 X_FOLLOWERS_LABEL="${X_FOLLOWERS_LABEL:-48.7K}"
+if ! [[ "$X_FOLLOWERS_LABEL" =~ ^([0-9]+|[0-9]{1,3}(,[0-9]{3})+)(\.[0-9]+)?[KkMm]?\+?$ ]]; then
+  echo "Invalid X follower label: ${X_FOLLOWERS_LABEL:-<empty>}" >&2
+  exit 1
+fi
 
 echo "=== Fetching Discord member count ==="
 DISCORD_INVITE_CODE="${DISCORD_INVITE_CODE:-gnCHsYDR25}"
@@ -183,6 +187,13 @@ RECENT_REPOS_JSON_CONTENT=$(gh repo list "$USERNAME" \
   --limit 1000 \
   --visibility public \
   --json name,description,primaryLanguage,defaultBranchRef,pushedAt,updatedAt,stargazerCount,isArchived,isFork,url)
+RECENT_REPO_COUNT=$(printf '%s' "$RECENT_REPOS_JSON_CONTENT" | jq -r \
+  'if type == "array" then length else error("repository metadata is not an array") end')
+require_integer_at_least "public repository metadata count" "$RECENT_REPO_COUNT" 1
+if (( 10#$RECENT_REPO_COUNT != 10#$PUBLIC_REPOS )); then
+  echo "GitHub repository metadata was incomplete: expected ${PUBLIC_REPOS}, received ${RECENT_REPO_COUNT}" >&2
+  exit 1
+fi
 export RECENT_REPOS_JSON_CONTENT
 if RECENT_ACTIVITY_JSON_CONTENT=$(printf '%s' "$RECENT_REPOS_JSON_CONTENT" | python3 scripts/recent_activity.py); then
   export RECENT_ACTIVITY_JSON_CONTENT
@@ -247,6 +258,8 @@ TOTAL_BYTES=0
 for lang in "${!LANG_BYTES[@]}"; do
   TOTAL_BYTES=$((TOTAL_BYTES + LANG_BYTES[$lang]))
 done
+require_integer_at_least "language byte count" "$TOTAL_BYTES" 1
+require_integer_at_least "repositories with language data" "$TOTAL_LANG_REPOS" 1
 
 # Build sorted list
 SORTED_LANGS=""

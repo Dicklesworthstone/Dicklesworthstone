@@ -252,6 +252,28 @@ class ReadmeActivityTests(unittest.TestCase):
             f"{start}\nnew\n{end}",
         )
 
+    def test_generated_section_rejects_orphaned_markers(self) -> None:
+        start = "<!-- BEGIN AUTO-TEST -->"
+        end = "<!-- END AUTO-TEST -->"
+        with self.assertRaises(SystemExit):
+            update_readme.replace_generated_section(
+                f"heading\n{end}\nfooter",
+                start,
+                end,
+                "new",
+                "heading\\n",
+                "footer",
+            )
+
+    def test_legacy_section_migration_rejects_duplicate_boundaries(self) -> None:
+        with self.assertRaises(SystemExit):
+            update_readme.replace_section_range(
+                "heading\nold\nfooter\nheading\nold\nfooter",
+                "heading\\n",
+                "footer",
+                "new",
+            )
+
     def test_readme_atomic_write_preserves_permissions(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             target = Path(temporary) / "README.md"
@@ -271,6 +293,26 @@ class ReadmeActivityTests(unittest.TestCase):
         )
         self.assertIsNone(update_readme.normalize_writing_href("https://[malformed"))
 
+    def test_rendered_writing_cards_are_extracted_without_next_metadata(self) -> None:
+        page = """
+        <a href="/writing/one"><article>
+          <h2>One &amp; Only</h2><p>A <em>careful</em> blurb.</p>
+        </article></a>
+        <a href="https://example.com/writing/trap"><article>
+          <h2>Trap</h2><p>Wrong host.</p>
+        </article></a>
+        """
+        self.assertEqual(
+            update_readme.extract_rendered_writing_items(page),
+            [
+                {
+                    "title": "One & Only",
+                    "href": "https://www.jeffreyemanuel.com/writing/one",
+                    "blurb": "A careful blurb.",
+                }
+            ],
+        )
+
     def test_writing_fetch_is_bounded_and_network_failures_are_nonfatal(self) -> None:
         response = MagicMock()
         response.__enter__.return_value.read.return_value = b"x" * (
@@ -287,6 +329,16 @@ class ReadmeActivityTests(unittest.TestCase):
 
 
 class StarHistoryTests(unittest.TestCase):
+    def test_positive_star_count_requires_timeline_data(self) -> None:
+        with (
+            patch.object(
+                star_history, "candidate_repos", return_value=[("example", 3)]
+            ),
+            patch.object(star_history, "starred_at", return_value=[]),
+            self.assertRaises(RuntimeError),
+        ):
+            star_history.main()
+
     def test_stargazer_pages_are_deduplicated_by_login(self) -> None:
         raw = (
             "alice\t2026-01-01T00:00:00Z\n"

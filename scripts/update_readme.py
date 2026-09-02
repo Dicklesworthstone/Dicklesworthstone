@@ -14,6 +14,7 @@ import sys
 import tempfile
 import urllib.request
 from datetime import datetime
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qsl, quote, urlencode, urljoin, urlparse
@@ -224,6 +225,12 @@ def between_markers(text: str, start: str, end: str, block: str) -> str:
 def replace_section_range(
     text: str, start_pattern: str, end_pattern: str, replacement: str
 ) -> str:
+    start_matches = list(re.finditer(start_pattern, text, re.MULTILINE))
+    end_matches = list(re.finditer(end_pattern, text, re.MULTILINE))
+    if len(start_matches) != 1 or len(end_matches) != 1:
+        raise SystemExit(
+            "Expected exactly one README section boundary pair for replacement"
+        )
     pattern = re.compile(
         f"(?P<start>{start_pattern}).*?(?P<end>{end_pattern})",
         re.DOTALL,
@@ -236,6 +243,25 @@ def replace_section_range(
     if count != 1:
         raise SystemExit("Could not locate README section range for replacement")
     return updated
+
+
+def replace_generated_section(
+    text: str,
+    start: str,
+    end: str,
+    block: str,
+    legacy_start_pattern: str,
+    legacy_end_pattern: str,
+) -> str:
+    """Refresh a marked block, migrating only when neither marker exists."""
+    if start in text or end in text:
+        return between_markers(text, start, end, block)
+    return replace_section_range(
+        text,
+        legacy_start_pattern,
+        legacy_end_pattern,
+        f"{start}\n{block}\n{end}",
+    )
 
 
 def round_badge_line(
@@ -650,6 +676,91 @@ def extract_json_array(text: str, marker: str) -> list[dict[str, Any]]:
     return []
 
 
+class WritingPageParser(HTMLParser):
+    """Extract article-card text from the server-rendered writing page."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.items: list[dict[str, str]] = []
+        self.href: str | None = None
+        self.in_article = False
+        self.heading_tag: str | None = None
+        self.in_blurb = False
+        self.title_parts: list[str] = []
+        self.blurb_parts: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attributes = dict(attrs)
+        if tag == "a":
+            href = attributes.get("href")
+            if isinstance(href, str) and "/writing/" in href:
+                self.href = href
+                self.in_article = False
+                self.heading_tag = None
+                self.in_blurb = False
+                self.title_parts = []
+                self.blurb_parts = []
+        elif self.href is not None and tag == "article":
+            self.in_article = True
+        elif (
+            self.in_article
+            and self.heading_tag is None
+            and tag
+            in {
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6",
+            }
+        ):
+            self.heading_tag = tag
+        elif self.in_article and tag == "p" and not self.blurb_parts:
+            self.in_blurb = True
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == self.heading_tag:
+            self.heading_tag = None
+        elif tag == "p":
+            self.in_blurb = False
+        elif tag == "article":
+            self.in_article = False
+        elif tag == "a" and self.href is not None:
+            title = "".join(self.title_parts).strip()
+            blurb = "".join(self.blurb_parts).strip()
+            if title:
+                self.items.append({"title": title, "href": self.href, "blurb": blurb})
+            self.href = None
+            self.in_article = False
+            self.heading_tag = None
+            self.in_blurb = False
+
+    def handle_data(self, data: str) -> None:
+        if self.heading_tag is not None:
+            self.title_parts.append(data)
+        elif self.in_blurb:
+            self.blurb_parts.append(data)
+
+
+def extract_rendered_writing_items(raw: str) -> list[dict[str, Any]]:
+    parser = WritingPageParser()
+    parser.feed(raw)
+    parser.close()
+
+    items: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for item in parser.items:
+        href = normalize_writing_href(item.get("href"))
+        if href is None or href in seen:
+            continue
+        seen.add(href)
+        normalized: dict[str, Any] = dict(item)
+        normalized["href"] = href
+        items.append(normalized)
+    return items
+
+
 def fetch_writing_items() -> list[dict[str, Any]]:
     try:
         parsed_url = urlparse(WRITING_URL)
@@ -670,6 +781,13 @@ def fetch_writing_items() -> list[dict[str, Any]]:
         return []
     raw = payload.decode("utf-8", errors="replace")
 
+    rendered_items = extract_rendered_writing_items(raw)
+    if rendered_items:
+        return rendered_items
+
+    # Older deployments exposed explicit metadata arrays in the Next.js
+    # hydration payload. Retain that path as a compatibility fallback when the
+    # server-rendered article cards are unavailable.
     decoded = unescape_next_payload(raw)
     items = []
     seen = set()
@@ -890,30 +1008,28 @@ def main() -> None:
     if recent_block:
         start = "<!-- BEGIN AUTO-BUILDING-NOW -->"
         end = "<!-- END AUTO-BUILDING-NOW -->"
-        if start in text:
-            text = between_markers(text, start, end, recent_block)
-        else:
-            text = replace_section_range(
-                text,
-                r"## What I'm Building Now\n\n",
-                r"### Live Demos",
-                f"{start}\n{recent_block}\n{end}",
-            )
+        text = replace_generated_section(
+            text,
+            start,
+            end,
+            recent_block,
+            r"## What I'm Building Now\n\n",
+            r"### Live Demos",
+        )
 
     writing_block = build_writing_block()
     if writing_block:
         start = "<!-- BEGIN AUTO-WRITING -->"
         end = "<!-- END AUTO-WRITING -->"
-        if start in text:
-            text = between_markers(text, start, end, writing_block)
-        else:
-            text = replace_section_range(
-                text,
-                r"Selected essays from \[jeffreyemanuel\.com/writing\]"
-                r"\(https://www\.jeffreyemanuel\.com/writing\):\n\n",
-                r"---\n\n## GitHub Activity",
-                f"{start}\n{writing_block}\n{end}",
-            )
+        text = replace_generated_section(
+            text,
+            start,
+            end,
+            writing_block,
+            r"Selected essays from \[jeffreyemanuel\.com/writing\]"
+            r"\(https://www\.jeffreyemanuel\.com/writing\):\n\n",
+            r"---\n\n## GitHub Activity",
+        )
 
     if text != original:
         write_atomically(README, text)

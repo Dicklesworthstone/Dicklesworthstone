@@ -510,6 +510,11 @@ def main() -> int:
     for repo, stars in candidates:
         print(f"  fetching {repo} ({stars} stars)...", file=sys.stderr)
         stamps = starred_at(repo)
+        if stars > 0 and not stamps:
+            raise RuntimeError(
+                f"GitHub returned no stargazer timestamps for {repo} "
+                f"despite reporting {stars} stars"
+            )
         if stamps:
             series[repo] = stamps
             totals[repo] = len(stamps)
