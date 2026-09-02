@@ -35,10 +35,22 @@ require_integer_at_least() {
     exit 1
   fi
 }
+gh_api() {
+  local attempt result
+  for attempt in 1 2 3; do
+    if result=$(gh api "$@"); then
+      printf '%s' "$result"
+      return 0
+    fi
+    echo "  GitHub API attempt $attempt failed" >&2
+    [ "$attempt" -lt 3 ] && sleep $((attempt * 2))
+  done
+  return 1
+}
 fetch_public_commit_count() {
   local attempt result count
   for attempt in 1 2 3; do
-    if result=$(gh api -X GET search/commits -f q="$COMMITS_SEARCH_QUERY" -f per_page=1); then
+    if result=$(gh_api -X GET search/commits -f q="$COMMITS_SEARCH_QUERY" -f per_page=1); then
       count=$(printf '%s' "$result" | jq -r '
         if (.incomplete_results == false)
           and ((.total_count | type) == "number")
@@ -68,14 +80,14 @@ write_atomically() {
 }
 
 echo "=== Fetching user profile ==="
-PROFILE=$(gh api "users/${USERNAME}")
+PROFILE=$(gh_api "users/${USERNAME}")
 FOLLOWERS=$(echo "$PROFILE" | jq -r '.followers')
 FOLLOWING=$(echo "$PROFILE" | jq -r '.following')
 PUBLIC_REPOS=$(echo "$PROFILE" | jq -r '.public_repos')
 
 echo "=== Fetching public non-fork project count ==="
 # shellcheck disable=SC2016
-OPEN_SOURCE_PROJECTS=$(gh api graphql -f login="$USERNAME" -f query='query($login: String!) {
+OPEN_SOURCE_PROJECTS=$(gh_api graphql -f login="$USERNAME" -f query='query($login: String!) {
   user(login: $login) {
     repositories(ownerAffiliations: OWNER, isFork: false, privacy: PUBLIC) {
       totalCount
@@ -98,9 +110,9 @@ STARS_QUERY='query($login: String!, $after: String) {
 }'
 while true; do
   if [ -z "$CURSOR" ]; then
-    RESULT=$(gh api graphql -f query="$STARS_QUERY" -f login="$USERNAME")
+    RESULT=$(gh_api graphql -f query="$STARS_QUERY" -f login="$USERNAME")
   else
-    RESULT=$(gh api graphql -f query="$STARS_QUERY" -f login="$USERNAME" -f after="$CURSOR")
+    RESULT=$(gh_api graphql -f query="$STARS_QUERY" -f login="$USERNAME" -f after="$CURSOR")
   fi
   PAGE_STARS=$(echo "$RESULT" | jq '[.data.user.repositories.nodes[].stargazerCount] | add // 0')
   TOTAL_STARS=$((TOTAL_STARS + PAGE_STARS))
@@ -118,7 +130,7 @@ done
 
 echo "=== Fetching contributions ==="
 # shellcheck disable=SC2016
-CONTRIB=$(gh api graphql -f query='query($login: String!) { user(login: $login) { contributionsCollection { contributionCalendar { totalContributions } } } }' -f login="$USERNAME")
+CONTRIB=$(gh_api graphql -f query='query($login: String!) { user(login: $login) { contributionsCollection { contributionCalendar { totalContributions } } } }' -f login="$USERNAME")
 CONTRIBUTIONS=$(echo "$CONTRIB" | jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions')
 CONTRIBUTIONS=${CONTRIBUTIONS_OVERRIDE:-$CONTRIBUTIONS}
 README_CONTRIBUTIONS_RAW=$CONTRIBUTIONS
@@ -226,9 +238,9 @@ LANG_QUERY='query($login: String!, $after: String) {
 }'
 while true; do
   if [ -z "$CURSOR" ]; then
-    REPOS_JSON=$(gh api graphql -f query="$LANG_QUERY" -f login="$USERNAME")
+    REPOS_JSON=$(gh_api graphql -f query="$LANG_QUERY" -f login="$USERNAME")
   else
-    REPOS_JSON=$(gh api graphql -f query="$LANG_QUERY" -f login="$USERNAME" -f after="$CURSOR")
+    REPOS_JSON=$(gh_api graphql -f query="$LANG_QUERY" -f login="$USERNAME" -f after="$CURSOR")
   fi
 
   # Aggregate language bytes and colors

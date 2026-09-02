@@ -23,6 +23,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -180,17 +181,24 @@ def metadata_default_branch(repo: dict[str, Any]) -> str:
 def fetch_default_branch(repo: Path, branch: str) -> str:
     """Fetch and return the current remote-tracking default-branch ref."""
     git(repo, "check-ref-format", "--branch", branch)
-    shallow = git(repo, "rev-parse", "--is-shallow-repository").strip()
-    if shallow not in {"true", "false"}:
-        raise RuntimeError("Git returned an invalid shallow-repository status")
     remote_ref = f"refs/remotes/origin/{branch}"
-    fetch_args = ["fetch", "--quiet", "--no-tags"]
-    if shallow == "true":
-        # Otherwise a window that predates the shallow boundary is diffed
-        # against an empty tree and looks much larger than it really is.
-        fetch_args.append("--unshallow")
-    fetch_args.extend(("origin", f"+refs/heads/{branch}:{remote_ref}"))
-    git(repo, *fetch_args)
+    for attempt in range(1, 4):
+        shallow = git(repo, "rev-parse", "--is-shallow-repository").strip()
+        if shallow not in {"true", "false"}:
+            raise RuntimeError("Git returned an invalid shallow-repository status")
+        fetch_args = ["fetch", "--quiet", "--no-tags"]
+        if shallow == "true":
+            # Otherwise a window that predates the shallow boundary is diffed
+            # against an empty tree and looks much larger than it really is.
+            fetch_args.append("--unshallow")
+        fetch_args.extend(("origin", f"+refs/heads/{branch}:{remote_ref}"))
+        try:
+            git(repo, *fetch_args)
+            break
+        except (subprocess.SubprocessError, OSError):
+            if attempt == 3:
+                raise
+            time.sleep(attempt * 2)
     git(repo, "rev-parse", "--verify", f"{remote_ref}^{{commit}}")
     return remote_ref
 

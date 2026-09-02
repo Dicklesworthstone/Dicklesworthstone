@@ -782,15 +782,13 @@ def fetch_writing_items() -> list[dict[str, Any]]:
     raw = payload.decode("utf-8", errors="replace")
 
     rendered_items = extract_rendered_writing_items(raw)
-    if rendered_items:
-        return rendered_items
-
     # Older deployments exposed explicit metadata arrays in the Next.js
-    # hydration payload. Retain that path as a compatibility fallback when the
-    # server-rendered article cards are unavailable.
+    # hydration payload. Retain that path as a compatibility source, and merge
+    # it with rendered cards: streaming or partially cached HTML can contain
+    # only the first rendered card even though the hydration data is complete.
     decoded = unescape_next_payload(raw)
-    items = []
-    seen = set()
+    items = list(rendered_items)
+    seen = {item["href"] for item in rendered_items}
     for marker in ['"featured":[', '"archive":[']:
         for item in extract_json_array(decoded, marker):
             if not isinstance(item, dict):

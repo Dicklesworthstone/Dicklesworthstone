@@ -26,6 +26,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import TypedDict
@@ -34,7 +35,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 USERNAME = "Dicklesworthstone"
 
 MAX_SERIES = 14
-CANDIDATES = 20  # top-by-stars pool we pull timelines for
+INITIAL_CANDIDATES = 20
 GROWTH_WINDOW_DAYS = 90
 SAMPLES = 260  # points per line — dense enough that the curves read as curves
 
@@ -147,63 +148,109 @@ LIGHT: Theme = {
 
 
 def gh(args: list[str]) -> str:
-    try:
-        result = subprocess.run(
-            ["gh", *args], capture_output=True, text=True, check=False, timeout=180
-        )
-    except subprocess.TimeoutExpired as exc:
-        raise RuntimeError("GitHub API request timed out") from exc
-    if result.returncode != 0:
-        raise RuntimeError(f"gh {' '.join(args)} failed: {result.stderr.strip()}")
-    return result.stdout
+    last_error = ""
+    for attempt in range(1, 4):
+        try:
+            result = subprocess.run(
+                ["gh", *args], capture_output=True, text=True, check=False, timeout=180
+            )
+        except subprocess.TimeoutExpired:
+            last_error = "request timed out"
+        except OSError as exc:
+            raise RuntimeError(f"could not run gh: {exc}") from exc
+        else:
+            if result.returncode == 0:
+                return result.stdout
+            last_error = result.stderr.strip() or f"gh exited {result.returncode}"
+        if attempt < 3:
+            print(
+                f"  GitHub API attempt {attempt} failed; retrying...",
+                file=sys.stderr,
+            )
+            time.sleep(attempt * 2)
+    raise RuntimeError(f"GitHub API request failed after 3 attempts: {last_error}")
 
 
 def candidate_repos() -> list[tuple[str, int]]:
-    """Public, non-fork repos ordered by stars — one request."""
+    """All public, non-fork repos ordered by stars."""
     query = f"""
-    query($login: String!) {{
+    query($login: String!, $after: String) {{
       user(login: $login) {{
-        repositories(privacy: PUBLIC, isFork: false, first: {CANDIDATES},
+        repositories(privacy: PUBLIC, isFork: false, ownerAffiliations: OWNER,
+                     first: 100, after: $after,
                      orderBy: {{field: STARGAZERS, direction: DESC}}) {{
+          totalCount
           nodes {{ name stargazerCount }}
+          pageInfo {{ endCursor hasNextPage }}
         }}
       }}
     }}
     """
-    try:
-        payload = json.JSONDecoder().decode(
-            gh(
-                [
-                    "api",
-                    "graphql",
-                    "-f",
-                    f"query={query}",
-                    "-f",
-                    f"login={USERNAME}",
-                ]
-            )
-        )
-        nodes = payload["data"]["user"]["repositories"]["nodes"]
-    except (json.JSONDecodeError, KeyError, TypeError) as exc:
-        raise RuntimeError("GitHub returned invalid repository metadata") from exc
-    if not isinstance(nodes, list):
-        raise TypeError("GitHub repository metadata nodes must be a list")
-    candidates = []
-    for node in nodes:
-        if not isinstance(node, dict):
-            raise TypeError("GitHub repository metadata node must be an object")
-        name = node.get("name")
-        stars = node.get("stargazerCount")
+    candidates: list[tuple[str, int]] = []
+    seen: set[str] = set()
+    cursor: str | None = None
+    expected_count: int | None = None
+    while True:
+        args = [
+            "api",
+            "graphql",
+            "-f",
+            f"query={query}",
+            "-f",
+            f"login={USERNAME}",
+        ]
+        if cursor is not None:
+            args.extend(("-f", f"after={cursor}"))
+        try:
+            payload = json.JSONDecoder().decode(gh(args))
+            repositories = payload["data"]["user"]["repositories"]
+            nodes = repositories["nodes"]
+            total_count = repositories["totalCount"]
+            page_info = repositories["pageInfo"]
+            has_next = page_info["hasNextPage"]
+            next_cursor = page_info["endCursor"]
+        except (json.JSONDecodeError, KeyError, TypeError) as exc:
+            raise RuntimeError("GitHub returned invalid repository metadata") from exc
         if (
-            not isinstance(name, str)
-            or not isinstance(stars, int)
-            or isinstance(stars, bool)
+            not isinstance(nodes, list)
+            or not isinstance(total_count, int)
+            or isinstance(total_count, bool)
+            or total_count < 0
+            or not isinstance(has_next, bool)
+            or (has_next and (not isinstance(next_cursor, str) or not next_cursor))
         ):
-            raise TypeError("GitHub returned invalid repository field types")
-        if not name or stars < 0:
-            raise ValueError("GitHub returned invalid repository field values")
-        candidates.append((name, stars))
-    return candidates
+            raise TypeError("GitHub returned invalid repository pagination data")
+        if expected_count is None:
+            expected_count = total_count
+        elif total_count != expected_count:
+            raise RuntimeError("GitHub repository count changed during pagination")
+        for node in nodes:
+            if not isinstance(node, dict):
+                raise TypeError("GitHub repository metadata node must be an object")
+            name = node.get("name")
+            stars = node.get("stargazerCount")
+            if (
+                not isinstance(name, str)
+                or not isinstance(stars, int)
+                or isinstance(stars, bool)
+            ):
+                raise TypeError("GitHub returned invalid repository field types")
+            folded_name = name.casefold()
+            if not name or stars < 0 or folded_name in seen:
+                raise ValueError("GitHub returned invalid repository field values")
+            seen.add(folded_name)
+            candidates.append((name, stars))
+        if not has_next:
+            break
+        if next_cursor == cursor:
+            raise RuntimeError("GitHub returned a repeated repository cursor")
+        cursor = next_cursor
+    if len(candidates) != expected_count:
+        raise RuntimeError(
+            "GitHub returned incomplete repository metadata: "
+            f"expected {expected_count}, received {len(candidates)}"
+        )
+    return sorted(candidates, key=lambda item: (-item[1], item[0].casefold()))
 
 
 def starred_at(repo: str) -> list[datetime]:
@@ -211,7 +258,11 @@ def starred_at(repo: str) -> list[datetime]:
     raw = gh(
         [
             "api",
+            "-X",
+            "GET",
             f"repos/{USERNAME}/{repo}/stargazers",
+            "-f",
+            "per_page=100",
             "-H",
             "Accept: application/vnd.github.star+json",
             "--paginate",
@@ -274,6 +325,43 @@ def select(
     chosen = sorted(series, key=score, reverse=True)[:MAX_SERIES]
     # Draw the biggest last so it lands on top of the pile.
     return sorted(chosen, key=lambda r: totals[r])
+
+
+def remaining_cannot_qualify(
+    remaining: list[tuple[str, int]],
+    series: dict[str, list[datetime]],
+    totals: dict[str, int],
+    growth: dict[str, int],
+) -> bool:
+    """Prove that even an all-recent remaining star total cannot make the cut."""
+    if len(series) < MAX_SERIES:
+        return False
+    remaining_total = max((stars for _repo, stars in remaining), default=0)
+    if remaining_total == 0:
+        return True
+
+    # A not-yet-fetched repository cannot have gained more stars during the
+    # growth window than its total star count. Use that deliberately generous
+    # upper bound, and simultaneously penalize the fetched candidates with the
+    # largest growth denominator the remaining pool could introduce. If the
+    # best possible remaining score is still below the fourteenth fetched
+    # score, downloading more timelines cannot change the selected set.
+    max_total = max(max(totals[repo] for repo in series), remaining_total, 1)
+    current_max_growth = max(growth.values(), default=0)
+    possible_max_growth = max(current_max_growth, remaining_total, 1)
+    fetched_lower_bounds = sorted(
+        (
+            totals[repo] / max_total + growth[repo] / possible_max_growth
+            for repo in series
+        ),
+        reverse=True,
+    )
+    cutoff = fetched_lower_bounds[MAX_SERIES - 1]
+    remaining_upper_bound = (
+        remaining_total / max_total
+        + remaining_total / max(current_max_growth, remaining_total, 1)
+    )
+    return remaining_upper_bound < cutoff
 
 
 def cumulative(stamps: list[datetime], ticks: list[datetime]) -> list[int]:
@@ -507,7 +595,9 @@ def main() -> int:
     totals = dict(candidates)
 
     series: dict[str, list[datetime]] = {}
-    for repo, stars in candidates:
+    snapshot_at = datetime.now(timezone.utc)
+    growth: dict[str, int] = {}
+    for index, (repo, stars) in enumerate(candidates):
         print(f"  fetching {repo} ({stars} stars)...", file=sys.stderr)
         stamps = starred_at(repo)
         if stars > 0 and not stamps:
@@ -518,13 +608,22 @@ def main() -> int:
         if stamps:
             series[repo] = stamps
             totals[repo] = len(stamps)
+            growth = recent_growth(series, snapshot_at)
+        fetched_count = index + 1
+        if fetched_count >= INITIAL_CANDIDATES and remaining_cannot_qualify(
+            candidates[fetched_count:], series, totals, growth
+        ):
+            print(
+                f"  selection proven after {fetched_count} of "
+                f"{len(candidates)} repository timelines",
+                file=sys.stderr,
+            )
+            break
 
     if not series:
         print("no stargazer data; leaving the chart untouched", file=sys.stderr)
         return 1
 
-    snapshot_at = datetime.now(timezone.utc)
-    growth = recent_growth(series, snapshot_at)
     order = select(series, totals, growth)
     print(
         "  charting: "

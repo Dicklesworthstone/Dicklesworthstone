@@ -327,8 +327,78 @@ class ReadmeActivityTests(unittest.TestCase):
         with patch.object(urllib.request, "urlopen", return_value=response):
             self.assertEqual(update_readme.fetch_writing_items(), [])
 
+    def test_writing_fetch_merges_partial_rendering_with_hydration_data(self) -> None:
+        page = b"""
+        <a href="/writing/rendered"><article>
+          <h2>Rendered</h2><p>Already in the HTML.</p>
+        </article></a>
+        <script>{"featured":[
+          {"title":"Rendered","href":"/writing/rendered","blurb":"Duplicate"},
+          {"title":"Hydrated","href":"/writing/hydrated","blurb":"Recovered"}
+        ],"archive":[]}</script>
+        """
+        response = MagicMock()
+        response.__enter__.return_value.read.return_value = page
+        with patch.object(urllib.request, "urlopen", return_value=response):
+            items = update_readme.fetch_writing_items()
+        self.assertEqual(
+            [item["href"] for item in items],
+            [
+                "https://www.jeffreyemanuel.com/writing/rendered",
+                "https://www.jeffreyemanuel.com/writing/hydrated",
+            ],
+        )
+
 
 class StarHistoryTests(unittest.TestCase):
+    def test_candidate_pagination_requires_complete_unique_metadata(self) -> None:
+        pages = [
+            {
+                "data": {
+                    "user": {
+                        "repositories": {
+                            "totalCount": 2,
+                            "nodes": [{"name": "second", "stargazerCount": 2}],
+                            "pageInfo": {"hasNextPage": True, "endCursor": "next"},
+                        }
+                    }
+                }
+            },
+            {
+                "data": {
+                    "user": {
+                        "repositories": {
+                            "totalCount": 2,
+                            "nodes": [{"name": "first", "stargazerCount": 5}],
+                            "pageInfo": {"hasNextPage": False, "endCursor": None},
+                        }
+                    }
+                }
+            },
+        ]
+        with patch.object(star_history, "gh", side_effect=map(json.dumps, pages)):
+            self.assertEqual(
+                star_history.candidate_repos(), [("first", 5), ("second", 2)]
+            )
+
+    def test_adaptive_selection_fetches_until_remaining_growth_cannot_win(self) -> None:
+        series = {
+            f"repo-{index}": [datetime(2026, 9, 1, tzinfo=UTC)]
+            for index in range(star_history.MAX_SERIES)
+        }
+        totals = {repo: 1_000 - index for index, repo in enumerate(series)}
+        growth = {repo: 500 - index for index, repo in enumerate(series)}
+        self.assertTrue(
+            star_history.remaining_cannot_qualify(
+                [("small", 10)], series, totals, growth
+            )
+        )
+        self.assertFalse(
+            star_history.remaining_cannot_qualify(
+                [("possible-spike", 900)], series, totals, growth
+            )
+        )
+
     def test_positive_star_count_requires_timeline_data(self) -> None:
         with (
             patch.object(
