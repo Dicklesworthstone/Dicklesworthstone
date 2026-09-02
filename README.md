@@ -39,6 +39,9 @@
 [![FrankenWhisper](https://img.shields.io/badge/franken--whisper.com-2b2b2b?style=flat-square&logo=audiomack&logoColor=white)](https://franken-whisper.com)
 [![ASImposium](https://img.shields.io/badge/asimposium.org-2b2b2b?style=flat-square&logo=openaccess&logoColor=white)](https://asimposium.org)
 [![ClassicPatents](https://img.shields.io/badge/classic--patents.com-2b2b2b?style=flat-square&logo=bookstack&logoColor=white)](https://classic-patents.com)
+[![FrankenMermaid](https://img.shields.io/badge/frankenmermaid.com-2b2b2b?style=flat-square&logo=mermaid&logoColor=white)](https://frankenmermaid.com)
+[![Smeared Life](https://img.shields.io/badge/smearedlife.com-2b2b2b?style=flat-square&logo=webgl&logoColor=white)](https://smearedlife.com)
+[![JazzChords](https://img.shields.io/badge/jazzchords.org-2b2b2b?style=flat-square&logo=musicbrainz&logoColor=white)](https://jazzchords.org)
 [![Discord](https://img.shields.io/badge/Flywheel_Hub-987_members-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/gnCHsYDR25)
 
 `Multi-Agent Coordination` · `Agentic Coding` · `Rust CLI Tools` · `LLM Applications` · `Terminal UI` · `FrankenSuite`
@@ -140,8 +143,12 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 | [**FrankenTTS**](https://github.com/Dicklesworthstone/franken_tts) | ![Stars](https://img.shields.io/badge/stars-40-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_tts) | Qwen3-TTS zero-shot voice cloning on CPU in pure Rust. Own int8 kernels, voice cards, WASM/iOS/FFI targets, no Python. |
 | [**FrankenNetworkX**](https://github.com/Dicklesworthstone/franken_networkx) | ![Stars](https://img.shields.io/badge/stars-23-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_networkx) | NetworkX graph library in Rust with Python bindings. |
 | [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Stars](https://img.shields.io/badge/stars-49-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankensim) | Certified simulation substrate: geometry, numerics, meshing, solvers, optimization. 126 crates, each contract-backed. |
+| [**Franken Surveillance System**](https://github.com/Dicklesworthstone/franken_surveillance_system) | ![Stars](https://img.shields.io/badge/stars-18-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_surveillance_system) | Architecture and safe-Rust scaffold for a local-first, evidence-native sensor fabric using owner-authorized cameras and capture drones. |
+| [**Franken Drone Geometry Reconstruction**](https://github.com/Dicklesworthstone/franken_drone_geometry_reconstruction) | ![Stars](https://img.shields.io/badge/stars-23-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_drone_geometry_reconstruction) | Architecture and safe-Rust scaffold for evidence-grade semantic digital twins built from owner-authorized drone video. |
 | [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Stars](https://img.shields.io/badge/stars-16-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_lean) | Lean 4 toolchain in Rust: own parser, elaborator, dual-engine kernel, VM, `.olean` and C-ABI twins. 32 crates, in progress. |
 | [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Stars](https://img.shields.io/badge/stars-23-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankengraphdb) | Property-graph storage engine in Rust: MVCC, time-travel, branches, and replication over a fountain-coded commit stream. |
+| [**FrankenGit**](https://github.com/Dicklesworthstone/frankengit) | ![Stars](https://img.shields.io/badge/stars-24-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankengit) | Source-available, Git-compatible Rust forge for humans and coding agents, with verifiable recovery and an immutable decision stream. Pre-release. |
+| [**FrankenSymPy**](https://github.com/Dicklesworthstone/frankensympy) | ![Stars](https://img.shields.io/badge/stars-2-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffrankensympy) | Planned proof-carrying symbolic mathematics system and independently implemented SymPy replacement with a Rust kernel and Python-compatible shell. |
 | [**FrankenOverlap**](https://github.com/Dicklesworthstone/franken_overlap) | ![Stars](https://img.shields.io/badge/stars-20-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_overlap) | Sparse-spectral textual overlap detection and approximate alignment. Rare-feature retrieval, anchor chaining, exact verification. |
 | [**FrankenManim**](https://github.com/Dicklesworthstone/franken_manim) | ![Stars](https://img.shields.io/badge/stars-9-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_manim) | Deterministic rewrite of 3b1b's manim. Native TeX math typesetting (no LaTeX), analytic Bezier renderer, bit-reproducible renders. |
 | [**FrankenSnowflake**](https://github.com/Dicklesworthstone/franken_snowflake) | ![Stars](https://img.shields.io/badge/stars-5-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Ffranken_snowflake) | The Snowflake driver Rust never had. 14 crates, SQL API direct, no ODBC or JDBC. |
@@ -255,6 +262,23 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 <sub>A public scientific ledger where frontier agents publish and referee</sub>
 </td>
 </tr>
+<tr>
+<td align="center" width="33%">
+<a href="https://frankenmermaid.com"><img src="https://frankenmermaid.com/gh_og_share_image.png" alt="FrankenMermaid" width="100%" /></a><br/>
+<a href="https://frankenmermaid.com"><strong>FrankenMermaid.com</strong></a><br/>
+<sub>Deterministic Mermaid-compatible diagrams rendered live by Rust and WASM</sub>
+</td>
+<td align="center" width="33%">
+<a href="https://smearedlife.com"><img src="https://smearedlife.com/og-image.png?v=3" alt="Smeared Life" width="100%" /></a><br/>
+<a href="https://smearedlife.com"><strong>SmearedLife.com</strong></a><br/>
+<sub>GPU-powered laboratory for emergent continuous cellular automata</sub>
+</td>
+<td align="center" width="33%">
+<a href="https://jazzchords.org"><img src="https://jazzchords.org/og-image.png" alt="JazzChords.org" width="100%" /></a><br/>
+<a href="https://jazzchords.org"><strong>JazzChords.org</strong></a><br/>
+<sub>Offline-first studio for composing and exploring jazz chord progressions</sub>
+</td>
+</tr>
 </table>
 
 ---
@@ -275,6 +299,7 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 | ![Stars](https://img.shields.io/badge/stars-158-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fultimate_mcp_server) | **[Ultimate MCP Server](https://github.com/Dicklesworthstone/ultimate_mcp_server)** | Unified MCP server exposing dozens of tools to frontier models. |
 | ![Stars](https://img.shields.io/badge/stars-181-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmarkdown_web_browser) | **[Markdown Web Browser](https://github.com/Dicklesworthstone/markdown_web_browser)** | Headless browser that renders modern JavaScript-heavy sites into clean Markdown for agents. |
 | ![Stars](https://img.shields.io/badge/stars-56-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fllm-tournament) | **[LLM Tournament](https://github.com/Dicklesworthstone/llm-tournament)** | Automated multi-round coding tournaments where models critique and merge each other's solutions, scored on complexity and performance. |
+| ![Stars](https://img.shields.io/badge/stars-20-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fdwarf_fortress_mcp) | **[Dwarf Fortress MCP](https://github.com/Dicklesworthstone/dwarf_fortress_mcp)** | Semantic, replayable agent control plane with an authenticated read-only DFHack bridge; mutation paths remain fail-closed. |
 
 ### Systems & Rust
 
@@ -458,6 +483,9 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 - ⚡ **[ASupersync.com](https://asupersync.com)** — Project site for ASupersync.
 - 📄 **[Franken-Markdown.com](https://franken-markdown.com)** — Live WASM playground: Markdown to HTML and PDF, entirely in your browser.
 - 🔬 **[FrankenSim.org](https://frankensim.org)** — Project site for FrankenSim, with 20 Rust kernels compiled to WebAssembly running live.
+- 📊 **[FrankenMermaid.com](https://frankenmermaid.com)** — Deterministic Mermaid-compatible diagram engine rendered live in the browser by Rust and WebAssembly.
+- 🧬 **[SmearedLife.com](https://smearedlife.com)** — WebGL2 laboratory for continuous, emergent, and transport-driven cellular automata.
+- 🎹 **[JazzChords.org](https://jazzchords.org)** — Offline-first studio for composing, arranging, auditioning, and sharing jazz chord progressions.
 - 🔬 **[BrennerBot.org](https://brennerbot.org)** — Multi-agent research orchestration using Sydney Brenner's methods.
 - 🔎 **[Franken-OCR.com](https://franken-ocr.com)** — A 3B-parameter OCR model running entirely in a browser tab.
 - 🎙️ **[Franken-Whisper.com](https://franken-whisper.com)** — Whisper transcription and speaker diarization, client-side.
