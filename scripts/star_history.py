@@ -14,7 +14,7 @@ the series ourselves, on the same schedule as the other SVGs, and commit the
 result. No third party, nothing to rate-limit, no expiry.
 
 Selection: at most MAX_SERIES repos, chosen for total stars *and* recent growth.
-Ten lines is roughly the limit of what a reader can actually follow.
+Fourteen lines still fit the dedicated legend without crowding the plot.
 """
 
 from __future__ import annotations
@@ -29,7 +29,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 USERNAME = "Dicklesworthstone"
 
-MAX_SERIES = 10
+MAX_SERIES = 14
 CANDIDATES = 20  # top-by-stars pool we pull timelines for
 GROWTH_WINDOW_DAYS = 90
 SAMPLES = 260  # points per line — dense enough that the curves read as curves
@@ -70,14 +70,15 @@ DARK = {
     "muted": "#8b949e",
     "faint": "#484f58",
     "accent": "#3fb950",
-    # Ten lines need ten hues a reader can actually tell apart. The obvious
-    # GitHub palette collapses at that size — it yields two greens and two
-    # purples that are indistinguishable at a 2px stroke — so these are spread
+# Fourteen lines need fourteen hues a reader can actually tell apart. The
+# obvious GitHub palette collapses at that size — it yields nearby greens and
+# purples that are indistinguishable at a 2px stroke — so these are spread
     # around the wheel instead, in the same order for both themes so a repo
     # keeps its colour whichever one you are looking at.
     "series": [
         "#6cb6ff", "#f0883e", "#ff7b72", "#5ed4c8", "#5bc46b",
         "#e3b341", "#c297d8", "#ff9db8", "#c49a7a", "#9aa4b0",
+        "#56d4ff", "#d4ef64", "#ff6ec7", "#8b9cff",
     ],
 }
 LIGHT = {
@@ -93,6 +94,7 @@ LIGHT = {
     "series": [
         "#0969da", "#bc4c00", "#cf222e", "#1b7c83", "#1a7f37",
         "#9a6700", "#8250df", "#bf3989", "#8d5f3d", "#57606a",
+        "#007a99", "#597a00", "#a40e66", "#4056b4",
     ],
 }
 
@@ -151,7 +153,7 @@ def recent_growth(series: dict[str, list[datetime]]) -> dict[str, int]:
 def select(series: dict[str, list[datetime]], totals: dict[str, int]) -> list[str]:
     """Pick the repos worth charting: biggest, and fastest-growing.
 
-    Ranking on stars alone charts dead weight — several of the top-ten-by-stars
+    Ranking on stars alone charts dead weight — several top-ranked repositories
     repos gained single-digit stars in the last quarter, so they contribute a
     flat line and nothing else. Ranking on growth alone charts noise, because a
     200-star repo doubling is invisible next to a 3,000-star one.
@@ -237,11 +239,11 @@ def render(theme: dict, series: dict[str, list[datetime]], order: list[str],
     out: list[str] = [
         f'<svg width="{WIDTH}" height="{HEIGHT}" viewBox="0 0 {WIDTH} {HEIGHT}" '
         f'fill="none" xmlns="http://www.w3.org/2000/svg" '
-        f'role="img" aria-label="Star history for the ten fastest-growing repositories">',
+        f'role="img" aria-label="Star history for {len(order)} leading repositories">',
         "  <defs>",
     ]
 
-    # No area fills: ten of them overlapping turns the lower half of the plot
+    # No area fills: fourteen of them overlapping turns the lower half of the plot
     # into brown mush. With this many series the lines have to carry it alone.
     out.append(
         f'    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">'
@@ -337,7 +339,7 @@ def render(theme: dict, series: dict[str, list[datetime]], order: list[str],
         )
 
     # Legend: name, total, and the quarter\'s gain — the growth column is the
-    # whole reason these ten were chosen, so it belongs on the chart.
+    # whole reason these repositories were chosen, so it belongs on the chart.
     legend_x = plot_r + 34
     legend_r = WIDTH - 30
     for row, repo in enumerate(ranked):
