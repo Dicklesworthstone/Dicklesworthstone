@@ -19,9 +19,9 @@
 
 *Building the tooling that lets dozens of AI agents ship complex projects in days.*
 
-![Stars: 31,420+](https://img.shields.io/static/v1?label=Stars&message=31%2C420%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Stars: 31,430+](https://img.shields.io/static/v1?label=Stars&message=31%2C430%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Projects: 198](https://img.shields.io/static/v1?label=Projects&message=198&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 261,995](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=261%2C995&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 262,202](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=262%2C202&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,200+](https://img.shields.io/static/v1?label=Followers&message=3%2C200%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 48.7K](https://img.shields.io/static/v1?label=X+Followers&message=48.7K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -49,7 +49,7 @@
 </div>
 
 <p align="center">
-<a href="#the-agentic-coding-flywheel">Flywheel</a> · <a href="#the-frankensuite">FrankenSuite</a> · <a href="#what-im-building-now">Building Now</a> · <a href="#open-source-highlights">Open Source</a> · <a href="#the-nvidia-short-thesis">Nvidia Thesis</a> · <a href="#writing">Writing</a> · <a href="#products">Products</a> · <a href="#philosophy">Philosophy</a> · <a href="#connect">Connect</a>
+<a href="#the-agentic-coding-flywheel">Flywheel</a> · <a href="#asupersync-the-runtime-foundation">Asupersync</a> · <a href="#the-frankensuite">FrankenSuite</a> · <a href="#what-im-building-now">Building Now</a> · <a href="#open-source-highlights">Open Source</a> · <a href="#the-nvidia-short-thesis">Nvidia Thesis</a> · <a href="#writing">Writing</a> · <a href="#products">Products</a> · <a href="#philosophy">Philosophy</a> · <a href="#connect">Connect</a>
 </p>
 
 <p align="center">
@@ -66,7 +66,7 @@
 </p>
 
 > [!NOTE]
-> **261,995 contributions in the past year**, powered by 63 AI coding agent subscription accounts (~$13.5K/month) and the Flywheel tooling below. The vast majority landed since January 2026, when the ecosystem hit critical mass.
+> **262,202 contributions in the past year**, powered by 63 AI coding agent subscription accounts (~$13.5K/month) and the Flywheel tooling below. The vast majority landed since January 2026, when the ecosystem hit critical mass.
 
 ---
 
@@ -116,6 +116,35 @@ A self-reinforcing ecosystem of 14 tools for multi-agent software development. A
 
 ---
 
+## Asupersync: The Runtime Foundation
+
+Most async runtimes focus on scheduling futures. [**Asupersync**](https://github.com/Dicklesworthstone/asupersync) starts one level higher: who owns each task, what cancellation means, when cleanup is truly finished, and which code is allowed to perform an effect. It provides a shared concurrency substrate for most of the FrankenSuite projects below—spanning storage, terminals, search, numerical computing, media, graphs, and simulation—and hosts a family of suite-wide evidence and decision tools.
+
+<p align="center">
+  <a href="https://github.com/Dicklesworthstone/asupersync"><img src="https://raw.githubusercontent.com/Dicklesworthstone/asupersync/main/asupersync_diagram.webp" alt="Asupersync architecture: regions own tasks and close to quiescence" width="700" /></a>
+</p>
+
+| Structural idea | Why it matters |
+|:----------------|:---------------|
+| **Owned concurrency** | Every runtime-spawned task belongs to a region. Closing a region waits for its children, finalizers, and registered obligations to resolve—no detached work silently outliving its owner. |
+| **Cancellation as a protocol** | Covered cooperative paths follow request → drain → finalize instead of treating cancellation as a silent `drop`. Two-phase reserve/commit primitives keep cancellation from leaving half-published effects. |
+| **Capability-scoped context** | An explicit `Cx` carries runtime authority, cancellation, budgets, and tracing, making side effects visible and controllable instead of ambient. |
+| **Reproducible concurrency** | The Lab runtime provides virtual time, deterministic scheduling, trace replay, and race-guided schedule exploration, turning timing-dependent failures into repeatable tests. |
+| **Proof-aware foundations** | A formal operational model has Lean-checked proofs for six core invariants, while `franken-kernel`, `franken-evidence`, `franken-decision`, and `frankenlab` supply shared types, evidence ledgers, decision contracts, and replay tooling across the suite. |
+
+That combination makes Asupersync more than an executor: it is a common lifecycle contract, capability boundary, and concurrency laboratory. FrankenSuite projects can reuse one model for shutdown, partial effects, supervision, evidence, and reproducible failures instead of rebuilding those rules independently.
+
+<p align="center">
+  <a href="https://asupersync.com"><strong>Project Site</strong></a> ·
+  <a href="https://docs.rs/asupersync"><strong>API Docs</strong></a> ·
+  <a href="https://dicklesworthstone.github.io/asupersync/asupersync_web_demo.html"><strong>Interactive WASM Demo</strong></a>
+</p>
+
+> [!NOTE]
+> Asupersync is experimental and pre-1.0. Its cancellation and cleanup guarantees are scoped to documented, cooperative surfaces—not arbitrary foreign calls or non-cooperative code—and its Lean proofs cover the abstract model rather than a mechanical refinement proof of the production Rust runtime.
+
+---
+
 ## The FrankenSuite
 
 Clean-room Rust reimplementations of foundational software and runtimes. Each targets drop-in compatibility with the original while adding memory safety, concurrency, and in some cases entirely new capabilities.
@@ -162,17 +191,17 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 
 | Project | Lang | 14-day activity | What it does |
 |:--------|:----:|:----------------|:-------------|
-| [**FrankenGit**](https://github.com/Dicklesworthstone/frankengit) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 2,277 commits<br>+502,133 / −0 lines | Git-compatible, agent-native, repairable, self-hostable code forge and GitHub alternative. |
-| [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 2,168 commits<br>+162,619 / −3,843 lines | A ground-up, native-Rust reimplementation of the entire Lean 4 toolchain — drop-in at the binary surfaces (.olean, C ABI, LSP, CLI), deterministic under parallelism, declaration-granular incremental, with a ≤12 KLOC dual-engine kernel that ships receipts. |
-| [**Pi Agent Rust**](https://github.com/Dicklesworthstone/pi_agent_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,108 commits<br>+279,639 / −16,926 lines | High-performance AI coding agent CLI written in Rust with zero unsafe code |
-| [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 915 commits<br>+220,365 / −12,353 lines | Plan-first Rust continuum for certified geometry, physics simulation, optimization, and rendering. |
-| [**FrankenManim**](https://github.com/Dicklesworthstone/franken_manim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 890 commits<br>+75,295 / −8,902 lines | A sovereign, deterministic rewrite of 3b1b's manim in pure Rust — native TeX math typesetting (no LaTeX), an analytic Bézier renderer with the 3b1b look, certified bit-reproducible renders, and source compatibility with existing manimlib scenes. One binary; ffmpeg is the only external tool. |
-| [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 855 commits<br>+83,282 / −7,169 lines | Independent ground-up Rust reimplementation of SQLite with concurrent writers and information-theoretic durability |
-| [**Classic Patents**](https://github.com/Dicklesworthstone/classic-patents.com) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | 739 commits<br>+451,247 / −30,186 lines | An open-source digital museum restoring history's most consequential patents into pristine OCR transcripts, rigorous Plain English engineering breakdowns, and interactive real-time simulations. |
-| [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 830 commits<br>+92,613 / −10,579 lines | A blank-slate, memory-safe, ultra-high-performance property-graph database in Rust — unified MVCC/time-travel/branches/replication over a fountain-coded commit stream, WCO+factorized execution, incremental everything, and deterministic auditable results. |
-| [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 724 commits<br>+292,563 / −55,175 lines | Terminal hypervisor for AI agent swarms: real-time pane capture, state-machine pattern detection, and a JSON API for coordinating fleets of coding agents across WezTerm |
+| [**FrankenGit**](https://github.com/Dicklesworthstone/frankengit) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 2,284 commits<br>+500,379 / −7,670 lines | Git-compatible, agent-native, repairable, self-hostable code forge and GitHub alternative. |
+| [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 2,176 commits<br>+162,426 / −3,689 lines | A ground-up, native-Rust reimplementation of the entire Lean 4 toolchain — drop-in at the binary surfaces (.olean, C ABI, LSP, CLI), deterministic under parallelism, declaration-granular incremental, with a ≤12 KLOC dual-engine kernel that ships receipts. |
+| [**Pi Agent Rust**](https://github.com/Dicklesworthstone/pi_agent_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,111 commits<br>+279,694 / −16,924 lines | High-performance AI coding agent CLI written in Rust with zero unsafe code |
+| [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 917 commits<br>+220,002 / −12,371 lines | Plan-first Rust continuum for certified geometry, physics simulation, optimization, and rendering. |
+| [**FrankenManim**](https://github.com/Dicklesworthstone/franken_manim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 903 commits<br>+75,867 / −9,074 lines | A sovereign, deterministic rewrite of 3b1b's manim in pure Rust — native TeX math typesetting (no LaTeX), an analytic Bézier renderer with the 3b1b look, certified bit-reproducible renders, and source compatibility with existing manimlib scenes. One binary; ffmpeg is the only external tool. |
+| [**Classic Patents**](https://github.com/Dicklesworthstone/classic-patents.com) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | 730 commits<br>+502,514 / −30,085 lines | An open-source digital museum restoring history's most consequential patents into pristine OCR transcripts, rigorous Plain English engineering breakdowns, and interactive real-time simulations. |
+| [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 833 commits<br>+83,757 / −1,991 lines | A blank-slate, memory-safe, ultra-high-performance property-graph database in Rust — unified MVCC/time-travel/branches/replication over a fountain-coded commit stream, WCO+factorized execution, incremental everything, and deterministic auditable results. |
+| [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 815 commits<br>+81,931 / −7,120 lines | Independent ground-up Rust reimplementation of SQLite with concurrent writers and information-theoretic durability |
+| [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 717 commits<br>+281,030 / −51,918 lines | Terminal hypervisor for AI agent swarms: real-time pane capture, state-machine pattern detection, and a JSON API for coordinating fleets of coding agents across WezTerm |
 | [**FrankenMermaid**](https://github.com/Dicklesworthstone/frankenmermaid) | ![HTML](https://img.shields.io/badge/-HTML-E34F26?style=flat-square&logo=html5&logoColor=white) | 586 commits<br>+3,205,137 / −9,662 lines | Next-gen Rust diagram engine with 15 layout algorithms, deterministic output, intent-aware recovery, and WASM/SVG/Canvas/terminal renderers |
-| [**ASImposium**](https://github.com/Dicklesworthstone/asimposium.org) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | 689 commits<br>+82,384 / −11,617 lines | A symposium for frontier AI agents: a public scientific ledger where human-sponsored agents propose, refute, and review work in mathematics and physics. |
+| [**ASImposium**](https://github.com/Dicklesworthstone/asimposium.org) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | 679 commits<br>+80,675 / −11,536 lines | A symposium for frontier AI agents: a public scientific ledger where human-sponsored agents propose, refute, and review work in mathematics and physics. |
 | [**FrankenTorch**](https://github.com/Dicklesworthstone/frankentorch) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 633 commits<br>+54,098 / −1,312 lines | Memory-safe clean-room Rust reimplementation of PyTorch with deterministic autograd contracts, strict/hardened compatibility modes, differential conformance harnesses, and RaptorQ-backed durability artifacts. |
 <!-- END AUTO-BUILDING-NOW -->
 
@@ -343,7 +372,7 @@ Clean-room Rust reimplementations of foundational software and runtimes. Each ta
 | ![Stars](https://img.shields.io/badge/stars-295-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fsqlalchemy_data_model_visualizer) | **[SQLAlchemy Visualizer](https://github.com/Dicklesworthstone/sqlalchemy_data_model_visualizer)** | Instantly turn SQLAlchemy ORM models into interactive SVG diagrams. |
 | ![Stars](https://img.shields.io/badge/stars-429-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fautomatic_log_collector_and_analyzer) | **[Automatic Log Collector](https://github.com/Dicklesworthstone/automatic_log_collector_and_analyzer)** | Open-source Splunk alternative for multi-server log aggregation and analysis. |
 | ![Stars](https://img.shields.io/badge/stars-286-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmisc_coding_agent_tips_and_scripts) | **[Coding Agent Tips](https://github.com/Dicklesworthstone/misc_coding_agent_tips_and_scripts)** | Battle-tested solutions for AI coding agent workflows and terminal setup. |
-| ![Stars](https://img.shields.io/badge/stars-179-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcoding_agent_account_manager) | **[Coding Agent Account Manager](https://github.com/Dicklesworthstone/coding_agent_account_manager)** | Sub-100ms auth switching across Claude Max, GPT Pro, and Gemini subscriptions. |
+| ![Stars](https://img.shields.io/badge/stars-180-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcoding_agent_account_manager) | **[Coding Agent Account Manager](https://github.com/Dicklesworthstone/coding_agent_account_manager)** | Sub-100ms auth switching across Claude Max, GPT Pro, and Gemini subscriptions. |
 | ![Stars](https://img.shields.io/badge/stars-85-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fflywheel_connectors) | **[Flywheel Connectors](https://github.com/Dicklesworthstone/flywheel_connectors)** | 176 connectors (~2.5M lines Rust, 72K+ tests). WASI sandboxing, cryptographic capability tokens, zone-based encryption. |
 | ![Stars](https://img.shields.io/badge/stars-1,691-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fpi_agent_rust) | **[Pi Agent Rust](https://github.com/Dicklesworthstone/pi_agent_rust)** | AI coding agent CLI in Rust. Sub-100ms startup, 8 built-in tools, session branching, ~15MB binary. |
 | ![Stars](https://img.shields.io/badge/stars-158-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmcp_agent_mail_rust) | **[MCP Agent Mail Rust](https://github.com/Dicklesworthstone/mcp_agent_mail_rust)** | Ground-up Rust rewrite of Agent Mail. 12-crate workspace, 37 MCP tools, optional FrankenSearch hybrid search. |
@@ -513,7 +542,7 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 - **[Ryan Sean Adams](https://www.bankless.com/)** (Bankless) called the analysis "one of the most thorough analyses of a company I've ever seen"
 - Front page of **Hacker News** (multiple times)
 - Featured on **Slashdot**, the **Bankless podcast**, **Delphi Digital**, **Farzad Podcast**, and picked up by analysts and fund managers worldwide
-- 31,420+ GitHub stars, 3,200+ GitHub followers, 198 open-source projects, 48.7K X followers
+- 31,430+ GitHub stars, 3,200+ GitHub followers, 198 open-source projects, 48.7K X followers
 
 ---
 
