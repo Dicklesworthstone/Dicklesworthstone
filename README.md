@@ -132,7 +132,7 @@ Most async runtimes focus on scheduling futures. [**Asupersync**](https://github
 | **Reproducible concurrency** | The Lab runtime provides virtual time, deterministic scheduling, trace replay, and race-guided schedule exploration, turning timing-dependent failures into repeatable tests. |
 | **Proof-aware foundations** | A formal operational model has Lean-checked proofs for six core invariants, while `franken-kernel`, `franken-evidence`, `franken-decision`, and `frankenlab` supply shared types, evidence ledgers, decision contracts, and replay tooling across the suite. |
 
-That combination makes Asupersync more than an executor: it is a common lifecycle contract, capability boundary, and concurrency laboratory. FrankenSuite projects can reuse one model for shutdown, partial effects, supervision, evidence, and reproducible failures instead of rebuilding those rules independently.
+That combination makes Asupersync more than an executor: it is a common lifecycle contract, capability boundary, and concurrency laboratory. Adoption ranges from FrankenTerm's sole production async runtime and `Cx`-threaded indexing in FrankenSearch to RaptorQ repair paths in FrankenSQLite and FrankenGit; FrankenEngine enables the shared kernel, decision, and evidence crates by default.
 
 <p align="center">
   <a href="https://asupersync.com"><strong>Project Site</strong></a> ·
