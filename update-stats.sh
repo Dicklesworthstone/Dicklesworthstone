@@ -209,7 +209,14 @@ DISCORD_INVITE_CODE="${DISCORD_INVITE_CODE:-gnCHsYDR25}"
 DISCORD_MEMBERS="${DISCORD_MEMBERS:-}"
 if [ -z "$DISCORD_MEMBERS" ]; then
   if DISCORD_JSON=$(curl -fsSL "https://discord.com/api/v10/invites/${DISCORD_INVITE_CODE}?with_counts=true" 2>/dev/null); then
-    DISCORD_MEMBERS=$(echo "$DISCORD_JSON" | jq -r '.approximate_member_count // empty')
+    if ! DISCORD_MEMBERS=$(printf '%s' "$DISCORD_JSON" | jq -er '
+      .approximate_member_count
+      | if (type == "number") and (. >= 0) and (. == floor)
+        then tostring else error("invalid member count") end
+    ' 2>/dev/null); then
+      echo "Discord returned an invalid response; leaving the README fallback in place" >&2
+      DISCORD_MEMBERS=""
+    fi
   fi
 fi
 if [ -n "$DISCORD_MEMBERS" ] && ! [[ "$DISCORD_MEMBERS" =~ ^[0-9]+$ ]]; then

@@ -428,7 +428,7 @@ class ReadmeActivityTests(unittest.TestCase):
         items = [
             {
                 "title": "The Overprompting Trap",
-                "href": "https://www.jeffreyemanuel.com/writing/overprompting",
+                "href": "https://www.jeffreyemanuel.com/writing/overprompting/",
                 "blurb": "Unedited site blurb",
             }
         ]
@@ -601,6 +601,19 @@ class StarHistoryTests(unittest.TestCase):
         self.assertIn("Jan 2025", svg)
         self.assertNotIn("Jan 2020", svg)
         self.assertIn("selected&amp;safe", svg)
+
+    def test_render_uses_profile_display_name_for_asupersync(self) -> None:
+        repo = "asupersync"
+        svg = star_history.render(
+            star_history.DARK,
+            {repo: [datetime(2026, 9, 1, tzinfo=UTC)]},
+            [repo],
+            {repo: 1},
+            {repo: 0},
+            datetime(2026, 9, 2, tzinfo=UTC),
+        )
+        self.assertIn(">Asupersync</text>", svg)
+        self.assertNotIn(">asupersync</text>", svg)
 
     def test_atomic_write_replaces_content_with_normal_permissions(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

@@ -66,6 +66,7 @@ class Theme(TypedDict):
 # legend and get truncated into mush ("agentic_coding_flywhe…"). These are the
 # names the README already uses for the same projects.
 DISPLAY_NAMES = {
+    "asupersync": "Asupersync",
     "destructive_command_guard": "DCG",
     "llm_aided_ocr": "LLM Aided OCR",
     "pi_agent_rust": "Pi Agent Rust",

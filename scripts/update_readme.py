@@ -157,8 +157,8 @@ RECENT_DESCRIPTION_OVERRIDES = {
         "contract-backed kernels."
     ),
     "frankensqlite": (
-        "Rust implementation of SQLite with MVCC concurrent writers and "
-        "RaptorQ-backed page repair."
+        "Rust implementation of SQLite with page-level MVCC concurrent-writer "
+        "support and RaptorQ durability components."
     ),
     "frankenterm": (
         "WezTerm-based terminal for AI-agent swarms, with pane capture, "
@@ -1012,7 +1012,7 @@ def build_writing_block() -> str:
             print("warning: writing metadata item was malformed", file=sys.stderr)
             return ""
         title = markdown_escape(title_raw)
-        path = urlparse(href).path
+        path = urlparse(href).path.rstrip("/") or "/"
         blurb = markdown_escape(
             WRITING_BLURB_OVERRIDES.get(path, blurb_raw or "")
         )
