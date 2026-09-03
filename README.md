@@ -130,7 +130,7 @@ Most async runtimes focus on scheduling futures. [**Asupersync**](https://github
 | **Cancellation as a protocol** | Covered cooperative paths follow request → drain → finalize instead of treating cancellation as a silent `drop`. Two-phase reserve/commit primitives keep cancellation from leaving half-published effects. |
 | **Capability-scoped context** | An explicit `Cx` carries runtime authority, cancellation, budgets, and tracing, making side effects visible and controllable instead of ambient. |
 | **Reproducible concurrency** | The Lab runtime provides virtual time, deterministic scheduling, trace replay, and race-guided schedule exploration, turning timing-dependent failures into repeatable tests. |
-| **Proof-aware foundations** | A formal operational model has Lean-checked proofs for six core invariants, while `franken-kernel`, `franken-evidence`, `franken-decision`, and `frankenlab` supply shared types, evidence ledgers, decision contracts, and replay tooling across the suite. |
+| **Proof-aware foundations** | A formal operational model has Lean-checked proofs for six of its core invariants, while `franken-kernel`, `franken-evidence`, `franken-decision`, and `frankenlab` supply shared types, evidence ledgers, decision contracts, and replay tooling across the suite. |
 
 That combination makes Asupersync more than an executor: it is a common lifecycle contract, capability boundary, and concurrency laboratory. Adoption ranges from FrankenTerm's sole production async runtime and `Cx`-threaded indexing in FrankenSearch to RaptorQ repair paths in FrankenSQLite and FrankenGit; FrankenEngine enables the shared kernel, decision, and evidence crates by default.
 
@@ -139,9 +139,6 @@ That combination makes Asupersync more than an executor: it is a common lifecycl
   <a href="https://docs.rs/asupersync"><strong>API Docs</strong></a> ·
   <a href="https://dicklesworthstone.github.io/asupersync/asupersync_web_demo.html"><strong>Interactive WASM Demo</strong></a>
 </p>
-
-> [!NOTE]
-> Asupersync is experimental and pre-1.0. Its cancellation and cleanup guarantees are scoped to documented, cooperative surfaces—not arbitrary foreign calls or non-cooperative code—and its Lean proofs cover the abstract model rather than a mechanical refinement proof of the production Rust runtime.
 
 ---
 
