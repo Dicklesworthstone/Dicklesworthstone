@@ -53,8 +53,8 @@ DISPLAY_NAMES = {
     "aadc": "AADC",
     "acip": "ACIP",
     "asimposium.org": "ASImposium",
-    "asupersync": "ASupersync",
-    "asupersync_ansi_c": "ASupersync ANSI C",
+    "asupersync": "Asupersync",
+    "asupersync_ansi_c": "Asupersync ANSI C",
     "atp": "ATP",
     "classic-patents.com": "Classic Patents",
     "beads_viewer_rust": "Beads Viewer Rust",
@@ -113,6 +113,170 @@ DISPLAY_NAMES = {
     "ultimate_bug_scanner": "UBS",
     "vibe_cockpit": "Vibe Cockpit",
     "xf": "XF",
+}
+
+# Public-facing descriptions for repositories that regularly appear in the
+# activity table. GitHub repository descriptions optimize for search and often
+# read poorly when copied into a profile. Keep this small map manually edited;
+# unknown repositories still use their live GitHub descriptions.
+RECENT_DESCRIPTION_OVERRIDES = {
+    "asimposium.org": (
+        "Public scientific ledger where human-sponsored AI agents submit, review, "
+        "and challenge work in mathematics and physics."
+    ),
+    "classic-patents.com": (
+        "Digital museum of landmark patents with corrected transcripts, "
+        "plain-English engineering notes, and interactive simulations."
+    ),
+    "franken_lean": (
+        "Rust implementation of the Lean 4 toolchain with `.olean`, C ABI, LSP, and "
+        "CLI compatibility; deterministic parallelism; declaration-level "
+        "incrementality; and a dual-engine kernel capped at 12 KLOC."
+    ),
+    "franken_manim": (
+        "Deterministic Rust implementation of 3b1b's Manim with native TeX "
+        "typesetting, an analytic Bézier renderer, bit-reproducible output, and "
+        "source compatibility with manimlib scenes. FFmpeg is its only external "
+        "tool."
+    ),
+    "frankengraphdb": (
+        "Rust property-graph database with MVCC, time travel, branches, "
+        "WCO/factorized execution, incremental maintenance, and fountain-coded "
+        "replication."
+    ),
+    "frankengit": (
+        "Git-compatible forge for human and coding-agent workflows, with "
+        "verifiable recovery, self-hosting, and an immutable decision stream."
+    ),
+    "frankenmermaid": (
+        "Rust diagram engine with 15 layout algorithms and deterministic SVG, "
+        "Canvas, terminal, and WASM rendering."
+    ),
+    "frankensim": (
+        "Rust geometry, simulation, optimization, and rendering workspace with "
+        "contract-backed kernels."
+    ),
+    "frankensqlite": (
+        "Rust implementation of SQLite with MVCC concurrent writers and "
+        "RaptorQ-backed page repair."
+    ),
+    "frankenterm": (
+        "WezTerm-based terminal for AI-agent swarms, with pane capture, "
+        "state-machine detection, and a JSON control API."
+    ),
+    "frankentorch": (
+        "Clean-room Rust implementation of PyTorch with deterministic autograd, "
+        "compatibility modes, differential tests, and RaptorQ-backed durability."
+    ),
+    "pi_agent_rust": (
+        "Rust coding-agent CLI with sub-100ms startup, eight built-in tools, "
+        "session branching, and a roughly 15 MB binary."
+    ),
+}
+
+# Article titles and order come from the live writing page. These blurbs are
+# deliberately written for the compact profile format and keyed by stable path.
+WRITING_BLURB_OVERRIDES = {
+    "/writing/wills-and-estate-planning": (
+        "A Claude Code and Codex skill that turns one weekend and about $120 into "
+        "a structured estate-planning intake package for attorney review."
+    ),
+    "/writing/slack-mattermost-migration": (
+        "Two paired skills migrate Slack data to self-hosted Mattermost with a "
+        "readiness gate, named rollback owner, and roughly 99% lower ongoing cost."
+    ),
+    "/writing/overprompting": (
+        "How excessive constraints hurt model output, with a two-phase prompting "
+        "method that leaves more room for the model to reason."
+    ),
+    "/writing/hoeffdings_d_explainer": (
+        "A guide to Hoeffding's D, a nonparametric dependence measure that detects "
+        "nonlinear relationships missed by Pearson and Spearman correlation."
+    ),
+    "/writing/barra-factor-model": (
+        "How Barra-style factor models can distort incentives, encourage crowding, "
+        "and hide shared risk at multi-manager funds."
+    ),
+    "/writing/raptorq": (
+        "How RaptorQ (RFC 6330) turns a file into interchangeable repair packets "
+        "with about 0.02% overhead."
+    ),
+    "/writing/cmaes_explainer": (
+        "An interactive explanation of CMA-ES and its search of high-dimensional, "
+        "nonconvex objective functions without gradients."
+    ),
+    "/writing/the_short_case_for_nvda": (
+        "The 12,000-word case that DeepSeek, inference economics, and GPU supply "
+        "could pressure Nvidia's valuation and the AI capital-spending cycle."
+    ),
+    "/writing/the_most_impressive_prediction_of_all_time": (
+        "A close reading of Pyotr Durnovo's 1914 memorandum, which predicted the "
+        "World War I alliances and a Russian revolution."
+    ),
+    "/writing/hermann_grassmann_nature_of_abstractions": (
+        "How Hermann Grassmann developed the exterior product decades before "
+        "mathematicians recognized its value."
+    ),
+    "/writing/bio_inspired_architecture": (
+        "A transformer architecture with metabolically regulated weights, "
+        "synaptic fatigue, and structural plasticity."
+    ),
+    "/writing/model_guided_math": (
+        "Eleven mathematical approaches to transformer alternatives, including "
+        "Lie groups, p-adic numbers, and tropical geometry."
+    ),
+    "/writing/bakery_algorithm": (
+        "A visual Python implementation of Lamport's fair mutual-exclusion "
+        "algorithm for systems without atomic hardware primitives."
+    ),
+    "/writing/llm_introspective_compression": (
+        "A proposal to let language models compress and restore their own reasoning "
+        "state for backtracking and reinforcement learning."
+    ),
+    "/writing/llm_multi_round_coding_tournament": (
+        "A framework in which multiple models critique and revise coding solutions "
+        "across several rounds to escape local optima."
+    ),
+    "/writing/making_complex_code_changes_with_cc": (
+        "A plan-first method for complex coding-agent tasks that separates reasoning "
+        "from implementation and allocates more tokens to design."
+    ),
+    "/writing/protecting_against_prompt_injection": (
+        "A history of prompt-injection techniques and a proposal for external "
+        "monitor models that enforce policy."
+    ),
+    "/writing/dr_gpt_empowering_your_healthcare_with_ai": (
+        "A workflow for combining scattered medical records into one dossier so "
+        "patients can review missed diagnoses and drug interactions with clinicians."
+    ),
+    "/writing/tax_gpt_using_ai_for_tax_prep": (
+        "A method for splitting tax returns into model-sized chunks to find possible "
+        "deductions and errors before professional review."
+    ),
+    "/writing/making_of_the_mindmap_generator": (
+        "The nonlinear exploration architecture used to extract hierarchical "
+        "structure from long documents while controlling hallucinations."
+    ),
+    "/writing/ppp_loan_fraud_analysis": (
+        "A network-analysis reconstruction of PPP loan fraud patterns and the simple "
+        "checks that could have flagged billions in suspicious loans."
+    ),
+    "/writing/what_i_learned_making_the_python_backend_for_yto": (
+        "A technical retrospective on a FastAPI, SQLModel, and Pydantic backend for "
+        "Whisper transcription under concurrent load."
+    ),
+    "/writing/intro_post_discussing_blogging_system": (
+        "How the Next.js and Tailwind blog uses static generation, responsive "
+        "layouts, and fast page loads."
+    ),
+    "/writing/some_thoughts_on_ai_alignment": (
+        "A proposal for external monitor models that apply policy to a primary "
+        "model's output, modeled on a criminal-justice system."
+    ),
+    "/writing/nextjs_github_blogging_system": (
+        "How the open-source blog uses GitHub as a headless CMS, Git for version "
+        "history, and static generation for page speed."
+    ),
 }
 
 RECENT_EXCLUDE = {
@@ -616,8 +780,11 @@ def build_recent_repos_table() -> str:
         additions = int(activity.get("additions") or 0)
         deletions = int(activity.get("deletions") or 0)
         commit_label = "commit" if commits == 1 else "commits"
-        desc = markdown_escape(
+        source_description = (
             repo.get("description") or "Recently active public project"
+        )
+        desc = markdown_escape(
+            RECENT_DESCRIPTION_OVERRIDES.get(name, source_description)
         )
         lines.append(
             "| "
@@ -845,8 +1012,14 @@ def build_writing_block() -> str:
             print("warning: writing metadata item was malformed", file=sys.stderr)
             return ""
         title = markdown_escape(title_raw)
-        blurb = markdown_escape(blurb_raw or "")
-        lines.append(f"- **[{title}]({href})** \u2014 {blurb}")
+        path = urlparse(href).path
+        blurb = markdown_escape(
+            WRITING_BLURB_OVERRIDES.get(path, blurb_raw or "")
+        )
+        line = f"- **[{title}]({href})**"
+        if blurb:
+            line += f": {blurb}"
+        lines.append(line)
     return "\n".join(lines)
 
 
@@ -893,7 +1066,7 @@ def main() -> None:
     if existing_contributions == "0":
         existing_contributions = existing_match(
             text,
-            r"> \*\*([\d,]+) contributions in the past year\*\*",
+            r"> \*\*([\d,]+) contributions in the past year\.?\*\*",
             "0",
         )
     existing_followers_label = existing_badge_message(
@@ -969,8 +1142,8 @@ def main() -> None:
     contribution_text = env("README_CONTRIBUTIONS", existing_contributions)
     text = replace_pattern_exact(
         text,
-        r"> \*\*[\d,]+ contributions in the past year\*\*",
-        f"> **{contribution_text} contributions in the past year**",
+        r"> \*\*[\d,]+ contributions in the past year\.?\*\*",
+        f"> **{contribution_text} contributions in the past year.**",
     )
 
     open_source_projects = env("OPEN_SOURCE_PROJECTS", existing_projects)
@@ -990,9 +1163,10 @@ def main() -> None:
     text = replace_pattern_exact(
         text,
         r"Next\.js 16, React Three Fiber, and GSAP\. "
-        r"(?:\d+ project showcase|(?:A )?showcase of \d+ projects)\.",
+        r"(?:\d+ project showcase|(?:A )?showcase of \d+ projects|"
+        r"Portfolio for \d+ open-source projects)\.",
         f"Next.js 16, React Three Fiber, and GSAP. "
-        f"A showcase of {open_source_projects} projects.",
+        f"Portfolio for {open_source_projects} open-source projects.",
     )
 
     text = replace_pattern_exact(

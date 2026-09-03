@@ -257,6 +257,20 @@ class ReadmeActivityTests(unittest.TestCase):
         self.assertIn("| Project | Lang | 7-day activity |", table)
         self.assertIn("3 commits<br>+20 / −5 lines", table)
 
+    def test_activity_table_prefers_curated_profile_description(self) -> None:
+        repo = repo_payload("frankengit")
+        repo["description"] = "Unedited GitHub description"
+        with patch.dict(
+            os.environ,
+            {"RECENT_ACTIVITY_JSON_CONTENT": json.dumps([repo])},
+            clear=False,
+        ):
+            table = update_readme.build_recent_repos_table()
+        self.assertIn(
+            "Git-compatible forge for human and coding-agent workflows", table
+        )
+        self.assertNotIn("Unedited GitHub description", table)
+
     def test_malformed_language_metadata_fails_closed(self) -> None:
         malformed = repo_payload("malformed")
         malformed["primaryLanguage"] = {"name": "Rust", "color": 123}
@@ -409,6 +423,36 @@ class ReadmeActivityTests(unittest.TestCase):
         ]
         with patch.object(update_readme, "fetch_writing_items", return_value=items):
             self.assertEqual(update_readme.build_writing_block(), "")
+
+    def test_writing_block_prefers_curated_blurb_and_plain_separator(self) -> None:
+        items = [
+            {
+                "title": "The Overprompting Trap",
+                "href": "https://www.jeffreyemanuel.com/writing/overprompting",
+                "blurb": "Unedited site blurb",
+            }
+        ]
+        with patch.object(update_readme, "fetch_writing_items", return_value=items):
+            block = update_readme.build_writing_block()
+        self.assertIn("**: How excessive constraints hurt model output", block)
+        self.assertNotIn("Unedited site blurb", block)
+        self.assertNotIn("—", block)
+
+    def test_writing_block_omits_separator_when_blurb_is_empty(self) -> None:
+        items = [
+            {
+                "title": "Article Without a Blurb",
+                "href": "https://www.jeffreyemanuel.com/writing/no-blurb",
+                "blurb": None,
+            }
+        ]
+        with patch.object(update_readme, "fetch_writing_items", return_value=items):
+            block = update_readme.build_writing_block()
+        self.assertEqual(
+            block,
+            "- **[Article Without a Blurb]"
+            "(https://www.jeffreyemanuel.com/writing/no-blurb)**",
+        )
 
     def test_main_is_idempotent_with_a_million_scale_follower_label(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
