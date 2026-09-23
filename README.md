@@ -19,9 +19,9 @@
 
 *Building the tooling that lets dozens of AI agents ship complex projects in days.*
 
-![Stars: 32,240+](https://img.shields.io/static/v1?label=Stars&message=32%2C240%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Stars: 32,270+](https://img.shields.io/static/v1?label=Stars&message=32%2C270%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Projects: 207](https://img.shields.io/static/v1?label=Projects&message=207&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 295,123](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=295%2C123&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 298,304](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=298%2C304&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,300+](https://img.shields.io/static/v1?label=Followers&message=3%2C300%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 48.7K](https://img.shields.io/static/v1?label=X+Followers&message=48.7K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -42,7 +42,7 @@
 [![FrankenMermaid](https://img.shields.io/badge/frankenmermaid.com-2b2b2b?style=flat-square&logo=mermaid&logoColor=white)](https://frankenmermaid.com)
 [![Smeared Life](https://img.shields.io/badge/smearedlife.com-2b2b2b?style=flat-square&logo=webgl&logoColor=white)](https://smearedlife.com)
 [![JazzChords](https://img.shields.io/badge/jazzchords.org-2b2b2b?style=flat-square&logo=musicbrainz&logoColor=white)](https://jazzchords.org)
-[![Discord](https://img.shields.io/badge/Flywheel_Hub-947_members-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/gnCHsYDR25)
+[![Discord](https://img.shields.io/badge/Flywheel_Hub-949_members-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/gnCHsYDR25)
 
 `Multi-Agent Coordination` · `Agentic Coding` · `Rust CLI Tools` · `LLM Applications` · `Terminal UI` · `FrankenSuite`
 
@@ -66,13 +66,13 @@
 </p>
 
 > [!NOTE]
-> **295,123 contributions in the past year.** I use 63 AI coding agent subscription accounts (~$13.5K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
+> **298,304 contributions in the past year.** I use 63 AI coding agent subscription accounts (~$13.5K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
 
 ---
 
 ## The Agentic Coding Flywheel
 
-Fourteen tools for multi-agent software development: messaging and file leases, issue graphs, session search, command safety, and tmux orchestration. I started building the stack in October 2025. Join the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~947 members), read the [full guide](https://agent-flywheel.com/complete-guide), or start with the [introductory guide](https://agent-flywheel.com/core-flywheel).
+Fourteen tools for multi-agent software development: messaging and file leases, issue graphs, session search, command safety, and tmux orchestration. I started building the stack in October 2025. Join the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~949 members), read the [full guide](https://agent-flywheel.com/complete-guide), or start with the [introductory guide](https://agent-flywheel.com/core-flywheel).
 
 <p align="center">
   <img src="flywheel_diagram.webp" alt="The Agentic Coding Flywheel: 14 tools for multi-agent development" width="800" />
@@ -80,12 +80,12 @@ Fourteen tools for multi-agent software development: messaging and file leases, 
 
 | Tool | Stars | Lang | Purpose |
 |:-----|:-----:|:----:|:--------|
-| [**MCP Agent Mail**](https://github.com/Dicklesworthstone/mcp_agent_mail) | ![Stars](https://img.shields.io/badge/stars-2,152-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmcp_agent_mail) | ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white) | Gmail for coding agents: messaging, file leases, audit trails |
-| [**DCG**](https://github.com/Dicklesworthstone/destructive_command_guard) | ![Stars](https://img.shields.io/badge/stars-6,036-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fdestructive_command_guard) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | SIMD-accelerated guard that blocks `rm -rf` and `git reset --hard` |
-| [**Beads Viewer**](https://github.com/Dicklesworthstone/beads_viewer) | ![Stars](https://img.shields.io/badge/stars-1,691-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbeads_viewer) | ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white) | PageRank-powered task prioritization in a keyboard-driven TUI |
-| [**Flywheel Setup**](https://github.com/Dicklesworthstone/agentic_coding_flywheel_setup) | ![Stars](https://img.shields.io/badge/stars-1,652-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fagentic_coding_flywheel_setup) | ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white) | Installs and configures all 14 Flywheel tools on an Ubuntu VPS in about 30 minutes |
-| [**Beads Rust**](https://github.com/Dicklesworthstone/beads_rust) | ![Stars](https://img.shields.io/badge/stars-1,107-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbeads_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Local-first, non-invasive issue tracker for git repos |
-| [**CASS**](https://github.com/Dicklesworthstone/coding_agent_session_search) | ![Stars](https://img.shields.io/badge/stars-1,141-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcoding_agent_session_search) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Unified search across 22 AI coding tool histories |
+| [**MCP Agent Mail**](https://github.com/Dicklesworthstone/mcp_agent_mail) | ![Stars](https://img.shields.io/badge/stars-2,155-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmcp_agent_mail) | ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white) | Gmail for coding agents: messaging, file leases, audit trails |
+| [**DCG**](https://github.com/Dicklesworthstone/destructive_command_guard) | ![Stars](https://img.shields.io/badge/stars-6,044-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fdestructive_command_guard) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | SIMD-accelerated guard that blocks `rm -rf` and `git reset --hard` |
+| [**Beads Viewer**](https://github.com/Dicklesworthstone/beads_viewer) | ![Stars](https://img.shields.io/badge/stars-1,692-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbeads_viewer) | ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white) | PageRank-powered task prioritization in a keyboard-driven TUI |
+| [**Flywheel Setup**](https://github.com/Dicklesworthstone/agentic_coding_flywheel_setup) | ![Stars](https://img.shields.io/badge/stars-1,650-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fagentic_coding_flywheel_setup) | ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white) | Installs and configures all 14 Flywheel tools on an Ubuntu VPS in about 30 minutes |
+| [**Beads Rust**](https://github.com/Dicklesworthstone/beads_rust) | ![Stars](https://img.shields.io/badge/stars-1,106-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbeads_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Local-first, non-invasive issue tracker for git repos |
+| [**CASS**](https://github.com/Dicklesworthstone/coding_agent_session_search) | ![Stars](https://img.shields.io/badge/stars-1,142-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcoding_agent_session_search) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Unified search across 22 AI coding tool histories |
 | [**CASS Memory**](https://github.com/Dicklesworthstone/cass_memory_system) | ![Stars](https://img.shields.io/badge/stars-438-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcass_memory_system) | ![TypeScript](https://img.shields.io/badge/-TS-3178C6?style=flat-square&logo=typescript&logoColor=white) | Three-layer cognitive memory: episodic, working, procedural |
 | [**UBS**](https://github.com/Dicklesworthstone/ultimate_bug_scanner) | ![Stars](https://img.shields.io/badge/stars-303-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fultimate_bug_scanner) | ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white) | 1,000+ pattern-based bug scanner, runs before every commit |
 | [**NTM**](https://github.com/Dicklesworthstone/ntm) | ![Stars](https://img.shields.io/badge/stars-449-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fntm) | ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white) | Multi-agent tmux orchestration with animated dashboards |
@@ -317,11 +317,11 @@ The FrankenSuite spans databases, terminals, numerical computing, media, graphs,
 
 | | Project | Description |
 |:--|:--|:--|
-| ![Stars](https://img.shields.io/badge/stars-3,002-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fllm_aided_ocr) | **[LLM-Aided OCR](https://github.com/Dicklesworthstone/llm_aided_ocr)** | Uses language models to correct OCR errors that rule-based postprocessing misses. |
-| ![Stars](https://img.shields.io/badge/stars-1,054-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fswiss_army_llama) | **[Swiss Army Llama](https://github.com/Dicklesworthstone/swiss_army_llama)** | FastAPI service for local LLM inference and semantic search. |
+| ![Stars](https://img.shields.io/badge/stars-3,004-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fllm_aided_ocr) | **[LLM-Aided OCR](https://github.com/Dicklesworthstone/llm_aided_ocr)** | Uses language models to correct OCR errors that rule-based postprocessing misses. |
+| ![Stars](https://img.shields.io/badge/stars-1,053-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fswiss_army_llama) | **[Swiss Army Llama](https://github.com/Dicklesworthstone/swiss_army_llama)** | FastAPI service for local LLM inference and semantic search. |
 | ![Stars](https://img.shields.io/badge/stars-761-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fyour-source-to-prompt.html) | **[Your Source to Prompt](https://github.com/Dicklesworthstone/your-source-to-prompt.html)** | Browser tool that selects codebase files and packages them into model-ready prompts. |
-| ![Stars](https://img.shields.io/badge/stars-692-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbulk_transcribe_youtube_videos_from_playlist) | **[Bulk YouTube Transcriber](https://github.com/Dicklesworthstone/bulk_transcribe_youtube_videos_from_playlist)** | Converts YouTube playlists into structured, searchable text with Whisper. |
-| ![Stars](https://img.shields.io/badge/stars-918-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fclaude_code_agent_farm) | **[Claude Code Agent Farm](https://github.com/Dicklesworthstone/claude_code_agent_farm)** | Runs parallel Claude Code agents against repositories across 36 tech stacks. |
+| ![Stars](https://img.shields.io/badge/stars-693-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbulk_transcribe_youtube_videos_from_playlist) | **[Bulk YouTube Transcriber](https://github.com/Dicklesworthstone/bulk_transcribe_youtube_videos_from_playlist)** | Converts YouTube playlists into structured, searchable text with Whisper. |
+| ![Stars](https://img.shields.io/badge/stars-919-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fclaude_code_agent_farm) | **[Claude Code Agent Farm](https://github.com/Dicklesworthstone/claude_code_agent_farm)** | Runs parallel Claude Code agents against repositories across 36 tech stacks. |
 | ![Stars](https://img.shields.io/badge/stars-226-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmindmap-generator) | **[Mindmap Generator](https://github.com/Dicklesworthstone/mindmap-generator)** | Distills documents into hierarchical, context-aware mindmaps using non-linear exploration. |
 | ![Stars](https://img.shields.io/badge/stars-150-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fultimate_mcp_client) | **[Ultimate MCP Client](https://github.com/Dicklesworthstone/ultimate_mcp_client)** | MCP client for connecting models to tools, resources, and prompts across MCP servers. |
 | ![Stars](https://img.shields.io/badge/stars-158-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fultimate_mcp_server) | **[Ultimate MCP Server](https://github.com/Dicklesworthstone/ultimate_mcp_server)** | MCP server exposing dozens of tools to language models. |
@@ -371,7 +371,7 @@ The FrankenSuite spans databases, terminals, numerical computing, media, graphs,
 | ![Stars](https://img.shields.io/badge/stars-291-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmisc_coding_agent_tips_and_scripts) | **[Coding Agent Tips](https://github.com/Dicklesworthstone/misc_coding_agent_tips_and_scripts)** | Scripts, configuration, and notes from daily AI coding-agent work. |
 | ![Stars](https://img.shields.io/badge/stars-201-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcoding_agent_account_manager) | **[Coding Agent Account Manager](https://github.com/Dicklesworthstone/coding_agent_account_manager)** | Sub-100ms auth switching across Claude Max, GPT Pro, and Gemini subscriptions. |
 | ![Stars](https://img.shields.io/badge/stars-87-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fflywheel_connectors) | **[Flywheel Connectors](https://github.com/Dicklesworthstone/flywheel_connectors)** | 176 connectors (~2.5M lines Rust, 72K+ tests). WASI sandboxing, cryptographic capability tokens, zone-based encryption. |
-| ![Stars](https://img.shields.io/badge/stars-1,767-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fpi_agent_rust) | **[Pi Agent Rust](https://github.com/Dicklesworthstone/pi_agent_rust)** | AI coding agent CLI in Rust. Sub-100ms startup, 8 built-in tools, session branching, ~15MB binary. |
+| ![Stars](https://img.shields.io/badge/stars-1,773-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fpi_agent_rust) | **[Pi Agent Rust](https://github.com/Dicklesworthstone/pi_agent_rust)** | AI coding agent CLI in Rust. Sub-100ms startup, 8 built-in tools, session branching, ~15MB binary. |
 | ![Stars](https://img.shields.io/badge/stars-171-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmcp_agent_mail_rust) | **[MCP Agent Mail Rust](https://github.com/Dicklesworthstone/mcp_agent_mail_rust)** | Ground-up Rust rewrite of Agent Mail. 12-crate workspace, 37 MCP tools, optional FrankenSearch hybrid search. |
 | ![Stars](https://img.shields.io/badge/stars-121-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcross_agent_session_resumer) | **[Cross Agent Session Resumer](https://github.com/Dicklesworthstone/cross_agent_session_resumer)** | Resumes sessions across Claude Code, Codex, and Gemini while preserving context. |
 | ![Stars](https://img.shields.io/badge/stars-39-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcloud_benchmarker) | **[Cloud Benchmarker](https://github.com/Dicklesworthstone/cloud_benchmarker)** | Automated cloud instance benchmarking with charts and historical tracking. |
@@ -506,7 +506,7 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 | **[jeffreyemanuel.com](https://www.jeffreyemanuel.com)** | Personal site built with Next.js 16, React Three Fiber, and GSAP. Portfolio for 207 open-source projects. |
 | **[Jeffreys-Skills.md](https://jeffreys-skills.md/)** | Paid SaaS for managing, discovering, and deploying Claude Code skills. |
 | **[JeffreysPrompts.com](https://jeffreysprompts.com)** | Free prompt library with a paid collection for multi-step coding and research workflows. |
-| **[Agent-Flywheel.com](https://agent-flywheel.com)** | Flywheel documentation, setup guides, and the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~947 members). |
+| **[Agent-Flywheel.com](https://agent-flywheel.com)** | Flywheel documentation, setup guides, and the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~949 members). |
 | **[MCPAgentMail.com](https://mcpagentmail.com)** | Documentation and demos for MCP Agent Mail. |
 | **[FrankenTUI.com](https://frankentui.com)** | Browser demos and documentation for FrankenTUI. |
 | **[FrankenSQLite.com](https://frankensqlite.com)** | Interactive explanation and documentation for FrankenSQLite. |
@@ -541,7 +541,7 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 - **[Ryan Sean Adams](https://www.bankless.com/)** (Bankless) called the analysis "one of the most thorough analyses of a company I've ever seen"
 - Front page of **Hacker News** (multiple times)
 - Featured on **Slashdot**, the **Bankless podcast**, **Delphi Digital**, and **Farzad Podcast**
-- 32,240+ GitHub stars, 3,300+ GitHub followers, 207 open-source projects, 48.7K X followers
+- 32,270+ GitHub stars, 3,300+ GitHub followers, 207 open-source projects, 48.7K X followers
 
 ---
 
