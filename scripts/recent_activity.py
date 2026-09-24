@@ -34,7 +34,10 @@ OWNER = "Dicklesworthstone"
 DEFAULT_WINDOW_DAYS = 14
 DEFAULT_LIMIT = 12
 MAX_WORKERS = 6
-MAX_TEMPORARY_CLONES = 5
+# Temporary clones are bare, single-branch, and deleted after measurement. New
+# public repos often land on other machines first; a cap of 5 froze the section
+# for weeks in September 2026 when 6-8 recent repos were not cloned here.
+MAX_TEMPORARY_CLONES = 20
 EXCLUDED = {"dicklesworthstone", "homebrew-tap", "scoop-bucket"}
 GITHUB_COMPONENT = re.compile(r"^[A-Za-z0-9_.-]+$")
 

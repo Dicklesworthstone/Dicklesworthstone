@@ -198,7 +198,7 @@ FOLLOWING_FMT=$(fmt "$FOLLOWING")
 
 README_STARS_LABEL="$(fmt $(( (TOTAL_STARS / 10) * 10 )))+"
 README_FOLLOWERS_LABEL="$(fmt $(( (FOLLOWERS / 100) * 100 )))+"
-X_FOLLOWERS_LABEL="${X_FOLLOWERS_LABEL:-48.7K}"
+X_FOLLOWERS_LABEL="${X_FOLLOWERS_LABEL:-50.1K}"
 if ! [[ "$X_FOLLOWERS_LABEL" =~ ^([0-9]+|[0-9]{1,3}(,[0-9]{3})+)(\.[0-9]+)?[KkMm]?\+?$ ]]; then
   echo "Invalid X follower label: ${X_FOLLOWERS_LABEL:-<empty>}" >&2
   exit 1

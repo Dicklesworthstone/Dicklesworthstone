@@ -52,39 +52,47 @@ LANG_COLORS = {
 DISPLAY_NAMES = {
     "aadc": "AADC",
     "acip": "ACIP",
+    "annus-mirabilis.com": "Annus Mirabilis",
     "asimposium.org": "ASImposium",
     "asupersync": "Asupersync",
     "asupersync_ansi_c": "Asupersync ANSI C",
     "atp": "ATP",
-    "classic-patents.com": "Classic Patents",
+    "beads_bend": "Beads Bend",
     "beads_viewer_rust": "Beads Viewer Rust",
-    "coding_agent_session_search": "CASS",
     "cass_memory_system": "CASS Memory",
+    "classic-patents.com": "Classic Patents",
+    "cmaes_explainer": "CMA-ES Explainer",
+    "coding_agent_session_search": "CASS",
     "destructive_command_guard": "DCG",
-    "dwarf_fortress_mcp": "Dwarf Fortress MCP",
     "doodlestein_self_releaser": "Doodlestein Self-Releaser",
+    "dwarf_fortress_mcp": "Dwarf Fortress MCP",
     "ees": "EES",
     "eidetic_engine_cli": "Eidetic Engine CLI",
     "fastapi_rust": "FastAPI Rust",
     "fastmcp_rust": "FastMCP Rust",
     "franken_agent_detection": "Franken Agent Detection",
+    "franken_alignment": "FrankenAlignment",
+    "franken_code_browser": "FrankenCodeBrowser",
     "franken_drone_geometry_reconstruction": "Franken Drone Geometry Reconstruction",
     "franken_engine": "FrankenEngine",
     "franken_lean": "FrankenLean",
     "franken_manim": "FrankenManim",
     "franken_markdown": "FrankenMarkdown",
+    "franken_native_capsule": "Franken Native Capsule",
     "franken_networkx": "FrankenNetworkX",
     "franken_node": "FrankenNode",
     "franken_numpy": "FrankenNumPy",
-    "franken_overlap": "FrankenOverlap",
     "franken_ocr": "FrankenOCR",
+    "franken_overlap": "FrankenOverlap",
+    "franken_remote": "FrankenRemote",
     "franken_snowflake": "FrankenSnowflake",
     "franken_surveillance_system": "Franken Surveillance System",
+    "franken_threed": "FrankenThreeD",
     "franken_tts": "FrankenTTS",
     "franken_whisper": "FrankenWhisper",
     "frankenfs": "FrankenFS",
-    "frankengraphdb": "FrankenGraphDB",
     "frankengit": "FrankenGit",
+    "frankengraphdb": "FrankenGraphDB",
     "frankenjax": "FrankenJAX",
     "frankenlibc": "FrankenLibC",
     "frankenmermaid": "FrankenMermaid",
@@ -99,16 +107,21 @@ DISPLAY_NAMES = {
     "frankentorch": "FrankenTorch",
     "frankentui": "FrankenTUI",
     "giil": "GIIL",
+    "jazz_chord_progression_editor_html": "JazzChords",
     "llm-tournament": "LLM Tournament",
     "mcp_agent_mail": "MCP Agent Mail",
     "mcp_agent_mail_rust": "MCP Agent Mail Rust",
+    "mechanism_interferometry_causality": "Mechanism Interferometry",
     "ntm": "NTM",
     "opentui_rust": "OpenTUI Rust",
     "pi_agent_rust": "Pi Agent Rust",
+    "power_failure_resumer": "Power Failure Resumer",
     "repo_updater": "RU",
+    "skillranker": "SkillRanker",
     "slb": "SLB",
     "sqlmodel_rust": "SQLModel Rust",
     "storage_ballast_helper": "Storage Ballast Helper",
+    "toon_bend": "TOON Bend",
     "toon_rust": "TOON Rust",
     "ultimate_bug_scanner": "UBS",
     "vibe_cockpit": "Vibe Cockpit",
@@ -120,13 +133,36 @@ DISPLAY_NAMES = {
 # read poorly when copied into a profile. Keep this small map manually edited;
 # unknown repositories still use their live GitHub descriptions.
 RECENT_DESCRIPTION_OVERRIDES = {
+    "annus-mirabilis.com": (
+        "Interactive edition of Einstein's four 1905 Annalen der Physik papers, "
+        "explained at the depth you choose, with instruments that show what "
+        "follows when you change an assumption."
+    ),
     "asimposium.org": (
         "Public scientific ledger where human-sponsored AI agents submit, review, "
         "and challenge work in mathematics and physics."
     ),
+    "asupersync": (
+        "Async runtime for Rust where correctness is structural: region-owned "
+        "tasks, cancel-correct protocols, capability-gated effects, and "
+        "deterministic replay testing."
+    ),
     "classic-patents.com": (
         "Digital museum of landmark patents with corrected transcripts, "
         "plain-English engineering notes, and interactive simulations."
+    ),
+    "eidetic_engine_cli": (
+        "Local-first, explainable memory for coding agents: a Rust CLI built on "
+        "Asupersync, FrankenSQLite, FrankenSearch, and FrankenNetworkX."
+    ),
+    "fastmcp_rust": (
+        "Rust framework for Model Context Protocol servers, built on Asupersync, "
+        "with cancel-aware handlers and attribute macros for tools, resources, "
+        "and prompts."
+    ),
+    "franken_code_browser": (
+        "Spatial source browser for Apple Silicon: a Rust engine and native Metal "
+        "app that zoom from a repository map down to exact source lines."
     ),
     "franken_lean": (
         "Rust implementation of the Lean 4 toolchain with `.olean`, C ABI, LSP, and "
@@ -139,14 +175,18 @@ RECENT_DESCRIPTION_OVERRIDES = {
         "source compatibility with manimlib scenes. FFmpeg is its only external "
         "tool."
     ),
-    "frankengraphdb": (
-        "Rust property-graph database with MVCC, time travel, branches, "
-        "WCO/factorized execution, incremental maintenance, and fountain-coded "
-        "replication."
+    "franken_surveillance_system": (
+        "Local-first Rust sensor system for owner-authorized cameras and capture "
+        "drones, with evidence tracking built into the data model."
     ),
     "frankengit": (
         "Git-compatible forge for human and coding-agent workflows, with "
         "verifiable recovery, self-hosting, and an immutable decision stream."
+    ),
+    "frankengraphdb": (
+        "Rust property-graph database with MVCC, time travel, branches, "
+        "WCO/factorized execution, incremental maintenance, and fountain-coded "
+        "replication."
     ),
     "frankenmermaid": (
         "Rust diagram engine with 15 layout algorithms and deterministic SVG, "
@@ -171,6 +211,10 @@ RECENT_DESCRIPTION_OVERRIDES = {
     "pi_agent_rust": (
         "Rust coding-agent CLI with sub-100ms startup, eight built-in tools, "
         "session branching, and a roughly 15 MB binary."
+    ),
+    "skillranker": (
+        "Rust CLI that ranks agent skills for the next step from live session "
+        "context using TypeSafe.ai's Jev, with Claude Code hooks."
     ),
 }
 
