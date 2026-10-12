@@ -26,8 +26,8 @@
       "revisit": "2026-11-12"
     },
     "franken_threed": {
-      "reason": "Early: runs only a subset of Three.js features so far.",
-      "revisit": "2026-10-12"
+      "reason": "Re-checked Oct 12, 2026: its README still says zero speedup measured and only an admitted feature subset runs (10 parity scenes on software Vulkan), so the headline claims are targets, not results.",
+      "revisit": "2026-11-11"
     },
     "franken_native_capsule": {
       "reason": "Internal native-code capsule for FrankenEngine (ADR-0010), not a standalone project.",
