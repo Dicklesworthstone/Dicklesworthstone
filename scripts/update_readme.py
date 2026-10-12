@@ -13,7 +13,8 @@ import stat
 import sys
 import tempfile
 import urllib.request
-from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
@@ -25,6 +26,12 @@ WRITING_URL = os.environ.get("WRITING_URL", "https://www.jeffreyemanuel.com/writ
 SITE_ROOT = "https://www.jeffreyemanuel.com"
 JSON_DECODER = json.JSONDecoder()
 MAX_WRITING_BYTES = 4 * 1024 * 1024
+MAX_PAGE_BYTES = 2 * 1024 * 1024
+USER_AGENT = "Mozilla/5.0 (compatible; Dicklesworthstone-profile-updater)"
+LIVE_DEMOS_HEADING = "### Live Demos"
+LIVE_DEMO_CARD = re.compile(
+    r'<a href="(?P<page>https://[^"\s]+)"><img src="(?P<image>https?://[^"\s]+)"'
+)
 
 
 LANG_LOGOS = {
@@ -865,12 +872,20 @@ def build_recent_repos_table(curated_names: dict[str, str] | None = None) -> str
     if len(windows) != 1:
         print("warning: recent activity windows do not match", file=sys.stderr)
         return ""
-    window_days, _, _ = windows.pop()
+    window_days, _, window_end = windows.pop()
+    # Dated so that a section preserved by a failed measurement shows its age
+    # on the page instead of passing for current (it froze unnoticed for two
+    # weeks in September 2026).
+    end_at = parse_activity_timestamp(window_end)
+    if end_at is None:
+        return ""
+    end_at = end_at.astimezone(timezone.utc)
     lines = [
         (
-            f"*Ranked by live default-branch activity over the trailing {window_days} "
-            "days: commits × log₂(2 + aggregate changed lines). Line totals compare "
-            "the branch at the start and end of the window.*"
+            f"*Ranked by live default-branch activity over the {window_days} days "
+            f"to {end_at:%b} {end_at.day}, {end_at.year}: commits × log₂(2 + "
+            "aggregate changed lines). Line totals compare the branch at the start "
+            "and end of the window.*"
         ),
         "",
         f"| Project | Lang | {window_days}-day activity | What it does |",
@@ -1134,6 +1149,111 @@ def build_writing_block() -> str:
     return "\n".join(lines)
 
 
+class OpenGraphImageParser(HTMLParser):
+    """Find a page's first og:image meta tag."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.image: str | None = None
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag != "meta" or self.image is not None:
+            return
+        attributes = dict(attrs)
+        key = attributes.get("property") or attributes.get("name")
+        content = attributes.get("content")
+        if key == "og:image" and isinstance(content, str) and content.strip():
+            self.image = content.strip()
+
+
+def open_url(url: str, limit: int) -> tuple[str, bytes, str]:
+    """Return a response's content type, first ``limit`` bytes, and final URL."""
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(request, timeout=20) as response:
+        return (
+            response.headers.get("Content-Type", ""),
+            response.read(limit),
+            response.geturl(),
+        )
+
+
+def serves_image(url: str) -> bool:
+    try:
+        content_type, _, _ = open_url(url, 1)
+    except (OSError, ValueError, http.client.HTTPException):
+        return False
+    return content_type.split(";", 1)[0].strip().lower().startswith("image/")
+
+
+def site_host(url: str) -> str:
+    return (urlparse(url).hostname or "").removeprefix("www.")
+
+
+def advertised_preview(page_url: str) -> str | None:
+    """The page's current og:image, if it is an HTTPS URL on the page's site."""
+    try:
+        _, body, final_url = open_url(page_url, MAX_PAGE_BYTES)
+        parser = OpenGraphImageParser()
+        parser.feed(body.decode("utf-8", errors="replace"))
+        if parser.image is None:
+            return None
+        image = urljoin(final_url, parser.image)
+        same_site = site_host(image) == site_host(page_url) != ""
+        scheme = urlparse(image).scheme
+    except (OSError, ValueError, http.client.HTTPException):
+        return None
+    if scheme != "https" or not same_site or any(
+        ord(character) <= 32 or character in "\"'<>" for character in image
+    ):
+        return None
+    return image
+
+
+def refresh_live_demo_previews(text: str) -> str:
+    """Swap a broken Live Demos preview for the site's current og:image.
+
+    A site that drops or renames its preview image can still answer the old
+    URL with 200 HTML, which GitHub renders as a broken image. Only a
+    preview that no longer serves an image is replaced, and only by an HTTPS
+    image on the card's own site that verifiably serves one.
+    """
+    start = text.find(LIVE_DEMOS_HEADING)
+    if start < 0:
+        return text
+    end = text.find("\n## ", start)
+    end = len(text) if end < 0 else end
+    section = text[start:end]
+    cards = list(LIVE_DEMO_CARD.finditer(section))
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        working = list(
+            pool.map(lambda card: serves_image(html.unescape(card["image"])), cards)
+        )
+    for card, ok in zip(cards, working):
+        if ok:
+            continue
+        page = html.unescape(card["page"])
+        current = advertised_preview(page)
+        if current is None or current == html.unescape(card["image"]):
+            print(
+                f"warning: Live Demos preview for {page} does not serve an image",
+                file=sys.stderr,
+            )
+            continue
+        if not serves_image(current):
+            print(
+                f"warning: Live Demos preview for {page} does not serve an image, "
+                "and neither does its current og:image",
+                file=sys.stderr,
+            )
+            continue
+        print(f"Live Demos preview for {page} now uses {current}", file=sys.stderr)
+        replacement = card.group(0).replace(
+            f'src="{card["image"]}"', f'src="{html.escape(current, quote=True)}"'
+        )
+        section = section.replace(card.group(0), replacement)
+    return text[:start] + section + text[end:]
+
+
 def write_atomically(path: Path, content: str) -> None:
     """Replace a text artifact only after its complete contents are durable."""
     try:
@@ -1318,6 +1438,8 @@ def main() -> None:
             r"\(https://www\.jeffreyemanuel\.com/writing\):\n\n",
             r"---\n\n## GitHub Activity",
         )
+
+    text = refresh_live_demo_previews(text)
 
     if text != original:
         write_atomically(README, text)

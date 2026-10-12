@@ -280,7 +280,7 @@ class ReadmeActivityTests(unittest.TestCase):
             clear=False,
         ):
             table = update_readme.build_recent_repos_table()
-        self.assertIn("trailing 7 days", table)
+        self.assertIn("over the 7 days to Sep 2, 2026:", table)
         self.assertIn("| Project | Lang | 7-day activity |", table)
         self.assertIn("3 commits<br>+20 / −5 lines", table)
 
@@ -529,6 +529,11 @@ class ReadmeActivityTests(unittest.TestCase):
                 patch.object(update_readme, "load_repo_star_counts", return_value={}),
                 patch.object(update_readme, "build_recent_repos_table", return_value=""),
                 patch.object(update_readme, "build_writing_block", return_value=""),
+                patch.object(
+                    update_readme,
+                    "refresh_live_demo_previews",
+                    side_effect=lambda text: text,
+                ),
                 patch.dict(
                     os.environ,
                     {"X_FOLLOWERS_LABEL": "1.2M"},
@@ -541,6 +546,76 @@ class ReadmeActivityTests(unittest.TestCase):
             self.assertEqual(target.read_text(encoding="utf-8"), first_pass)
             self.assertIn("![X: 1.2M]", first_pass)
             self.assertIn("1.2M X followers", first_pass)
+
+    LIVE_DEMOS = (
+        "### Live Demos\n\n"
+        '<a href="https://ok.example"><img src="https://ok.example/og.png" /></a>\n'
+        '<a href="https://moved.example"><img src="https://moved.example/og.png?v=1" />'
+        "</a>\n"
+        '<a href="https://local.example"><img src="assets/local.png" /></a>\n'
+        "---\n\n## Open Source Highlights\n"
+        '<a href="https://later.example"><img src="https://later.example/x.png" /></a>\n'
+    )
+
+    def refresh(
+        self, serving: set[str], advertised: dict[str, str | None]
+    ) -> str:
+        with (
+            patch.object(
+                update_readme, "serves_image", side_effect=lambda url: url in serving
+            ),
+            patch.object(
+                update_readme, "advertised_preview", side_effect=advertised.get
+            ),
+        ):
+            return update_readme.refresh_live_demo_previews(self.LIVE_DEMOS)
+
+    def test_broken_live_demo_preview_takes_the_sites_current_og_image(self) -> None:
+        current = "https://moved.example/opengraph-image?b&c"
+        refreshed = self.refresh(
+            {"https://ok.example/og.png", current, "https://local.example/og.png"},
+            {
+                "https://moved.example": current,
+                "https://local.example": "https://local.example/og.png",
+            },
+        )
+        self.assertIn(
+            '<img src="https://moved.example/opengraph-image?b&amp;c" />', refreshed
+        )
+        self.assertIn('<img src="https://ok.example/og.png" />', refreshed)
+        # A repository-relative image is not fetched, so never judged broken.
+        self.assertIn('<img src="assets/local.png" />', refreshed)
+        # Cards after the Live Demos section are not its business.
+        self.assertIn('<img src="https://later.example/x.png" />', refreshed)
+
+    def test_broken_live_demo_preview_is_kept_without_a_working_replacement(
+        self,
+    ) -> None:
+        serving = {"https://ok.example/og.png"}
+        broken_replacement = {"https://moved.example": "https://moved.example/gone"}
+        self.assertEqual(self.refresh(serving, broken_replacement), self.LIVE_DEMOS)
+        self.assertEqual(
+            self.refresh(serving, {"https://moved.example": None}), self.LIVE_DEMOS
+        )
+
+    def test_advertised_preview_must_be_https_on_the_cards_own_site(self) -> None:
+        def page(og_image: str) -> tuple[str, bytes, str]:
+            body = f'<meta property="og:image" content="{og_image}">'.encode()
+            return "text/html", body, "https://www.site.example/demo/"
+
+        cases = {
+            "/og.png": "https://www.site.example/og.png",
+            "https://site.example/og.png": "https://site.example/og.png",
+            "https://cdn.other.example/og.png": None,
+            "http://site.example/og.png": None,
+        }
+        for og_image, expected in cases.items():
+            with patch.object(update_readme, "open_url", return_value=page(og_image)):
+                self.assertEqual(
+                    update_readme.advertised_preview("https://site.example/demo"),
+                    expected,
+                    og_image,
+                )
 
 
 class StarHistoryTests(unittest.TestCase):

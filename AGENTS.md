@@ -28,7 +28,9 @@ and regenerate it.
   potentially stale local refs. When measurement fails, the run still succeeds
   and keeps the old section, so check `~/.local/share/profile-stats/update.log`
   for "preserving the existing Building Now section" (it froze from Sep 10 to
-  Sep 24, 2026 when too many recent repos were not cloned locally).
+  Sep 24, 2026 when too many recent repos were not cloned locally). The
+  section's caption carries its window's end date, so a frozen table also
+  shows its age on the page.
 - List only projects and sites backed by a public GitHub repository. A live
   domain on Vercel or Cloudflare may still be unannounced; without a public
   repo, leave it off every section. Re-check sites already on the page too:
@@ -40,6 +42,11 @@ and regenerate it.
   domain.
 - Verify every Live Demos preview with `curl -w '%{content_type}'`, not just
   the status code: a site that drops its OG image can still return 200 HTML.
+  Each run of `scripts/update_readme.py` repeats that check for every card: it
+  replaces a preview that no longer serves an image with the site's current
+  same-site HTTPS `og:image` when that one does, and otherwise only logs
+  "Live Demos preview ... does not serve an image", so still check new cards
+  by hand before publishing.
 - Keep the star-history main panel at 14 repositories unless the profile
   layout is deliberately redesigned. Select the leading series from both total
   stars and 90-day growth, then regenerate both light and dark SVGs. The
