@@ -70,8 +70,11 @@ and regenerate it.
 ## Refresh and verification
 
 Every night at 05:00, the LaunchAgent `com.jemanuel.profile-stats` runs
-`~/.local/bin/profile-stats-update.sh` on this machine; GitHub Actions is only
-a manual fallback. Stage 1 runs `bash update-stats.sh`, then commits and
+`ops/profile-stats-update.sh` on this machine, through the launcher
+`ops/profile-stats-launcher.sh`, which is installed as
+`~/.local/bin/profile-stats-update.sh` and runs a snapshot of the script
+(install steps are in its header). GitHub Actions is only a manual
+fallback. Stage 1 runs `bash update-stats.sh`, then commits and
 pushes the generated files. Stage 2 starts headless Claude Code with
 `scripts/nightly_curation_prompt.md`, but only when there is work: a
 repository from `scripts/profile_coverage.py`, a failed stage 1, or a stale
@@ -82,7 +85,7 @@ section or broken preview that stage 1 logged. The log is
 Run `bash update-stats.sh` from the repository root. Before publishing, run:
 
 ```bash
-bash -n update-stats.sh
+for script in update-stats.sh ops/*.sh; do bash -n "$script"; done
 python3 -m py_compile scripts/update_readme.py scripts/recent_activity.py scripts/star_history.py scripts/profile_coverage.py
 python3 -m unittest tests.test_profile_generators
 xmllint --noout stats.svg stats-light.svg languages.svg languages-light.svg star_history.svg star_history-light.svg

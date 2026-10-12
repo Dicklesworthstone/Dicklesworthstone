@@ -1020,6 +1020,15 @@ class ProfileCoverageTests(unittest.TestCase):
         data = json.loads(profile_coverage.EXCLUSIONS.read_text(encoding="utf-8"))
         profile_coverage.load_exclusions(data)
 
+    def test_nightly_job_scripts_parse(self) -> None:
+        # A syntax error here would silently stop every scheduled refresh.
+        for script in ("profile-stats-update.sh", "profile-stats-launcher.sh"):
+            path = profile_coverage.ROOT / "ops" / script
+            result = subprocess.run(
+                ["bash", "-n", str(path)], capture_output=True, text=True
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()
