@@ -594,7 +594,7 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
   <picture>
     <source media="(prefers-color-scheme: light)" srcset="star_history-light.svg" />
     <source media="(prefers-color-scheme: dark)" srcset="star_history.svg" />
-    <img src="star_history.svg" width="900" alt="Star history for 14 repositories selected by total stars and recent growth" />
+    <img src="star_history.svg" width="900" alt="Star history: 14 leading repositories by total stars and 90-day growth, plus a Rising fast panel of up to 6 smaller repositories that gained at least 20 stars and grew at least 25% in the last 28 days" />
   </picture>
 </p>
 

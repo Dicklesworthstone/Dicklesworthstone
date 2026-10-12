@@ -40,9 +40,14 @@ and regenerate it.
   domain.
 - Verify every Live Demos preview with `curl -w '%{content_type}'`, not just
   the status code: a site that drops its OG image can still return 200 HTML.
-- Keep the star-history chart at 14 repositories unless the profile layout is
-  deliberately redesigned. Select the leading series from both total stars
-  and recent growth, then regenerate both light and dark SVGs.
+- Keep the star-history main panel at 14 repositories unless the profile
+  layout is deliberately redesigned. Select the leading series from both total
+  stars and 90-day growth, then regenerate both light and dark SVGs. The
+  "Rising fast" panel below it (added Oct 12, 2026) charts up to 6 repos outside
+  those 14 that gained at least 20 stars and grew at least 25% over 28 days, on
+  their own axes so small counts stay visible. The thresholds and their
+  data-based justification live in `scripts/star_history.py`; re-check them
+  against the current distribution before changing either.
 - When Jeffrey supplies a new X follower count, update both the generated badge
   for the current run and the `X_FOLLOWERS_LABEL` fallback in
   `update-stats.sh`.

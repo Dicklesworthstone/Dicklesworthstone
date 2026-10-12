@@ -9,7 +9,7 @@ import subprocess
 import tempfile
 import unittest
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from unittest.mock import MagicMock, patch
@@ -734,6 +734,128 @@ class StarHistoryTests(unittest.TestCase):
         )
         self.assertIn(">Asupersync</text>", svg)
         self.assertNotIn(">asupersync</text>", svg)
+
+    @staticmethod
+    def rising_series(
+        snapshot: datetime, before: int, during: int
+    ) -> list[datetime]:
+        """`before` stars well before the rising window, `during` inside it."""
+        old = snapshot - timedelta(days=star_history.RISING_WINDOW_DAYS + 30)
+        recent = snapshot - timedelta(days=2)
+        return [old] * before + [recent] * during
+
+    def test_rising_picks_need_both_absolute_and_relative_growth(self) -> None:
+        snapshot = datetime(2026, 10, 12, tzinfo=UTC)
+        series = {
+            "launch": self.rising_series(snapshot, 0, 25),  # new: 25 / 20
+            "surge": self.rising_series(snapshot, 40, 40),  # +100%
+            "boundary": self.rising_series(snapshot, 80, 20),  # exactly +20, 25%
+            "tiny": self.rising_series(snapshot, 2, 4),  # the "2 -> 6" case
+            "steady": self.rising_series(snapshot, 200, 30),  # +30 but only 15%
+            "almost": self.rising_series(snapshot, 81, 20),  # 24.7%
+            "charted": self.rising_series(snapshot, 0, 500),  # in the main panel
+        }
+        picks = star_history.rising_picks(series, {"charted"}, snapshot)
+        self.assertEqual([p.repo for p in picks], ["launch", "surge", "boundary"])
+        launch = picks[0]
+        self.assertEqual((launch.start, launch.gain, launch.total), (0, 25, 25))
+        self.assertAlmostEqual(launch.relative, 25 / star_history.RISING_MIN_GAIN)
+        ranked = star_history.rising_candidates(series, {"charted"}, snapshot)
+        self.assertNotIn("charted", [p.repo for p in ranked])
+        self.assertEqual(len(ranked), len(series) - 1)
+
+    def test_rising_picks_are_capped_and_count_the_window_start_inside(self) -> None:
+        snapshot = datetime(2026, 10, 12, tzinfo=UTC)
+        series = {
+            f"riser-{index}": self.rising_series(snapshot, 0, 30 + index)
+            for index in range(star_history.MAX_RISING + 2)
+        }
+        picks = star_history.rising_picks(series, set(), snapshot)
+        self.assertEqual(len(picks), star_history.MAX_RISING)
+        self.assertEqual(picks[0].repo, f"riser-{star_history.MAX_RISING + 1}")
+        cutoff = snapshot - timedelta(days=star_history.RISING_WINDOW_DAYS)
+        edge = {"edge": [cutoff - timedelta(seconds=1)] * 10 + [cutoff] * 20}
+        (pick,) = star_history.rising_candidates(edge, set(), snapshot)
+        self.assertEqual((pick.start, pick.gain), (10, 20))
+
+    def test_main_keeps_fetching_while_a_rising_pick_is_possible(self) -> None:
+        now = datetime.now(UTC)
+        old = now - timedelta(days=400)
+        recent = now - timedelta(days=1)
+        big = [old] * 900 + [recent] * 100
+        timelines = {f"big-{index}": big for index in range(star_history.MAX_SERIES)}
+        timelines.update({f"mid-{index}": [old] * 100 for index in range(6)})
+        timelines["riser"] = [recent] * 30
+        timelines["quiet"] = [old] * 10
+        candidates = [(repo, len(stamps)) for repo, stamps in timelines.items()]
+        fetched: list[str] = []
+        written: dict[str, str] = {}
+
+        def fake_starred_at(repo: str) -> list[datetime]:
+            fetched.append(repo)
+            return list(timelines[repo])
+
+        def capture(artifacts: list[tuple[Path, str]]) -> None:
+            written.update({path.name: content for path, content in artifacts})
+
+        with (
+            patch.object(star_history, "candidate_repos", return_value=candidates),
+            patch.object(star_history, "starred_at", side_effect=fake_starred_at),
+            patch.object(star_history, "write_svg_pair", side_effect=capture),
+        ):
+            self.assertEqual(star_history.main(), 0)
+        # The 20 initial candidates alone already prove the main selection;
+        # the old stopping rule quit there and never saw "riser".
+        self.assertIn("riser", fetched)
+        self.assertNotIn("quiet", fetched)
+        for name in ("star_history.svg", "star_history-light.svg"):
+            self.assertIn(">Rising fast</text>", written[name])
+            self.assertIn(">riser</text>", written[name])
+            self.assertIn(
+                f'height="{star_history.HEIGHT + star_history.RISING_HEIGHT}"',
+                written[name],
+            )
+
+    def test_rising_panel_without_picks_says_so(self) -> None:
+        snapshot = datetime(2026, 10, 12, tzinfo=UTC)
+        svg = star_history.render(
+            star_history.LIGHT,
+            {"repo": [datetime(2026, 1, 1, tzinfo=UTC)]},
+            ["repo"],
+            {"repo": 1},
+            {"repo": 0},
+            snapshot,
+            [],
+        )
+        self.assertIn("cleared both bars", svg)
+        self.assertIn("and 0 smaller repositories rising fastest", svg)
+        self.assertIn(">Sep 14</text>", svg)
+        self.assertIn(">Oct 12</text>", svg)
+
+    def test_rising_legend_uses_profile_names_and_marks_new_repos(self) -> None:
+        snapshot = datetime(2026, 10, 12, tzinfo=UTC)
+        series = {
+            "repo": [datetime(2026, 1, 1, tzinfo=UTC)],
+            "doodlestein_self_releaser": self.rising_series(snapshot, 42, 35),
+            "brand_new_thing": self.rising_series(snapshot, 0, 22),
+        }
+        picks = star_history.rising_picks(series, {"repo"}, snapshot)
+        svg = star_history.render(
+            star_history.DARK, series, ["repo"], {"repo": 1}, {"repo": 0},
+            snapshot, picks,
+        )
+        self.assertIn(">Doodlestein Self-Releaser</text>", svg)
+        self.assertIn("(+83%)", svg)
+        self.assertIn(">brand_new_thing</text>", svg)
+        self.assertIn("(new)", svg)
+
+    def test_axis_marks_drop_interior_labels_that_touch_the_ends(self) -> None:
+        marks = [(100.0, "Sep 14"), (300.0, "Sep 21"), (480.0, "Oct 2"), (500.0, "Oct 3")]
+        placed = star_history.axis_marks_without_collisions(marks, 100.0, 500.0)
+        self.assertEqual(
+            placed,
+            [(100.0, "Sep 14", "start"), (300.0, "Sep 21", "middle"), (500.0, "Oct 3", "end")],
+        )
 
     def test_atomic_write_replaces_content_with_normal_permissions(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
