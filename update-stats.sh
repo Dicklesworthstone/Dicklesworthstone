@@ -35,10 +35,10 @@ require_integer_at_least() {
     exit 1
   fi
 }
-gh_api() {
+gh_retry() {
   local attempt result
   for attempt in 1 2 3; do
-    if result=$(gh api "$@"); then
+    if result=$(gh "$@"); then
       printf '%s' "$result"
       return 0
     fi
@@ -47,6 +47,7 @@ gh_api() {
   done
   return 1
 }
+gh_api() { gh_retry api "$@"; }
 fetch_public_commit_count() {
   local attempt result count
   for attempt in 1 2 3; do
@@ -208,7 +209,9 @@ echo "=== Fetching Discord member count ==="
 DISCORD_INVITE_CODE="${DISCORD_INVITE_CODE:-gnCHsYDR25}"
 DISCORD_MEMBERS="${DISCORD_MEMBERS:-}"
 if [ -z "$DISCORD_MEMBERS" ]; then
-  if DISCORD_JSON=$(curl -fsSL "https://discord.com/api/v10/invites/${DISCORD_INVITE_CODE}?with_counts=true" 2>/dev/null); then
+  # Bounded: a hung request would block this run, and the local updater skips
+  # every later run while an update-stats.sh process is still alive.
+  if DISCORD_JSON=$(curl -fsSL --connect-timeout 10 --max-time 30 "https://discord.com/api/v10/invites/${DISCORD_INVITE_CODE}?with_counts=true" 2>/dev/null); then
     if ! DISCORD_MEMBERS=$(printf '%s' "$DISCORD_JSON" | jq -er '
       .approximate_member_count
       | if (type == "number") and (. >= 0) and (. == floor)
@@ -231,10 +234,10 @@ else
   echo "Discord:      count unavailable; leaving README fallback in place"
 fi
 
-RECENT_REPOS_JSON_CONTENT=$(gh repo list "$USERNAME" \
+RECENT_REPOS_JSON_CONTENT=$(gh_retry repo list "$USERNAME" \
   --limit 1000 \
   --visibility public \
-  --json name,description,primaryLanguage,defaultBranchRef,pushedAt,updatedAt,stargazerCount,isArchived,isFork,url)
+  --json name,description,primaryLanguage,defaultBranchRef,pushedAt,updatedAt,stargazerCount,isArchived,isEmpty,isFork,url)
 RECENT_REPO_COUNT=$(printf '%s' "$RECENT_REPOS_JSON_CONTENT" | jq -r \
   'if type == "array" then length else error("repository metadata is not an array") end')
 require_integer_at_least "public repository metadata count" "$RECENT_REPO_COUNT" 1

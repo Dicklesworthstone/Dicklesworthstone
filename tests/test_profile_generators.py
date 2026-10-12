@@ -3,6 +3,7 @@ from __future__ import annotations
 import http.client
 import json
 import os
+import re
 import stat
 import subprocess
 import tempfile
@@ -65,6 +66,32 @@ class RecentActivityTests(unittest.TestCase):
         with self.assertRaises(TypeError):
             recent_activity.recent_candidates(
                 [{**valid, "name": "bad-time", "pushedAt": "yesterday"}], since
+            )
+
+    def test_candidates_skip_a_new_empty_repository(self) -> None:
+        # GitHub gives an empty repo a fresh pushedAt and no default branch.
+        since = datetime(2026, 8, 20, tzinfo=UTC)
+        valid = {
+            "name": "valid",
+            "pushedAt": "2026-08-21T00:00:00Z",
+            "isArchived": False,
+            "isEmpty": False,
+            "isFork": False,
+            "defaultBranchRef": {"name": "main"},
+        }
+        empty = {
+            **valid,
+            "name": "brand-new",
+            "isEmpty": True,
+            "defaultBranchRef": {"name": ""},
+        }
+        self.assertEqual(
+            recent_activity.recent_candidates([valid, empty], since),
+            {"valid": valid},
+        )
+        with self.assertRaises(TypeError):
+            recent_activity.recent_candidates(
+                [{**valid, "isEmpty": "false"}], since
             )
 
     def test_summarize_counts_commits_and_window_diff(self) -> None:
@@ -276,6 +303,7 @@ class ReadmeActivityTests(unittest.TestCase):
             "| **[LLM-Aided OCR](https://github.com/Dicklesworthstone/llm_aided_ocr)** |\n"
             "| [**Agent Farm**](https://github.com/Dicklesworthstone/claude_code_agent_farm) |\n"
             "| **[Visual A* Pathfinding](https://github.com/Dicklesworthstone/visual_astar_python)** |\n"
+            "| **[Pipe A\\|B](https://github.com/Dicklesworthstone/pipe_repo)** |\n"
             "<!-- BEGIN AUTO-BUILDING-NOW -->\n"
             "| [**Stale Name**](https://github.com/Dicklesworthstone/unlisted_repo) |\n"
             "<!-- END AUTO-BUILDING-NOW -->\n"
@@ -283,10 +311,12 @@ class ReadmeActivityTests(unittest.TestCase):
         curated = update_readme.curated_display_names(readme)
         self.assertEqual(curated["llm_aided_ocr"], "LLM-Aided OCR")
         self.assertEqual(curated["claude_code_agent_farm"], "Agent Farm")
+        self.assertEqual(curated["pipe_repo"], "Pipe A|B")
         self.assertNotIn("unlisted_repo", curated)
         repos = [
             repo_payload("llm_aided_ocr"),
             repo_payload("visual_astar_python"),
+            repo_payload("pipe_repo"),
             repo_payload("unlisted_repo"),
             repo_payload("frankengit"),
         ]
@@ -298,6 +328,7 @@ class ReadmeActivityTests(unittest.TestCase):
             table = update_readme.build_recent_repos_table(curated)
         self.assertIn("[**LLM-Aided OCR**]", table)
         self.assertIn("[**Visual A\\* Pathfinding**]", table)
+        self.assertIn("[**Pipe A\\|B**]", table)
         self.assertIn("[**Unlisted Repo**]", table)
         self.assertIn("[**FrankenGit**]", table)
 
@@ -574,6 +605,60 @@ class StarHistoryTests(unittest.TestCase):
             star_history.remaining_cannot_qualify(
                 [("possible-spike", 900)], series, totals, growth
             )
+        )
+
+    def test_adaptive_selection_keeps_fetching_while_a_new_growth_leader_is_possible(
+        self,
+    ) -> None:
+        # "growing" is 14th and "steady" 15th while 100 is the top growth. A
+        # remaining 150-star repo cannot be charted itself, but if all 150
+        # stars are recent it becomes the growth leader and swaps those two.
+        series = {
+            f"core-{index}": [datetime(2026, 9, 1, tzinfo=UTC)]
+            for index in range(star_history.MAX_SERIES - 1)
+        }
+        series["growing"] = [datetime(2026, 9, 1, tzinfo=UTC)]
+        series["steady"] = [datetime(2026, 9, 1, tzinfo=UTC)]
+        totals = {repo: 1_000 for repo in series}
+        growth = {repo: 100 for repo in series}
+        totals["growing"], growth["growing"] = 500, 90
+        growth["steady"] = 30
+        self.assertIn("growing", star_history.select(series, totals, growth))
+        spiked = {
+            **series,
+            "spike": [datetime(2026, 9, 1, tzinfo=UTC)],
+        }
+        chosen = star_history.select(
+            spiked, {**totals, "spike": 150}, {**growth, "spike": 150}
+        )
+        self.assertNotIn("spike", chosen)
+        self.assertIn("steady", chosen)
+        self.assertNotIn("growing", chosen)
+        self.assertFalse(
+            star_history.remaining_cannot_qualify(
+                [("spike", 150)], series, totals, growth
+            )
+        )
+
+    def test_year_label_near_the_axis_end_keeps_only_its_gridline(self) -> None:
+        def axis_labels(snapshot: datetime) -> list[str]:
+            svg = star_history.render(
+                star_history.DARK,
+                {"repo": [datetime(2023, 7, 10, tzinfo=UTC)]},
+                ["repo"],
+                {"repo": 1},
+                {"repo": 0},
+                snapshot,
+            )
+            return re.findall(r'y="622"[^>]*>([^<]+)</text>', svg)
+
+        self.assertEqual(
+            axis_labels(datetime(2027, 1, 20, tzinfo=UTC)),
+            ["Jul 2023", "2024", "2025", "2026", "Jan 2027"],
+        )
+        self.assertEqual(
+            axis_labels(datetime(2027, 6, 1, tzinfo=UTC)),
+            ["Jul 2023", "2024", "2025", "2026", "2027", "Jun 2027"],
         )
 
     def test_positive_star_count_requires_timeline_data(self) -> None:

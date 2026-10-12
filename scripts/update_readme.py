@@ -367,6 +367,7 @@ CURATED_REPO_LINK = re.compile(
     r"\[\*\*([^*\[\]\n]+)\*\*\]\(https://github\.com/Dicklesworthstone/([A-Za-z0-9_.-]+)\)"
     r"|\*\*\[([^\[\]\n]+)\]\(https://github\.com/Dicklesworthstone/([A-Za-z0-9_.-]+)\)\*\*"
 )
+MARKDOWN_ESCAPE = re.compile(r"\\([!-/:-@\[-`{-~])")
 
 
 def env(name: str, default: str = "") -> str:
@@ -593,7 +594,10 @@ def curated_display_names(text: str) -> dict[str, str]:
     for match in CURATED_REPO_LINK.finditer(curated):
         label = match.group(1) or match.group(3)
         repo_name = match.group(2) or match.group(4)
-        names.setdefault(repo_name, label.strip())
+        # Labels are Markdown; drop their backslash escapes so the table
+        # builder's own escaping does not double them.
+        plain = MARKDOWN_ESCAPE.sub(r"\1", label.strip())
+        names.setdefault(repo_name, plain)
     return names
 
 

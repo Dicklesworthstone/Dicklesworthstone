@@ -100,11 +100,17 @@ def recent_candidates(repos: object, since: datetime) -> dict[str, dict[str, Any
             repo.get("isFork"), bool
         ):
             raise TypeError("repository metadata contains invalid visibility flags")
+        # A newly created empty repository (asupersync-beads is one) reports
+        # its creation time as pushedAt but has no default branch, so trying
+        # to measure it would fail the whole run and freeze the section.
+        is_empty = repo.get("isEmpty", False)
+        if not isinstance(is_empty, bool):
+            raise TypeError("repository metadata contains an invalid empty flag")
         pushed_value = repo.get("pushedAt")
         pushed_at = parse_github_timestamp(pushed_value)
         if pushed_value is not None and pushed_at is None:
             raise TypeError("repository metadata contains an invalid push timestamp")
-        if repo["isArchived"] or repo["isFork"] or is_excluded(name):
+        if repo["isArchived"] or repo["isFork"] or is_empty or is_excluded(name):
             continue
         if pushed_at is None or pushed_at < since:
             continue

@@ -47,6 +47,10 @@ FONT = (
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', "
     "Helvetica, Arial, sans-serif"
 )
+# Generous per-character width of the 12px axis labels, used to keep the
+# year labels from printing over the dated labels at either end of the axis.
+AXIS_CHAR_WIDTH = 7.5
+AXIS_LABEL_GAP = 12
 
 
 class Theme(TypedDict):
@@ -339,7 +343,7 @@ def remaining_cannot_qualify(
     totals: dict[str, int],
     growth: dict[str, int],
 ) -> bool:
-    """Prove that even an all-recent remaining star total cannot make the cut."""
+    """Prove that fetching the remaining timelines cannot change the selection."""
     if len(series) < MAX_SERIES:
         return False
     remaining_total = max((stars for _repo, stars in remaining), default=0)
@@ -347,27 +351,22 @@ def remaining_cannot_qualify(
         return True
 
     # A not-yet-fetched repository cannot have gained more stars during the
-    # growth window than its total star count. Use that deliberately generous
-    # upper bound, and simultaneously penalize the fetched candidates with the
-    # largest growth denominator the remaining pool could introduce. If the
-    # best possible remaining score is still below the fourteenth fetched
-    # score, downloading more timelines cannot change the selected set.
-    max_total = max(max(totals[repo] for repo in series), remaining_total, 1)
-    current_max_growth = max(growth.values(), default=0)
-    possible_max_growth = max(current_max_growth, remaining_total, 1)
-    fetched_lower_bounds = sorted(
-        (
-            totals[repo] / max_total + growth[repo] / possible_max_growth
-            for repo in series
-        ),
+    # growth window than its total star count. While that bound stays within
+    # both current leaders, fetching it cannot move either normalizer, so the
+    # fetched scores are final and the best a remaining repository can score
+    # is its star total against both. Past that, a new growth leader would
+    # rescale every fetched score and could swap the repositories on either
+    # side of the cut without being charted itself, so keep fetching.
+    max_total = max(totals[repo] for repo in series)
+    max_growth = max(growth.values(), default=0)
+    if remaining_total > max_total or remaining_total > max_growth:
+        return False
+    scores = sorted(
+        (totals[repo] / max_total + growth[repo] / max_growth for repo in series),
         reverse=True,
     )
-    cutoff = fetched_lower_bounds[MAX_SERIES - 1]
-    remaining_upper_bound = (
-        remaining_total / max_total
-        + remaining_total / max(current_max_growth, remaining_total, 1)
-    )
-    return remaining_upper_bound < cutoff
+    remaining_upper_bound = remaining_total / max_total + remaining_total / max_growth
+    return remaining_upper_bound < scores[MAX_SERIES - 1]
 
 
 def cumulative(stamps: list[datetime], ticks: list[datetime]) -> list[int]:
@@ -505,6 +504,18 @@ def render(
     else:
         year_marks.append(final_mark)
 
+    def label_span(i: int, label: str) -> tuple[float, float]:
+        width = len(label) * AXIS_CHAR_WIDTH
+        x = x_of(i)
+        if i == 0:
+            return x, x + width
+        if i == SAMPLES - 1:
+            return x - width, x
+        return x - width / 2, x + width / 2
+
+    first_span = label_span(*year_marks[0])
+    final_span = label_span(*year_marks[-1])
+
     for i, label in year_marks:
         x = x_of(i)
         if i not in (0, SAMPLES - 1):
@@ -512,6 +523,15 @@ def render(
                 f'  <line x1="{x:.1f}" y1="{PAD_T}" x2="{x:.1f}" y2="{plot_b}" '
                 f'stroke="{theme["grid"]}" stroke-width="1" stroke-dasharray="3 5"/>'
             )
+            # From January until about April the new year's label sits on top
+            # of the end-of-axis date (and likewise for a chart that starts
+            # late in a year), so it keeps its gridline but drops its text.
+            left, right = label_span(i, label)
+            if (
+                left < first_span[1] + AXIS_LABEL_GAP
+                or right > final_span[0] - AXIS_LABEL_GAP
+            ):
+                continue
         anchor = "start" if i == 0 else ("end" if i == SAMPLES - 1 else "middle")
         out.append(
             f'  <text x="{x:.1f}" y="{plot_b + 24}" fill="{theme["muted"]}" '
