@@ -27,7 +27,7 @@
     },
     "franken_threed": {
       "reason": "Early: runs only a subset of Three.js features so far.",
-      "revisit": "2026-11-12"
+      "revisit": "2026-10-12"
     },
     "franken_native_capsule": {
       "reason": "Internal native-code capsule for FrankenEngine (ADR-0010), not a standalone project.",
