@@ -40,6 +40,11 @@ and regenerate it.
   visibility (the search includes private repos): eidetic-engine.org is built
   from the public `eidetic-engine-website-project`, whose name matches no
   domain.
+- Record every public repository you decide to leave off the profile in
+  `scripts/profile_exclusions.json`, with a reason, plus a `revisit` date if it
+  may mature. `scripts/profile_coverage.py` reports any public repository
+  that is neither linked nor excluded, and the nightly job hands that list to
+  Claude Code, so an unrecorded decision gets reconsidered every night.
 - Verify every Live Demos preview with `curl -w '%{content_type}'`, not just
   the status code: a site that drops its OG image can still return 200 HTML.
   Each run of `scripts/update_readme.py` repeats that check for every card: it
@@ -64,11 +69,22 @@ and regenerate it.
 
 ## Refresh and verification
 
+Every night at 05:00, the LaunchAgent `com.jemanuel.profile-stats` runs
+`~/.local/bin/profile-stats-update.sh` on this machine; GitHub Actions is only
+a manual fallback. Stage 1 runs `bash update-stats.sh`, then commits and
+pushes the generated files. Stage 2 starts headless Claude Code with
+`scripts/nightly_curation_prompt.md`, but only when there is work: a
+repository from `scripts/profile_coverage.py`, a failed stage 1, or a stale
+section or broken preview that stage 1 logged. The log is
+`~/.local/share/profile-stats/update.log`; Claude's transcripts are
+`curation-YYYY-MM-DD.log` beside it.
+
 Run `bash update-stats.sh` from the repository root. Before publishing, run:
 
 ```bash
 bash -n update-stats.sh
-python3 -m py_compile scripts/update_readme.py scripts/recent_activity.py scripts/star_history.py
+python3 -m py_compile scripts/update_readme.py scripts/recent_activity.py scripts/star_history.py scripts/profile_coverage.py
+python3 -m unittest tests.test_profile_generators
 xmllint --noout stats.svg stats-light.svg languages.svg languages-light.svg star_history.svg star_history-light.svg
 git diff --check
 ```

@@ -9,12 +9,12 @@ import subprocess
 import tempfile
 import unittest
 import urllib.request
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from unittest.mock import MagicMock, patch
 
-from scripts import recent_activity, star_history, update_readme
+from scripts import profile_coverage, recent_activity, star_history, update_readme
 
 UTC = timezone.utc
 
@@ -965,6 +965,60 @@ class StarHistoryTests(unittest.TestCase):
                 )
             self.assertEqual(dark.read_text(encoding="utf-8"), "old dark")
             self.assertEqual(light.read_text(encoding="utf-8"), "old light")
+
+
+class ProfileCoverageTests(unittest.TestCase):
+    TODAY = date(2026, 10, 12)
+
+    @staticmethod
+    def repo(name: str, **overrides: object) -> dict[str, Any]:
+        return {
+            "name": name,
+            "description": f"{name} project",
+            "isArchived": False,
+            "isEmpty": False,
+            "isFork": False,
+            **overrides,
+        }
+
+    def test_only_unlisted_unexcluded_original_repos_need_a_decision(self) -> None:
+        readme = "[**Listed**](https://github.com/Dicklesworthstone/Listed_Repo#readme)"
+        exclusions = {
+            "description_exact": ["Issue tracker dashboard"],
+            "repos": {
+                "skipped": {"reason": "Not a project."},
+                "early": {"reason": "Not ready.", "revisit": "2026-11-12"},
+                "matured": {"reason": "Not ready.", "revisit": "2026-10-12"},
+            },
+        }
+        repos = [
+            self.repo("listed_repo"),
+            self.repo("forked", isFork=True),
+            self.repo("archived", isArchived=True),
+            self.repo("empty", isEmpty=True),
+            self.repo("dashboard", description="Issue tracker dashboard"),
+            self.repo("skipped"),
+            self.repo("early"),
+            self.repo("matured"),
+            self.repo("brand_new"),
+        ]
+        found = profile_coverage.uncovered(repos, readme, exclusions, self.TODAY)
+        self.assertEqual([item["name"] for item in found], ["brand_new", "matured"])
+        self.assertEqual(found[1]["previousExclusion"]["reason"], "Not ready.")
+
+    def test_exclusions_need_a_reason_and_a_valid_revisit_date(self) -> None:
+        for broken in (
+            {"repos": {"x": {}}},
+            {"repos": {"x": {"reason": "Fine.", "revisit": "next month"}}},
+            {"description_exact": "Issue tracker dashboard"},
+        ):
+            with self.assertRaises(ValueError):
+                profile_coverage.uncovered([], "", broken, self.TODAY)
+
+    def test_committed_exclusions_file_is_valid(self) -> None:
+        # The nightly curation run edits this file unattended.
+        data = json.loads(profile_coverage.EXCLUSIONS.read_text(encoding="utf-8"))
+        profile_coverage.load_exclusions(data)
 
 
 if __name__ == "__main__":

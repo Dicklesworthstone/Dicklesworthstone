@@ -1,0 +1,52 @@
+{
+  "_comment": "Public repositories deliberately left off the profile, read by scripts/profile_coverage.py. The nightly curation run adds an entry for every repo it decides not to list. An entry with a 'revisit' date (YYYY-MM-DD) comes back for review on that date.",
+  "description_exact": [
+    "Issue tracker dashboard",
+    "MCP Agent Mail static viewer"
+  ],
+  "repos": {
+    "Dicklesworthstone": {
+      "reason": "This profile repository itself."
+    },
+    "homebrew-tap": {
+      "reason": "Homebrew tap for packaged tools, not a project."
+    },
+    "homebrew-sbh": {
+      "reason": "Homebrew tap for Storage Ballast Helper, not a project."
+    },
+    "scoop-bucket": {
+      "reason": "Scoop bucket for packaged tools, not a project."
+    },
+    "franken_nlp": {
+      "reason": "Its README says the engine cannot run the model yet.",
+      "revisit": "2026-11-12"
+    },
+    "franken_remote": {
+      "reason": "Its README says no second machine has connected yet.",
+      "revisit": "2026-11-12"
+    },
+    "franken_threed": {
+      "reason": "Early: runs only a subset of Three.js features so far.",
+      "revisit": "2026-11-12"
+    },
+    "franken_native_capsule": {
+      "reason": "Internal native-code capsule for FrankenEngine (ADR-0010), not a standalone project.",
+      "revisit": "2026-11-12"
+    },
+    "beads_for_cass": {
+      "reason": "Static Beads issue dashboard for CASS, like the other generated dashboards."
+    },
+    "toon-go": {
+      "reason": "Thin Go wrapper around toon_rust, which the profile already lists as TOON Rust."
+    },
+    "guide_to_openai_response_api_and_agents_sdk": {
+      "reason": "Obsolete guide to a since-revised OpenAI API."
+    },
+    "gemini-api-updater-doc": {
+      "reason": "Obsolete reference document for an older Gemini API."
+    },
+    "ChatTTS": {
+      "reason": "Copy of 2noise/ChatTTS repackaged for pip, not original work."
+    }
+  }
+}
