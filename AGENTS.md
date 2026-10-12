@@ -32,7 +32,12 @@ and regenerate it.
 - List only projects and sites backed by a public GitHub repository. A live
   domain on Vercel or Cloudflare may still be unannounced; without a public
   repo, leave it off every section. Re-check sites already on the page too:
-  smearedlife.com stayed listed with a private repo until Oct 12, 2026.
+  smearedlife.com stayed listed with a private repo until Oct 12, 2026. Before
+  calling a site repo-less, search the live page's title or a distinctive
+  string with `gh search code --owner Dicklesworthstone` and check the hit's
+  visibility (the search includes private repos): eidetic-engine.org is built
+  from the public `eidetic-engine-website-project`, whose name matches no
+  domain.
 - Verify every Live Demos preview with `curl -w '%{content_type}'`, not just
   the status code: a site that drops its OG image can still return 200 HTML.
 - Keep the star-history chart at 14 repositories unless the profile layout is

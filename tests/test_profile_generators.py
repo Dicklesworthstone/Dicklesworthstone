@@ -271,6 +271,41 @@ class ReadmeActivityTests(unittest.TestCase):
         )
         self.assertNotIn("Unedited GitHub description", table)
 
+    def test_activity_table_falls_back_to_the_curated_readme_name(self) -> None:
+        readme = (
+            "| **[LLM-Aided OCR](https://github.com/Dicklesworthstone/llm_aided_ocr)** |\n"
+            "| [**Agent Farm**](https://github.com/Dicklesworthstone/claude_code_agent_farm) |\n"
+            "| **[Visual A* Pathfinding](https://github.com/Dicklesworthstone/visual_astar_python)** |\n"
+            "<!-- BEGIN AUTO-BUILDING-NOW -->\n"
+            "| [**Stale Name**](https://github.com/Dicklesworthstone/unlisted_repo) |\n"
+            "<!-- END AUTO-BUILDING-NOW -->\n"
+        )
+        curated = update_readme.curated_display_names(readme)
+        self.assertEqual(curated["llm_aided_ocr"], "LLM-Aided OCR")
+        self.assertEqual(curated["claude_code_agent_farm"], "Agent Farm")
+        self.assertNotIn("unlisted_repo", curated)
+        repos = [
+            repo_payload("llm_aided_ocr"),
+            repo_payload("visual_astar_python"),
+            repo_payload("unlisted_repo"),
+            repo_payload("frankengit"),
+        ]
+        with patch.dict(
+            os.environ,
+            {"RECENT_ACTIVITY_JSON_CONTENT": json.dumps(repos)},
+            clear=False,
+        ):
+            table = update_readme.build_recent_repos_table(curated)
+        self.assertIn("[**LLM-Aided OCR**]", table)
+        self.assertIn("[**Visual A\\* Pathfinding**]", table)
+        self.assertIn("[**Unlisted Repo**]", table)
+        self.assertIn("[**FrankenGit**]", table)
+
+    def test_recent_activity_exclusions_match_the_readme_generator(self) -> None:
+        # A repo excluded on one side only makes update_readme drop the whole
+        # measurement and keep the stale section.
+        self.assertEqual(recent_activity.EXCLUDED, update_readme.RECENT_EXCLUDE)
+
     def test_malformed_language_metadata_fails_closed(self) -> None:
         malformed = repo_payload("malformed")
         malformed["primaryLanguage"] = {"name": "Rust", "color": 123}

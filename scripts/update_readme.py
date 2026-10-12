@@ -188,20 +188,23 @@ RECENT_DESCRIPTION_OVERRIDES = {
         "tool."
     ),
     "franken_nlp": (
-        "Pure-Rust CPU inference engine for the Nanbeige4.2-3B model, with INT8 "
-        "kernels and grammar-constrained decoding for local NLP tasks."
+        "Pure-Rust CPU NLP engine being built around one model, Nanbeige4.2-3B: "
+        "custom quantized weights, shape-specific kernels, and schema-valid "
+        "structured extraction."
     ),
     "franken_remote": (
-        "Rust remote workstation for Tailscale networks, built on Asupersync: "
-        "HEVC screen streaming and input control, tested today on Linux X11."
+        "Tailnet-native remote workstation being built in Rust on Asupersync: "
+        "HEVC desktop streaming from Linux X11 hosts, with opt-in input, "
+        "clipboard, file sending, and audio."
     ),
     "franken_surveillance_system": (
         "Local-first Rust sensor system for owner-authorized cameras and capture "
         "drones, with evidence tracking built into the data model."
     ),
     "franken_threed": (
-        "Toolchain that runs ordinary Three.js apps on a new WebGPU renderer "
-        "route and compiles their numeric hot spots to WebAssembly."
+        "Three.js application specializer in Rust/Wasm and WebGPU: a new "
+        "renderer route runs ordinary Three.js apps on a supported feature "
+        "subset and compiles numeric hot spots to WebAssembly."
     ),
     "frankengit": (
         "Git-compatible forge for human and coding-agent workflows, with "
@@ -353,11 +356,17 @@ WRITING_BLURB_OVERRIDES = {
 
 RECENT_EXCLUDE = {
     "dicklesworthstone",
+    "homebrew-sbh",
     "homebrew-tap",
     "scoop-bucket",
 }
 GITHUB_REPO_NAME = re.compile(r"^[A-Za-z0-9_.-]+$")
 HEX_COLOR = re.compile(r"^#[0-9A-Fa-f]{6}$")
+# Curated rows link a repo as [**Name**](url) or **[Name](url)**.
+CURATED_REPO_LINK = re.compile(
+    r"\[\*\*([^*\[\]\n]+)\*\*\]\(https://github\.com/Dicklesworthstone/([A-Za-z0-9_.-]+)\)"
+    r"|\*\*\[([^\[\]\n]+)\]\(https://github\.com/Dicklesworthstone/([A-Za-z0-9_.-]+)\)\*\*"
+)
 
 
 def env(name: str, default: str = "") -> str:
@@ -566,9 +575,33 @@ def markdown_escape(value: object) -> str:
     return html.escape(escaped, quote=False)
 
 
-def display_name(repo_name: str) -> str:
+def curated_display_names(text: str) -> dict[str, str]:
+    """Names the hand-written README tables already give each repository.
+
+    Building Now falls back to these before title-casing the repo name, which
+    turns acronyms and file-like names into "Llm Aided Ocr" or
+    "Your Source To Prompt.Html". The generated section itself is skipped so a
+    fallback name can never feed back into the next run.
+    """
+    curated = re.sub(
+        r"<!-- BEGIN AUTO-BUILDING-NOW -->.*?<!-- END AUTO-BUILDING-NOW -->",
+        "",
+        text,
+        flags=re.S,
+    )
+    names: dict[str, str] = {}
+    for match in CURATED_REPO_LINK.finditer(curated):
+        label = match.group(1) or match.group(3)
+        repo_name = match.group(2) or match.group(4)
+        names.setdefault(repo_name, label.strip())
+    return names
+
+
+def display_name(repo_name: str, curated: dict[str, str] | None = None) -> str:
     if repo_name in DISPLAY_NAMES:
         return DISPLAY_NAMES[repo_name]
+    if curated and curated.get(repo_name):
+        return curated[repo_name]
     return repo_name.replace("_", " ").replace("-", " ").title()
 
 
@@ -813,7 +846,7 @@ def replace_star_badges(text: str, star_counts: dict[str, int]) -> str:
     return static_pattern.sub(static_repl, text)
 
 
-def build_recent_repos_table() -> str:
+def build_recent_repos_table(curated_names: dict[str, str] | None = None) -> str:
     repos = load_recent_repos()
     if not repos:
         return ""
@@ -858,9 +891,11 @@ def build_recent_repos_table() -> str:
         desc = markdown_escape(
             RECENT_DESCRIPTION_OVERRIDES.get(name, source_description)
         )
+        # A bare "*" (as in "Visual A* Pathfinding") would close the bold early.
+        label = markdown_escape(display_name(name, curated_names)).replace("*", "\\*")
         lines.append(
             "| "
-            f"[**{markdown_escape(display_name(name))}**]({url})"
+            f"[**{label}**]({url})"
             " | "
             f"{lang_badge(lang.get('name'), lang.get('color'))}"
             " | "
@@ -1253,7 +1288,7 @@ def main() -> None:
     if star_counts:
         text = replace_star_badges(text, star_counts)
 
-    recent_block = build_recent_repos_table()
+    recent_block = build_recent_repos_table(curated_display_names(text))
     if recent_block:
         start = "<!-- BEGIN AUTO-BUILDING-NOW -->"
         end = "<!-- END AUTO-BUILDING-NOW -->"

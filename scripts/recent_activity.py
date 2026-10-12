@@ -38,7 +38,7 @@ MAX_WORKERS = 6
 # public repos often land on other machines first; a cap of 5 froze the section
 # for weeks in September 2026 when 6-8 recent repos were not cloned here.
 MAX_TEMPORARY_CLONES = 20
-EXCLUDED = {"dicklesworthstone", "homebrew-tap", "scoop-bucket"}
+EXCLUDED = {"dicklesworthstone", "homebrew-sbh", "homebrew-tap", "scoop-bucket"}
 GITHUB_COMPONENT = re.compile(r"^[A-Za-z0-9_.-]+$")
 
 
