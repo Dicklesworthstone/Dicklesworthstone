@@ -31,7 +31,8 @@ and regenerate it.
   Sep 24, 2026 when too many recent repos were not cloned locally).
 - List only projects and sites backed by a public GitHub repository. A live
   domain on Vercel or Cloudflare may still be unannounced; without a public
-  repo, leave it off every section.
+  repo, leave it off every section. Re-check sites already on the page too:
+  smearedlife.com stayed listed with a private repo until Oct 12, 2026.
 - Verify every Live Demos preview with `curl -w '%{content_type}'`, not just
   the status code: a site that drops its OG image can still return 200 HTML.
 - Keep the star-history chart at 14 repositories unless the profile layout is

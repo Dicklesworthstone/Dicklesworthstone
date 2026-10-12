@@ -70,6 +70,7 @@ DISPLAY_NAMES = {
     "eidetic_engine_cli": "Eidetic Engine CLI",
     "fastapi_rust": "FastAPI Rust",
     "fastmcp_rust": "FastMCP Rust",
+    "franken_accounting": "FrankenAccounting",
     "franken_agent_detection": "Franken Agent Detection",
     "franken_alignment": "FrankenAlignment",
     "franken_code_browser": "FrankenCodeBrowser",
@@ -77,9 +78,11 @@ DISPLAY_NAMES = {
     "franken_engine": "FrankenEngine",
     "franken_lean": "FrankenLean",
     "franken_manim": "FrankenManim",
+    "franken_manim_hoeffding_explainer": "Hoeffding's D Video",
     "franken_markdown": "FrankenMarkdown",
     "franken_native_capsule": "Franken Native Capsule",
     "franken_networkx": "FrankenNetworkX",
+    "franken_nlp": "FrankenNLP",
     "franken_node": "FrankenNode",
     "franken_numpy": "FrankenNumPy",
     "franken_ocr": "FrankenOCR",
@@ -101,6 +104,7 @@ DISPLAY_NAMES = {
     "frankenscipy": "FrankenSciPy",
     "frankensearch": "FrankenSearch",
     "frankensim": "FrankenSim",
+    "frankensonos": "FrankenSonos",
     "frankensqlite": "FrankenSQLite",
     "frankensympy": "FrankenSymPy",
     "frankenterm": "FrankenTerm",
@@ -108,6 +112,7 @@ DISPLAY_NAMES = {
     "frankentui": "FrankenTUI",
     "giil": "GIIL",
     "jazz_chord_progression_editor_html": "JazzChords",
+    "jeffs_math_explainer_videos": "Math Explainer Videos",
     "llm-tournament": "LLM Tournament",
     "mcp_agent_mail": "MCP Agent Mail",
     "mcp_agent_mail_rust": "MCP Agent Mail Rust",
@@ -117,6 +122,7 @@ DISPLAY_NAMES = {
     "pi_agent_rust": "Pi Agent Rust",
     "power_failure_resumer": "Power Failure Resumer",
     "repo_updater": "RU",
+    "savant-elite": "Savant Elite",
     "skillranker": "SkillRanker",
     "slb": "SLB",
     "sqlmodel_rust": "SQLModel Rust",
@@ -125,6 +131,7 @@ DISPLAY_NAMES = {
     "toon_rust": "TOON Rust",
     "ultimate_bug_scanner": "UBS",
     "vibe_cockpit": "Vibe Cockpit",
+    "wasm_cmaes": "WASM CMA-ES",
     "xf": "XF",
 }
 
@@ -160,6 +167,11 @@ RECENT_DESCRIPTION_OVERRIDES = {
         "with cancel-aware handlers and attribute macros for tools, resources, "
         "and prompts."
     ),
+    "franken_accounting": (
+        "Double-entry ledger in Rust on FrankenGraphDB: append-only journal, "
+        "exact integer money, bitemporal trial balances, replayable report "
+        "certificates, CLI, and MCP server."
+    ),
     "franken_code_browser": (
         "Spatial source browser for Apple Silicon: a Rust engine and native Metal "
         "app that zoom from a repository map down to exact source lines."
@@ -175,18 +187,30 @@ RECENT_DESCRIPTION_OVERRIDES = {
         "source compatibility with manimlib scenes. FFmpeg is its only external "
         "tool."
     ),
+    "franken_nlp": (
+        "Pure-Rust CPU inference engine for the Nanbeige4.2-3B model, with INT8 "
+        "kernels and grammar-constrained decoding for local NLP tasks."
+    ),
+    "franken_remote": (
+        "Rust remote workstation for Tailscale networks, built on Asupersync: "
+        "HEVC screen streaming and input control, tested today on Linux X11."
+    ),
     "franken_surveillance_system": (
         "Local-first Rust sensor system for owner-authorized cameras and capture "
         "drones, with evidence tracking built into the data model."
+    ),
+    "franken_threed": (
+        "Toolchain that runs ordinary Three.js apps on a new WebGPU renderer "
+        "route and compiles their numeric hot spots to WebAssembly."
     ),
     "frankengit": (
         "Git-compatible forge for human and coding-agent workflows, with "
         "verifiable recovery, self-hosting, and an immutable decision stream."
     ),
     "frankengraphdb": (
-        "Rust property-graph database with MVCC, time travel, branches, "
-        "WCO/factorized execution, incremental maintenance, and fountain-coded "
-        "replication."
+        "Rust property-graph database with MVCC, time travel, branch-pinned "
+        "reads, WCO/factorized execution, incremental maintenance, and "
+        "fountain-coded replication."
     ),
     "frankenmermaid": (
         "Rust diagram engine with 15 layout algorithms and deterministic SVG, "
@@ -195,6 +219,10 @@ RECENT_DESCRIPTION_OVERRIDES = {
     "frankensim": (
         "Rust geometry, simulation, optimization, and rendering workspace with "
         "contract-backed kernels."
+    ),
+    "frankensonos": (
+        "Sonos controller in Rust for S1 and S2 speakers: CLI, HTTP API, MCP "
+        "server, a Spotify-library DJ, and remote access over Tailscale."
     ),
     "frankensqlite": (
         "Rust implementation of SQLite with page-level MVCC concurrent-writer "
@@ -209,8 +237,8 @@ RECENT_DESCRIPTION_OVERRIDES = {
         "compatibility modes, differential tests, and RaptorQ-backed durability."
     ),
     "pi_agent_rust": (
-        "Rust coding-agent CLI with sub-100ms startup, eight built-in tools, "
-        "session branching, and a roughly 15 MB binary."
+        "Rust coding-agent CLI with 36 built-in tools, session branching, and "
+        "a single native binary."
     ),
     "skillranker": (
         "Rust CLI that ranks agent skills for the next step from live session "
