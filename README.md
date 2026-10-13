@@ -21,7 +21,7 @@
 
 ![Stars: 33,020+](https://img.shields.io/static/v1?label=Stars&message=33%2C020%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Projects: 212](https://img.shields.io/static/v1?label=Projects&message=212&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 334,460](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=334%2C460&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 334,478](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=334%2C478&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,400+](https://img.shields.io/static/v1?label=Followers&message=3%2C400%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 50.6K](https://img.shields.io/static/v1?label=X+Followers&message=50.6K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -70,7 +70,7 @@
 </p>
 
 > [!NOTE]
-> **334,460 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
+> **334,478 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
 
 ---
 
@@ -196,13 +196,13 @@ The FrankenSuite spans databases, terminals, numerical computing, media, graphs,
 | Project | Lang | 14-day activity | What it does |
 |:--------|:----:|:----------------|:-------------|
 | [**FrankenEngine**](https://github.com/Dicklesworthstone/franken_engine) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 2,478 commits<br>+163,658 / −11,662 lines | Native Rust runtime for adversarial extension workloads with deterministic replay, cryptographic decision receipts, and fleet-scale containment. |
-| [**Asupersync**](https://github.com/Dicklesworthstone/asupersync) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,790 commits<br>+212,018 / −20,834 lines | Async runtime for Rust where correctness is structural: region-owned tasks, cancel-correct protocols, capability-gated effects, and deterministic replay testing. |
+| [**Asupersync**](https://github.com/Dicklesworthstone/asupersync) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,802 commits<br>+212,355 / −20,867 lines | Async runtime for Rust where correctness is structural: region-owned tasks, cancel-correct protocols, capability-gated effects, and deterministic replay testing. |
 | [**Annus Mirabilis**](https://github.com/Dicklesworthstone/annus-mirabilis.com) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | 1,200 commits<br>+115,168 / −5,164 lines | Interactive edition of Einstein's four 1905 Annalen der Physik papers, explained at the depth you choose, with instruments that show what follows when you change an assumption. |
 | [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,067 commits<br>+365,964 / −12,418 lines | Rust implementation of the Lean 4 toolchain with `.olean`, C ABI, LSP, and CLI compatibility; deterministic parallelism; declaration-level incrementality; and a dual-engine kernel capped at 12 KLOC. |
 | [**Franken Surveillance System**](https://github.com/Dicklesworthstone/franken_surveillance_system) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 764 commits<br>+261,670 / −7,485 lines | Local-first Rust sensor system for owner-authorized cameras and capture drones, with evidence tracking built into the data model. |
-| [**Eidetic Engine CLI**](https://github.com/Dicklesworthstone/eidetic_engine_cli) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 837 commits<br>+74,757 / −4,436 lines | Local-first, explainable memory for coding agents: a Rust CLI built on Asupersync, FrankenSQLite, FrankenSearch, and FrankenNetworkX. |
+| [**Eidetic Engine CLI**](https://github.com/Dicklesworthstone/eidetic_engine_cli) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 844 commits<br>+74,906 / −4,437 lines | Local-first, explainable memory for coding agents: a Rust CLI built on Asupersync, FrankenSQLite, FrankenSearch, and FrankenNetworkX. |
 | [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 656 commits<br>+203,263 / −8,311 lines | Rust property-graph database with MVCC, time travel, branch-pinned reads, WCO/factorized execution, incremental maintenance, and fountain-coded replication. |
-| [**FrankenPandas**](https://github.com/Dicklesworthstone/frankenpandas) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 627 commits<br>+171,212 / −32,452 lines | Memory-safe, clean-room Rust reimplementation of pandas with packetized conformance gates, strict/hardened runtime modes, and RaptorQ-backed artifact durability. |
+| [**FrankenPandas**](https://github.com/Dicklesworthstone/frankenpandas) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 625 commits<br>+171,927 / −32,273 lines | Memory-safe, clean-room Rust reimplementation of pandas with packetized conformance gates, strict/hardened runtime modes, and RaptorQ-backed artifact durability. |
 | [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 523 commits<br>+174,594 / −15,468 lines | Rust geometry, simulation, optimization, and rendering workspace with contract-backed kernels. |
 | [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 501 commits<br>+189,846 / −14,263 lines | WezTerm-based terminal for AI-agent swarms, with pane capture, state-machine detection, and a JSON control API. |
 | [**FrankenManim**](https://github.com/Dicklesworthstone/franken_manim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 535 commits<br>+69,027 / −4,336 lines | Deterministic Rust implementation of 3b1b's Manim with native TeX typesetting, an analytic Bézier renderer, bit-reproducible output, and source compatibility with manimlib scenes. FFmpeg is its only external tool. |
