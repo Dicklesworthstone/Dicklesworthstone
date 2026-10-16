@@ -21,7 +21,7 @@
 
 ![Stars: 33,140+](https://img.shields.io/static/v1?label=Stars&message=33%2C140%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Projects: 212](https://img.shields.io/static/v1?label=Projects&message=212&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 344,822](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=344%2C822&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 344,967](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=344%2C967&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,400+](https://img.shields.io/static/v1?label=Followers&message=3%2C400%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 50.6K](https://img.shields.io/static/v1?label=X+Followers&message=50.6K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -46,7 +46,7 @@
 [![Annus Mirabilis](https://img.shields.io/badge/annus--mirabilis.com-2b2b2b?style=flat-square&logo=academia&logoColor=white)](https://annus-mirabilis.com)
 [![Phage Explorer](https://img.shields.io/badge/phage--explorer.org-2b2b2b?style=flat-square&logo=bioconductor&logoColor=white)](https://phage-explorer.org)
 [![CMA-ES](https://img.shields.io/badge/cmaes.org-2b2b2b?style=flat-square&logo=plotly&logoColor=white)](https://cmaes.org)
-[![Discord](https://img.shields.io/badge/Flywheel_Hub-928_members-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/gnCHsYDR25)
+[![Discord](https://img.shields.io/badge/Flywheel_Hub-927_members-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/gnCHsYDR25)
 
 `Multi-Agent Coordination` · `Agentic Coding` · `Rust CLI Tools` · `LLM Applications` · `Terminal UI` · `FrankenSuite`
 
@@ -70,13 +70,13 @@
 </p>
 
 > [!NOTE]
-> **344,822 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
+> **344,967 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
 
 ---
 
 ## The Agentic Coding Flywheel
 
-Fourteen tools for multi-agent software development: messaging and file leases, issue graphs, session search, command safety, and tmux orchestration. I started building the stack in October 2025. Join the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~928 members), read the [full guide](https://agent-flywheel.com/complete-guide), or start with the [introductory guide](https://agent-flywheel.com/core-flywheel).
+Fourteen tools for multi-agent software development: messaging and file leases, issue graphs, session search, command safety, and tmux orchestration. I started building the stack in October 2025. Join the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~927 members), read the [full guide](https://agent-flywheel.com/complete-guide), or start with the [introductory guide](https://agent-flywheel.com/core-flywheel).
 
 <p align="center">
   <img src="flywheel_diagram.webp" alt="The Agentic Coding Flywheel: 14 tools for multi-agent development" width="800" />
@@ -195,18 +195,18 @@ The FrankenSuite spans databases, terminals, numerical computing, media, graphs,
 
 | Project | Lang | 14-day activity | What it does |
 |:--------|:----:|:----------------|:-------------|
-| [**Asupersync**](https://github.com/Dicklesworthstone/asupersync) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,770 commits<br>+849,152 / −650,512 lines | Async runtime for Rust where correctness is structural: region-owned tasks, cancel-correct protocols, capability-gated effects, and deterministic replay testing. |
-| [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,201 commits<br>+410,605 / −11,391 lines | Rust implementation of the Lean 4 toolchain with `.olean`, C ABI, LSP, and CLI compatibility; deterministic parallelism; declaration-level incrementality; and a dual-engine kernel capped at 12 KLOC. |
+| [**Asupersync**](https://github.com/Dicklesworthstone/asupersync) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,771 commits<br>+849,793 / −650,512 lines | Async runtime for Rust where correctness is structural: region-owned tasks, cancel-correct protocols, capability-gated effects, and deterministic replay testing. |
+| [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,204 commits<br>+411,374 / −11,428 lines | Rust implementation of the Lean 4 toolchain with `.olean`, C ABI, LSP, and CLI compatibility; deterministic parallelism; declaration-level incrementality; and a dual-engine kernel capped at 12 KLOC. |
 | [**Annus Mirabilis**](https://github.com/Dicklesworthstone/annus-mirabilis.com) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | 1,312 commits<br>+120,888 / −5,477 lines | Interactive edition of Einstein's four 1905 Annalen der Physik papers, explained at the depth you choose, with instruments that show what follows when you change an assumption. |
-| [**FrankenEngine**](https://github.com/Dicklesworthstone/franken_engine) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,240 commits<br>+180,391 / −10,962 lines | Native Rust runtime for adversarial extension workloads with deterministic replay, cryptographic decision receipts, and fleet-scale containment. |
-| [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,147 commits<br>+373,531 / −27,563 lines | Rust geometry, simulation, optimization, and rendering workspace with contract-backed kernels. |
-| [**Eidetic Engine CLI**](https://github.com/Dicklesworthstone/eidetic_engine_cli) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,095 commits<br>+117,078 / −6,651 lines | Local-first, explainable memory for coding agents: a Rust CLI built on Asupersync, FrankenSQLite, FrankenSearch, and FrankenNetworkX. |
-| [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 993 commits<br>+290,194 / −10,558 lines | Rust property-graph database with MVCC, time travel, branch-pinned reads, WCO/factorized execution, incremental maintenance, and fountain-coded replication. |
+| [**FrankenEngine**](https://github.com/Dicklesworthstone/franken_engine) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,240 commits<br>+180,775 / −10,962 lines | Native Rust runtime for adversarial extension workloads with deterministic replay, cryptographic decision receipts, and fleet-scale containment. |
+| [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,157 commits<br>+377,440 / −27,615 lines | Rust geometry, simulation, optimization, and rendering workspace with contract-backed kernels. |
+| [**Eidetic Engine CLI**](https://github.com/Dicklesworthstone/eidetic_engine_cli) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,097 commits<br>+117,563 / −6,665 lines | Local-first, explainable memory for coding agents: a Rust CLI built on Asupersync, FrankenSQLite, FrankenSearch, and FrankenNetworkX. |
+| [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 995 commits<br>+290,939 / −10,558 lines | Rust property-graph database with MVCC, time travel, branch-pinned reads, WCO/factorized execution, incremental maintenance, and fountain-coded replication. |
 | [**Math Explainer Videos**](https://github.com/Dicklesworthstone/jeffs_math_explainer_videos) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 896 commits<br>+315,984 / −0 lines | Narrated, 3Blue1Brown-style 4K math explainer videos built in Rust with franken_manim (native TeX, no LaTeX, no Python) and voiced by FrankenTTS. Every number computed and oracle-checked, every line ASR-verified and never time-stretched, every frame looked at, with a warm procedural score under the voice. |
-| [**Franken Surveillance System**](https://github.com/Dicklesworthstone/franken_surveillance_system) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 878 commits<br>+309,554 / −7,188 lines | Local-first Rust sensor system for owner-authorized cameras and capture drones, with evidence tracking built into the data model. |
+| [**Franken Surveillance System**](https://github.com/Dicklesworthstone/franken_surveillance_system) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 880 commits<br>+309,821 / −7,199 lines | Local-first Rust sensor system for owner-authorized cameras and capture drones, with evidence tracking built into the data model. |
 | [**Asupersync ANSI C**](https://github.com/Dicklesworthstone/asupersync_ansi_c) | ![C](https://img.shields.io/badge/-C-2b2b2b?style=flat-square) | 846 commits<br>+190,393 / −18,294 lines | Highly portable, dependency-free ANSI C port of asupersync with deterministic replay, strict resource contracts, and embedded-router profiles. |
-| [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 709 commits<br>+570,270 / −202,120 lines | WezTerm-based terminal for AI-agent swarms, with pane capture, state-machine detection, and a JSON control API. |
-| [**FrankenSonos**](https://github.com/Dicklesworthstone/frankensonos) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 719 commits<br>+578,817 / −0 lines | Sonos controller in Rust for S1 and S2 speakers: CLI, HTTP API, MCP server, a Spotify-library DJ, and remote access over Tailscale. |
+| [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 722 commits<br>+571,264 / −202,249 lines | WezTerm-based terminal for AI-agent swarms, with pane capture, state-machine detection, and a JSON control API. |
+| [**FrankenSonos**](https://github.com/Dicklesworthstone/frankensonos) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 722 commits<br>+579,775 / −0 lines | Sonos controller in Rust for S1 and S2 speakers: CLI, HTTP API, MCP server, a Spotify-library DJ, and remote access over Tailscale. |
 <!-- END AUTO-BUILDING-NOW -->
 
 ### Live Demos
@@ -607,7 +607,7 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 | **[jeffreyemanuel.com](https://www.jeffreyemanuel.com)** | Personal site built with Next.js 16, React Three Fiber, and GSAP. Portfolio for 212 open-source projects. |
 | **[Jeffreys-Skills.md](https://jeffreys-skills.md/)** | Paid SaaS for managing, discovering, and deploying Claude Code skills. |
 | **[JeffreysPrompts.com](https://jeffreysprompts.com)** | Free prompt library with a paid collection for multi-step coding and research workflows. |
-| **[Agent-Flywheel.com](https://agent-flywheel.com)** | Flywheel documentation, setup guides, and the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~928 members). |
+| **[Agent-Flywheel.com](https://agent-flywheel.com)** | Flywheel documentation, setup guides, and the [Flywheel Hub Discord](https://discord.gg/gnCHsYDR25) (~927 members). |
 | **[MCPAgentMail.com](https://mcpagentmail.com)** | Documentation and demos for MCP Agent Mail. |
 | **[FrankenTUI.com](https://frankentui.com)** | Browser demos and documentation for FrankenTUI. |
 | **[FrankenSQLite.com](https://frankensqlite.com)** | Interactive explanation and documentation for FrankenSQLite. |
