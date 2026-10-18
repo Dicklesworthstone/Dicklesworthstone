@@ -21,7 +21,7 @@
 
 ![Stars: 33,180+](https://img.shields.io/static/v1?label=Stars&message=33%2C180%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Projects: 212](https://img.shields.io/static/v1?label=Projects&message=212&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 347,375](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=347%2C375&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 347,441](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=347%2C441&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,400+](https://img.shields.io/static/v1?label=Followers&message=3%2C400%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 50.6K](https://img.shields.io/static/v1?label=X+Followers&message=50.6K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -70,7 +70,7 @@
 </p>
 
 > [!NOTE]
-> **347,375 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
+> **347,441 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
 
 ---
 
@@ -199,7 +199,7 @@ The FrankenSuite spans databases, terminals, numerical computing, media, graphs,
 | [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,469 commits<br>+503,240 / −30,625 lines | Rust geometry, simulation, optimization, and rendering workspace with contract-backed kernels. |
 | [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,240 commits<br>+419,795 / −11,480 lines | Rust implementation of the Lean 4 toolchain with `.olean`, C ABI, LSP, and CLI compatibility; deterministic parallelism; declaration-level incrementality; and a dual-engine kernel capped at 12 KLOC. |
 | [**Annus Mirabilis**](https://github.com/Dicklesworthstone/annus-mirabilis.com) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | 1,282 commits<br>+110,444 / −3,993 lines | Interactive edition of Einstein's four 1905 Annalen der Physik papers, explained at the depth you choose, with instruments that show what follows when you change an assumption. |
-| [**Eidetic Engine CLI**](https://github.com/Dicklesworthstone/eidetic_engine_cli) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,223 commits<br>+127,109 / −6,819 lines | Local-first, explainable memory for coding agents: a Rust CLI built on Asupersync, FrankenSQLite, FrankenSearch, and FrankenNetworkX. |
+| [**Eidetic Engine CLI**](https://github.com/Dicklesworthstone/eidetic_engine_cli) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,228 commits<br>+127,450 / −6,819 lines | Local-first, explainable memory for coding agents: a Rust CLI built on Asupersync, FrankenSQLite, FrankenSearch, and FrankenNetworkX. |
 | [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,057 commits<br>+300,147 / −10,857 lines | Rust property-graph database with MVCC, time travel, branch-pinned reads, WCO/factorized execution, incremental maintenance, and fountain-coded replication. |
 | [**FrankenEngine**](https://github.com/Dicklesworthstone/franken_engine) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,095 commits<br>+176,328 / −12,581 lines | Native Rust runtime for adversarial extension workloads with deterministic replay, cryptographic decision receipts, and fleet-scale containment. |
 | [**Math Explainer Videos**](https://github.com/Dicklesworthstone/jeffs_math_explainer_videos) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 938 commits<br>+340,910 / −0 lines | Narrated, 3Blue1Brown-style 4K math explainer videos built in Rust with franken_manim (native TeX, no LaTeX, no Python) and voiced by FrankenTTS. Every number computed and oracle-checked, every line ASR-verified and never time-stretched, every frame looked at, with a warm procedural score under the voice. |
