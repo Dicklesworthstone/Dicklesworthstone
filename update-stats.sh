@@ -3,10 +3,23 @@ set -euo pipefail
 
 # update-stats.sh — Fetches live GitHub stats and refreshes profile artifacts.
 # Used by the local daily updater and the manual GitHub Actions fallback.
-# Requires: gh CLI authenticated, jq, python3, curl
+# Requires: gh CLI authenticated, jq, python3, curl, timeout (GNU coreutils)
 
 USERNAME="Dicklesworthstone"
 MONTH=$(date +"%b %Y")
+# Every gh call is bounded, like the Discord request below and the gh calls in
+# scripts/*.py. On Oct 20, 2026 a language-stats request never returned and the
+# run hung for 13 hours until it was killed; the local updater skips every
+# later run while update-stats.sh is alive. A timed-out attempt is retried.
+GH_TIMEOUT_SECONDS="${GH_TIMEOUT_SECONDS:-180}"
+if ! [[ "$GH_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ ]]; then
+  echo "Invalid GH_TIMEOUT_SECONDS: ${GH_TIMEOUT_SECONDS:-<empty>}" >&2
+  exit 1
+fi
+if ! command -v timeout >/dev/null 2>&1; then
+  echo "update-stats.sh needs timeout from GNU coreutils" >&2
+  exit 1
+fi
 
 fmt() { python3 -c 'import sys; print(f"{int(sys.argv[1]):,}")' "$1"; }
 calc_pct() {
@@ -36,13 +49,19 @@ require_integer_at_least() {
   fi
 }
 gh_retry() {
-  local attempt result
+  local attempt result status
   for attempt in 1 2 3; do
-    if result=$(gh "$@"); then
+    status=0
+    result=$(timeout -k 10 "$GH_TIMEOUT_SECONDS" gh "$@") || status=$?
+    if [ "$status" -eq 0 ]; then
       printf '%s' "$result"
       return 0
     fi
-    echo "  GitHub API attempt $attempt failed" >&2
+    if [ "$status" -eq 124 ]; then
+      echo "  GitHub API attempt $attempt timed out after ${GH_TIMEOUT_SECONDS}s" >&2
+    else
+      echo "  GitHub API attempt $attempt failed" >&2
+    fi
     [ "$attempt" -lt 3 ] && sleep $((attempt * 2))
   done
   return 1

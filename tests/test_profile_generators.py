@@ -1030,5 +1030,69 @@ class ProfileCoverageTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
 
 
+class UpdateStatsTests(unittest.TestCase):
+    def test_a_github_request_that_never_returns_is_timed_out_and_retried(
+        self,
+    ) -> None:
+        # Oct 20, 2026: one gh request never returned and the nightly run hung
+        # for 13 hours. Here the first request hangs, its retry succeeds, and
+        # every later request fails so the run stops right after.
+        with tempfile.TemporaryDirectory() as tmp:
+            bin_dir = Path(tmp) / "bin"
+            bin_dir.mkdir()
+            calls = Path(tmp) / "calls"
+            fake_gh = bin_dir / "gh"
+            fake_gh.write_text(
+                "#!/bin/bash\n"
+                'printf "%s\\n" "$1 $2" >> "$FAKE_GH_CALLS"\n'
+                'if [ "$(wc -l < "$FAKE_GH_CALLS")" -eq 1 ]; then exec /bin/sleep 60; fi\n'
+                'if [ "$*" = "api users/Dicklesworthstone" ]; then\n'
+                '  echo \'{"followers": 1, "following": 0, "public_repos": 1}\'\n'
+                "  exit 0\n"
+                "fi\n"
+                "exit 1\n",
+                encoding="utf-8",
+            )
+            fake_sleep = bin_dir / "sleep"  # skips the retry backoff
+            fake_sleep.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+            for fake in (fake_gh, fake_sleep):
+                fake.chmod(0o755)
+            env = {
+                **os.environ,
+                "PATH": f"{bin_dir}{os.pathsep}{os.environ['PATH']}",
+                "FAKE_GH_CALLS": str(calls),
+                "GH_TIMEOUT_SECONDS": "1",
+            }
+            result = subprocess.run(
+                ["bash", str(profile_coverage.ROOT / "update-stats.sh")],
+                cwd=tmp,
+                env=env,
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            made = calls.read_text(encoding="utf-8").splitlines()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("GitHub API attempt 1 timed out after 1s", result.stderr)
+        self.assertIn("Fetching public non-fork project count", result.stdout)
+        self.assertEqual(
+            made, ["api users/Dicklesworthstone"] * 2 + ["api graphql"] * 3
+        )
+
+    def test_a_disabled_github_request_timeout_is_rejected(self) -> None:
+        # GNU timeout treats 0 as "no limit", which would bring the hang back.
+        with tempfile.TemporaryDirectory() as tmp:
+            result = subprocess.run(
+                ["bash", str(profile_coverage.ROOT / "update-stats.sh")],
+                cwd=tmp,
+                env={**os.environ, "GH_TIMEOUT_SECONDS": "0"},
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("Invalid GH_TIMEOUT_SECONDS: 0", result.stderr)
+
+
 if __name__ == "__main__":
     unittest.main()
