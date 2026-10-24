@@ -21,7 +21,7 @@
 
 ![Stars: 33,360+](https://img.shields.io/static/v1?label=Stars&message=33%2C360%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Projects: 212](https://img.shields.io/static/v1?label=Projects&message=212&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 359,769](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=359%2C769&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 359,777](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=359%2C777&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,500+](https://img.shields.io/static/v1?label=Followers&message=3%2C500%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 50.6K](https://img.shields.io/static/v1?label=X+Followers&message=50.6K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -70,7 +70,7 @@
 </p>
 
 > [!NOTE]
-> **359,769 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
+> **359,777 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
 
 ---
 
@@ -197,7 +197,7 @@ The FrankenSuite spans databases, terminals, numerical computing, media, graphs,
 |:--------|:----:|:----------------|:-------------|
 | [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 2,562 commits<br>+1,089,311 / −25,223 lines | Rust geometry, simulation, optimization, and rendering workspace with contract-backed kernels. |
 | [**FrankenAccounting**](https://github.com/Dicklesworthstone/franken_accounting) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,602 commits<br>+645,434 / −5,308 lines | Double-entry ledger in Rust on FrankenGraphDB: append-only journal, exact integer money, bitemporal trial balances, replayable report certificates, CLI, and MCP server. |
-| [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,422 commits<br>+462,549 / −16,578 lines | Rust property-graph database with MVCC, time travel, branch-pinned reads, WCO/factorized execution, incremental maintenance, and fountain-coded replication. |
+| [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,400 commits<br>+462,549 / −16,578 lines | Rust property-graph database with MVCC, time travel, branch-pinned reads, WCO/factorized execution, incremental maintenance, and fountain-coded replication. |
 | [**Eidetic Engine CLI**](https://github.com/Dicklesworthstone/eidetic_engine_cli) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,322 commits<br>+146,073 / −7,837 lines | Local-first, explainable memory for coding agents: a Rust CLI built on Asupersync, FrankenSQLite, FrankenSearch, and FrankenNetworkX. |
 | [**FrankenSonos**](https://github.com/Dicklesworthstone/frankensonos) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,214 commits<br>+234,549 / −5,040 lines | Sonos controller in Rust for S1 and S2 speakers: CLI, HTTP API, MCP server, a Spotify-library DJ, and remote access over Tailscale. |
 | [**Math Explainer Videos**](https://github.com/Dicklesworthstone/jeffs_math_explainer_videos) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,073 commits<br>+391,636 / −4,654 lines | Narrated, 3Blue1Brown-style 4K math explainer videos built in Rust with franken_manim (native TeX, no LaTeX, no Python) and voiced by FrankenTTS. Every number computed and oracle-checked, every line ASR-verified and never time-stretched, every frame looked at, with a warm procedural score under the voice. |
@@ -412,7 +412,7 @@ The FrankenSuite spans databases, terminals, numerical computing, media, graphs,
 | ![Stars](https://img.shields.io/badge/stars-291-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmisc_coding_agent_tips_and_scripts) | **[Coding Agent Tips](https://github.com/Dicklesworthstone/misc_coding_agent_tips_and_scripts)** | Scripts, configuration, and notes from daily AI coding-agent work. |
 | ![Stars](https://img.shields.io/badge/stars-210-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcoding_agent_account_manager) | **[Coding Agent Account Manager](https://github.com/Dicklesworthstone/coding_agent_account_manager)** | Sub-100ms auth switching across Claude Max, GPT Pro, and Gemini subscriptions. |
 | ![Stars](https://img.shields.io/badge/stars-95-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fflywheel_connectors) | **[Flywheel Connectors](https://github.com/Dicklesworthstone/flywheel_connectors)** | 176 connectors (~2.6M lines Rust, 72K+ tests). WASI sandboxing, cryptographic capability tokens, zone-based encryption. |
-| ![Stars](https://img.shields.io/badge/stars-1,927-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fpi_agent_rust) | **[Pi Agent Rust](https://github.com/Dicklesworthstone/pi_agent_rust)** | AI coding agent CLI in Rust. Single native binary, 36 built-in tools, session branching. |
+| ![Stars](https://img.shields.io/badge/stars-1,926-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fpi_agent_rust) | **[Pi Agent Rust](https://github.com/Dicklesworthstone/pi_agent_rust)** | AI coding agent CLI in Rust. Single native binary, 36 built-in tools, session branching. |
 | ![Stars](https://img.shields.io/badge/stars-211-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmcp_agent_mail_rust) | **[MCP Agent Mail Rust](https://github.com/Dicklesworthstone/mcp_agent_mail_rust)** | Ground-up Rust rewrite of Agent Mail. 12-crate workspace, 45 MCP tools, optional FrankenSearch hybrid search. |
 | ![Stars](https://img.shields.io/badge/stars-125-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcross_agent_session_resumer) | **[Cross Agent Session Resumer](https://github.com/Dicklesworthstone/cross_agent_session_resumer)** | Resumes sessions across Claude Code, Codex, and Gemini while preserving context. |
 | ![Stars](https://img.shields.io/badge/stars-39-2b2b2b?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcloud_benchmarker) | **[Cloud Benchmarker](https://github.com/Dicklesworthstone/cloud_benchmarker)** | Automated cloud instance benchmarking with charts and historical tracking. |
