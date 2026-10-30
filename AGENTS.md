@@ -67,6 +67,10 @@ and regenerate it.
 - When Jeffrey supplies a new X follower count, update both the generated badge
   for the current run and the `X_FOLLOWERS_LABEL` fallback in
   `update-stats.sh`.
+- Keep the `&nbsp;` padding around the Stars and Lang column headers. GitHub
+  styles images `max-width: 100%`, so a narrow table column shrinks its
+  badges until the star counts are unreadable; the padded header gives the
+  column a minimum width. A new badge column needs the same padding.
 - Treat `.ee/`, `.wrangler/`, build output, caches, and unrelated worktree
   changes as out of scope. Never stage or alter them as part of a profile
   update.

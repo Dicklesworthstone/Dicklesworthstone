@@ -283,7 +283,9 @@ class ReadmeActivityTests(unittest.TestCase):
         ):
             table = update_readme.build_recent_repos_table()
         self.assertIn("over the 7 days to Sep 2, 2026:", table)
-        self.assertIn("| Project | Lang | 7-day activity |", table)
+        self.assertIn(
+            f"| Project | {update_readme.LANG_HEADER} | 7-day activity |", table
+        )
         self.assertIn("3 commits<br>+20 / −5 lines", table)
 
     def test_activity_table_prefers_curated_profile_description(self) -> None:

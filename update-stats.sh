@@ -406,89 +406,93 @@ BYTES_HUMAN="$(human_bytes "$TOTAL_BYTES")"
 echo ""
 echo "=== Generating stats-light.svg ==="
 write_atomically stats-light.svg << SVGEOF
-<svg width="495" height="195" viewBox="0 0 495 195" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="0.5" y="0.5" rx="4.5" width="494" height="194" fill="#ffffff" stroke="#d0d7de"/>
+<svg width="495" height="285" viewBox="0 0 495 285" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0.5" y="0.5" rx="4.5" width="494" height="284" fill="#ffffff" stroke="#d0d7de"/>
   <text x="25" y="35" fill="#24292f" font-family="'Segoe UI', Ubuntu, 'Helvetica Neue', sans-serif" font-weight="600" font-size="18">Jeffrey Emanuel's GitHub Stats</text>
 
   <!-- Row 1: Stars -->
-  <circle cx="33" cy="68" r="5" fill="#d4a72c"/>
-  <text x="46" y="72" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Total Stars</text>
-  <text x="190" y="72" fill="#0969da" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${STARS_FMT}</text>
+  <circle cx="33" cy="86" r="5" fill="#d4a72c"/>
+  <text x="46" y="90" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Total Stars</text>
+  <text x="190" y="90" fill="#0969da" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${STARS_FMT}</text>
 
   <!-- Row 2: Commits -->
-  <circle cx="33" cy="98" r="5" fill="#1a7f37"/>
-  <text x="46" y="102" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Public Commits</text>
-  <text x="190" y="102" fill="#0969da" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${COMMITS_FMT}</text>
+  <circle cx="33" cy="131" r="5" fill="#1a7f37"/>
+  <text x="46" y="135" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Public Commits</text>
+  <text x="190" y="135" fill="#0969da" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${COMMITS_FMT}</text>
 
   <!-- Row 3: Public Repos -->
-  <circle cx="33" cy="128" r="5" fill="#57606a"/>
-  <text x="46" y="132" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Public Repos</text>
-  <text x="190" y="132" fill="#0969da" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${REPOS_FMT}</text>
+  <circle cx="33" cy="176" r="5" fill="#57606a"/>
+  <text x="46" y="180" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Public Repos</text>
+  <text x="190" y="180" fill="#0969da" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${REPOS_FMT}</text>
 
   <!-- Row 1 right: Followers -->
-  <circle cx="285" cy="68" r="5" fill="#bf3989"/>
-  <text x="298" y="72" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Followers</text>
-  <text x="420" y="72" fill="#0969da" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${FOLLOWERS_FMT}</text>
+  <circle cx="285" cy="86" r="5" fill="#bf3989"/>
+  <text x="298" y="90" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Followers</text>
+  <text x="420" y="90" fill="#0969da" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${FOLLOWERS_FMT}</text>
 
   <!-- Row 2 right: Contributions -->
-  <circle cx="285" cy="98" r="5" fill="#cf222e"/>
-  <text x="298" y="102" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Contributions</text>
-  <text x="420" y="102" fill="#0969da" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${CONTRIBUTIONS_FMT}</text>
+  <circle cx="285" cy="131" r="5" fill="#cf222e"/>
+  <text x="298" y="135" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Contributions</text>
+  <text x="420" y="135" fill="#0969da" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${CONTRIBUTIONS_FMT}</text>
 
   <!-- Row 3 right: Following -->
-  <circle cx="285" cy="128" r="5" fill="#57606a"/>
-  <text x="298" y="132" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Following</text>
-  <text x="420" y="132" fill="#0969da" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${FOLLOWING_FMT}</text>
+  <circle cx="285" cy="176" r="5" fill="#57606a"/>
+  <text x="298" y="180" fill="#24292f" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Following</text>
+  <text x="420" y="180" fill="#0969da" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${FOLLOWING_FMT}</text>
 
   <!-- Divider -->
-  <line x1="260" y1="55" x2="260" y2="145" stroke="#d0d7de" stroke-width="1"/>
+  <line x1="260" y1="60" x2="260" y2="195" stroke="#d0d7de" stroke-width="1"/>
+
+  <line x1="25" y1="210" x2="470" y2="210" stroke="#d0d7de" stroke-width="1"/>
 
   <!-- Updated date -->
-  <text x="25" y="172" fill="#6e7781" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="11">Updated ${MONTH}</text>
+  <text x="25" y="255" fill="#6e7781" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="11">Updated ${MONTH}</text>
 </svg>
 SVGEOF
 
 echo "=== Generating stats.svg (dark) ==="
 write_atomically stats.svg << SVGEOF
-<svg width="495" height="195" viewBox="0 0 495 195" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="0.5" y="0.5" rx="4.5" width="494" height="194" fill="#0d1117" stroke="#30363d"/>
+<svg width="495" height="285" viewBox="0 0 495 285" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0.5" y="0.5" rx="4.5" width="494" height="284" fill="#0d1117" stroke="#30363d"/>
   <text x="25" y="35" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, 'Helvetica Neue', sans-serif" font-weight="600" font-size="18">Jeffrey Emanuel's GitHub Stats</text>
 
   <!-- Row 1: Stars -->
-  <circle cx="33" cy="68" r="5" fill="#e3b341"/>
-  <text x="46" y="72" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Total Stars</text>
-  <text x="190" y="72" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${STARS_FMT}</text>
+  <circle cx="33" cy="86" r="5" fill="#e3b341"/>
+  <text x="46" y="90" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Total Stars</text>
+  <text x="190" y="90" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${STARS_FMT}</text>
 
   <!-- Row 2: Commits -->
-  <circle cx="33" cy="98" r="5" fill="#3fb950"/>
-  <text x="46" y="102" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Public Commits</text>
-  <text x="190" y="102" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${COMMITS_FMT}</text>
+  <circle cx="33" cy="131" r="5" fill="#3fb950"/>
+  <text x="46" y="135" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Public Commits</text>
+  <text x="190" y="135" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${COMMITS_FMT}</text>
 
   <!-- Row 3: Public Repos -->
-  <circle cx="33" cy="128" r="5" fill="#8b949e"/>
-  <text x="46" y="132" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Public Repos</text>
-  <text x="190" y="132" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${REPOS_FMT}</text>
+  <circle cx="33" cy="176" r="5" fill="#8b949e"/>
+  <text x="46" y="180" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Public Repos</text>
+  <text x="190" y="180" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${REPOS_FMT}</text>
 
   <!-- Row 1 right: Followers -->
-  <circle cx="285" cy="68" r="5" fill="#db61a2"/>
-  <text x="298" y="72" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Followers</text>
-  <text x="420" y="72" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${FOLLOWERS_FMT}</text>
+  <circle cx="285" cy="86" r="5" fill="#db61a2"/>
+  <text x="298" y="90" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Followers</text>
+  <text x="420" y="90" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${FOLLOWERS_FMT}</text>
 
   <!-- Row 2 right: Contributions -->
-  <circle cx="285" cy="98" r="5" fill="#f78166"/>
-  <text x="298" y="102" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Contributions</text>
-  <text x="420" y="102" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${CONTRIBUTIONS_FMT}</text>
+  <circle cx="285" cy="131" r="5" fill="#f78166"/>
+  <text x="298" y="135" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Contributions</text>
+  <text x="420" y="135" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${CONTRIBUTIONS_FMT}</text>
 
   <!-- Row 3 right: Following -->
-  <circle cx="285" cy="128" r="5" fill="#8b949e"/>
-  <text x="298" y="132" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Following</text>
-  <text x="420" y="132" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${FOLLOWING_FMT}</text>
+  <circle cx="285" cy="176" r="5" fill="#8b949e"/>
+  <text x="298" y="180" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="14">Following</text>
+  <text x="420" y="180" fill="#58a6ff" font-family="'Segoe UI', Ubuntu, sans-serif" font-weight="700" font-size="14">${FOLLOWING_FMT}</text>
 
   <!-- Divider -->
-  <line x1="260" y1="55" x2="260" y2="145" stroke="#21262d" stroke-width="1"/>
+  <line x1="260" y1="60" x2="260" y2="195" stroke="#21262d" stroke-width="1"/>
+
+  <line x1="25" y1="210" x2="470" y2="210" stroke="#21262d" stroke-width="1"/>
 
   <!-- Updated date -->
-  <text x="25" y="172" fill="#484f58" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="11">Updated ${MONTH}</text>
+  <text x="25" y="255" fill="#484f58" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="11">Updated ${MONTH}</text>
 </svg>
 SVGEOF
 

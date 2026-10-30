@@ -30,6 +30,9 @@ MAX_WRITING_BYTES = 4 * 1024 * 1024
 MAX_PAGE_BYTES = 2 * 1024 * 1024
 USER_AGENT = "Mozilla/5.0 (compatible; Dicklesworthstone-profile-updater)"
 LIVE_DEMOS_HEADING = "### Live Demos"
+# GitHub caps images at the width of their table cell, so a narrow column
+# shrinks its badges; non-breaking spaces give the header a minimum width.
+LANG_HEADER = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lang&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 LIVE_DEMO_CARD = re.compile(
     r'<a href="(?P<page>https://[^"\s]+)"><img src="(?P<image>https?://[^"\s]+)"'
 )
@@ -925,7 +928,7 @@ def build_recent_repos_table(curated_names: dict[str, str] | None = None) -> str
             "and end of the window.*"
         ),
         "",
-        f"| Project | Lang | {window_days}-day activity | What it does |",
+        f"| Project | {LANG_HEADER} | {window_days}-day activity | What it does |",
         "|:--------|:----:|:----------------|:-------------|",
     ]
     for repo in repos:
