@@ -29,12 +29,13 @@ bar_width() {
   python3 -c 'import sys; print(max(2, int(float(sys.argv[1]) * int(sys.argv[2]) / 100)))' "$1" "$2"
 }
 human_bytes() {
-  # One decimal below 10 units; whole units floored 3.16 GB to "3G".
+  # One decimal below 10 units, so 3.16 GB reads "3.2 GB" (it used to be
+  # floored to "3G"). A unit starts where the one below would show 1000.
   python3 -c '
 import sys
 n = int(sys.argv[1])
 for unit, size in (("GB", 10**9), ("MB", 10**6), ("KB", 10**3)):
-    if n >= size:
+    if round(n / (size // 1000)) >= 1000:
         value = n / size
         print(f"{value:.1f} {unit}" if value < 9.95 else f"{round(value)} {unit}")
         break

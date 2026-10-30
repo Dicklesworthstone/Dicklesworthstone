@@ -375,7 +375,7 @@ class ReadmeActivityTests(unittest.TestCase):
     def test_badge_column_headers_keep_their_minimum_width(self) -> None:
         # GitHub caps a badge at its cell's width, so an unpadded Stars or
         # Lang header lets the column shrink its badges (the Flywheel table's
-        # did until Oct 30, 2026).
+        # badges shrank until Oct 30, 2026).
         lines = update_readme.README.read_text(encoding="utf-8").splitlines()
         headers = [
             line
@@ -1173,6 +1173,31 @@ class UpdateStatsTests(unittest.TestCase):
             )
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("Invalid GH_TIMEOUT_SECONDS: 0", result.stderr)
+
+    def test_language_byte_total_keeps_a_decimal_and_never_shows_1000(self) -> None:
+        # The languages card floored 3.16 GB to "3G" until Oct 30, 2026.
+        script = (profile_coverage.ROOT / "update-stats.sh").read_text(encoding="utf-8")
+        function = re.search(r"^human_bytes\(\) \{\n.*?^\}\n", script, re.M | re.S)
+        self.assertIsNotNone(function)
+        cases = {
+            "3160016437": "3.2 GB",
+            "9960000000": "10 GB",
+            "999600000": "1.0 GB",
+            "999400000": "999 MB",
+            "12400000": "12 MB",
+            "999999": "1.0 MB",
+            "1000": "1.0 KB",
+            "999": "999 bytes",
+        }
+        for count, label in cases.items():
+            result = subprocess.run(
+                ["bash", "-c", function.group(0) + 'human_bytes "$1"', "_", count],
+                capture_output=True,
+                text=True,
+                timeout=30,
+                check=True,
+            )
+            self.assertEqual(result.stdout.strip(), label, count)
 
 
 if __name__ == "__main__":

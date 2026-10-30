@@ -70,7 +70,9 @@ and regenerate it.
 - Keep the `&nbsp;` padding around the Stars and Lang column headers. GitHub
   styles images `max-width: 100%`, so a narrow table column shrinks its
   badges until the star counts are unreadable; the padded header gives the
-  column a minimum width. A new badge column needs the same padding.
+  column a minimum width. A new badge column needs the same padding, and the
+  tests fail on a Markdown table without it. In an HTML table, set a badge
+  column's `width` to at least its widest badge: the Nvidia quotes need 170.
 - Treat `.ee/`, `.wrangler/`, build output, caches, and unrelated worktree
   changes as out of scope. Never stage or alter them as part of a profile
   update.

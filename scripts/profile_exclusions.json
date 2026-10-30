@@ -34,7 +34,7 @@
       "revisit": "2026-11-12"
     },
     "franken_mining": {
-      "reason": "A day old: its README says status is design plan and scaffold in progress, nothing runs end to end yet, and every capability is DESIGN or TARGET until its first milestone (M0, planned Nov 2026 to Jan 2027) passes its gate.",
+      "reason": "Checked Oct 30, 2026, a day after it was created: its README says status is design plan and scaffold in progress, nothing runs end to end yet, and every capability is DESIGN or TARGET until its first milestone (M0, planned Nov 2026 to Jan 2027) passes its gate.",
       "revisit": "2026-11-29"
     },
     "beads_for_cass": {
