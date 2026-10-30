@@ -37,6 +37,10 @@
       "reason": "Internal native-code capsule for FrankenEngine (ADR-0010), not a standalone project.",
       "revisit": "2026-11-12"
     },
+    "franken_mining": {
+      "reason": "A day old: its README says status is design plan and scaffold in progress, nothing runs end to end yet, and every capability is DESIGN or TARGET until its first milestone (M0, planned Nov 2026 to Jan 2027) passes its gate.",
+      "revisit": "2026-11-29"
+    },
     "beads_for_cass": {
       "reason": "Static Beads issue dashboard for CASS, like the other generated dashboards."
     },
