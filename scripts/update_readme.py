@@ -22,6 +22,7 @@ from urllib.parse import parse_qsl, quote, urlencode, urljoin, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
+PROFILE_EXCLUSIONS = ROOT / "scripts" / "profile_exclusions.json"
 WRITING_URL = os.environ.get("WRITING_URL", "https://www.jeffreyemanuel.com/writing")
 SITE_ROOT = "https://www.jeffreyemanuel.com"
 JSON_DECODER = json.JSONDecoder()
@@ -97,6 +98,7 @@ DISPLAY_NAMES = {
     "franken_remote": "FrankenRemote",
     "franken_snowflake": "FrankenSnowflake",
     "franken_surveillance_system": "Franken Surveillance System",
+    "franken_textiles": "FrankenTextiles",
     "franken_threed": "FrankenThreeD",
     "franken_tts": "FrankenTTS",
     "franken_whisper": "FrankenWhisper",
@@ -208,6 +210,11 @@ RECENT_DESCRIPTION_OVERRIDES = {
         "Local-first Rust sensor system for owner-authorized cameras and capture "
         "drones, with evidence tracking built into the data model."
     ),
+    "franken_textiles": (
+        "Sewing-pattern engine in Rust/Wasm: drafting, seam and ease validation, "
+        "alterations, Anny bodies fitted to tape measurements, a cloth drape "
+        "solver with body contact, and PDF, DXF, HPGL, and embroidery exports."
+    ),
     "franken_threed": (
         "Three.js application specializer in Rust/Wasm and WebGPU: a new "
         "renderer route runs ordinary Three.js apps on a supported feature "
@@ -239,8 +246,9 @@ RECENT_DESCRIPTION_OVERRIDES = {
         "support and RaptorQ durability components."
     ),
     "frankenterm": (
-        "WezTerm-based terminal for AI-agent swarms, with pane capture, "
-        "state-machine detection, and a JSON control API."
+        "Terminal platform for AI-agent swarms on its own engine, forked from "
+        "WezTerm, with pane capture, state-transition detection, and a JSON "
+        "control API."
     ),
     "frankentorch": (
         "Clean-room Rust implementation of PyTorch with deterministic autograd, "
@@ -532,6 +540,17 @@ def round_badge_line(
     )
     alt = f"{alt_label or label}: {value}"
     return f"![{alt}](https://img.shields.io/static/v1?{query})"
+
+
+def approximate_count(formatted: str) -> str:
+    """Round a formatted count to two significant figures for "~N" prose."""
+    try:
+        value = int(formatted.replace(",", ""))
+    except ValueError:
+        return formatted
+    if value < 100:
+        return formatted
+    return f"{round(value, 2 - len(str(value))):,}"
 
 
 def discord_badge_line(member_count: str) -> str:
@@ -857,10 +876,28 @@ def replace_star_badges(text: str, star_counts: dict[str, int]) -> str:
     return static_pattern.sub(static_repl, text)
 
 
+def withheld_repos() -> set[str]:
+    """Repositories that scripts/profile_exclusions.json keeps off the profile."""
+    try:
+        repos = json.loads(PROFILE_EXCLUSIONS.read_text(encoding="utf-8"))["repos"]
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        print(f"warning: could not load profile exclusions: {exc}", file=sys.stderr)
+        return set()
+    if not isinstance(repos, dict):
+        print("warning: profile exclusions were malformed", file=sys.stderr)
+        return set()
+    return {str(name).casefold() for name in repos}
+
+
 def build_recent_repos_table(curated_names: dict[str, str] | None = None) -> str:
     repos = load_recent_repos()
     if not repos:
         return ""
+    # A withheld repo's GitHub description usually claims what its code does
+    # not do yet, which is why it is withheld, but it still shows here whenever
+    # it is busy (Franken Textiles did, unnoticed, from Oct 24, 2026), so it
+    # needs an override. The nightly job treats this warning as work.
+    withheld = withheld_repos()
     windows = {
         (
             repo["recentActivity"]["windowDays"],
@@ -907,6 +944,12 @@ def build_recent_repos_table(curated_names: dict[str, str] | None = None) -> str
         source_description = (
             repo.get("description") or "Recently active public project"
         )
+        if name.casefold() in withheld and name not in RECENT_DESCRIPTION_OVERRIDES:
+            print(
+                f"warning: Building Now shows withheld repo {name} with its GitHub "
+                "description; add an honest RECENT_DESCRIPTION_OVERRIDES entry",
+                file=sys.stderr,
+            )
         desc = markdown_escape(
             RECENT_DESCRIPTION_OVERRIDES.get(name, source_description)
         )
@@ -1403,7 +1446,7 @@ def main() -> None:
     text = replace_pattern_exact(
         text,
         r"~[\d,]+ members",
-        f"~{discord_members} members",
+        f"~{approximate_count(discord_members)} members",
         expected=None,
     )
 

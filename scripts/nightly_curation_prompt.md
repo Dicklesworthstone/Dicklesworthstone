@@ -31,7 +31,11 @@ act within these rules, then stop.
    `bash update-stats.sh`. For a Live Demos preview that does not serve an
    image, re-check the site first. If the site does not respond, change
    nothing: it may be back tomorrow. If it is up but its preview moved, point
-   the card at its current `og:image` once that serves `image/*`.
+   the card at its current `og:image` once that serves `image/*`. For "Building
+   Now shows withheld repo NAME", add NAME to `RECENT_DESCRIPTION_OVERRIDES` in
+   `scripts/update_readme.py` with one line that states only what its code
+   does today, per its README's own status section; if it is ready to list
+   instead, list it as in rule 3 and drop its exclusion.
 5. Verify with the `AGENTS.md` checklist and
    `python3 -m unittest tests.test_profile_generators`. Nothing may be
    committed while either fails.

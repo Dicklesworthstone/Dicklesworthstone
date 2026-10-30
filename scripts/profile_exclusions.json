@@ -18,20 +18,16 @@
       "reason": "Scoop bucket for packaged tools, not a project."
     },
     "franken_nlp": {
-      "reason": "Its README says the engine cannot run the model yet.",
-      "revisit": "2026-11-12"
+      "reason": "Re-checked Oct 30, 2026: its README says no kernel exists yet and the production feature graph is not wired, and nothing shows the engine has compiled or run the model.",
+      "revisit": "2026-11-29"
     },
     "franken_remote": {
-      "reason": "Its README says no second machine has connected yet.",
-      "revisit": "2026-11-12"
+      "reason": "Re-checked Oct 30, 2026: live two-machine sessions now carry video, input, clipboard, files and audio, but only between Linux X11 Xvfb displays for one viewer, and its README says it is not an installable remote desktop yet.",
+      "revisit": "2026-11-29"
     },
     "franken_threed": {
-      "reason": "Re-checked Oct 12, 2026: its README still says zero speedup measured and only an admitted feature subset runs (10 parity scenes on software Vulkan), so the headline claims are targets, not results.",
-      "revisit": "2026-11-11"
-    },
-    "franken_textiles": {
-      "reason": "Phase 1, a day old: validation, alteration, tape-fitted Anny bodies and the drape solver work, but its FEATURE_PARITY.md lists drafting, photo/video measurement, DXF, embroidery and the browser build as missing, so the description's headline claims are targets.",
-      "revisit": "2026-11-12"
+      "reason": "Re-checked Oct 30, 2026: its README still says no speedup has been measured and pixel parity holds for 10 scenes on software Vulkan only, so the headline claims are targets, not results.",
+      "revisit": "2026-11-29"
     },
     "franken_native_capsule": {
       "reason": "Internal native-code capsule for FrankenEngine (ADR-0010), not a standalone project.",

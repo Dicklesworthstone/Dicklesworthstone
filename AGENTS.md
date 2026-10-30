@@ -30,7 +30,11 @@ and regenerate it.
   for "preserving the existing Building Now section" (it froze from Sep 10 to
   Sep 24, 2026 when too many recent repos were not cloned locally). The
   section's caption carries its window's end date, so a frozen table also
-  shows its age on the page.
+  shows its age on the page. The table shows any busy repo, including ones
+  kept off the rest of the page, so give every repo in
+  `scripts/profile_exclusions.json` that appears there an honest
+  `RECENT_DESCRIPTION_OVERRIDES` entry; the refresh warns "Building Now shows
+  withheld repo" until it has one.
 - List only projects and sites backed by a public GitHub repository. A live
   domain on Vercel or Cloudflare may still be unannounced; without a public
   repo, leave it off every section. Re-check sites already on the page too:
@@ -70,15 +74,17 @@ and regenerate it.
 ## Refresh and verification
 
 Every night at 05:00, the LaunchAgent `com.jemanuel.profile-stats` runs
-`ops/profile-stats-update.sh` on this machine, through the launcher
+`ops/profile-stats-update.sh` on mac-studio, through the launcher
 `ops/profile-stats-launcher.sh`, which is installed as
 `~/.local/bin/profile-stats-update.sh` and runs a snapshot of the script
-(install steps are in its header). GitHub Actions is only a manual
-fallback. Stage 1 runs `bash update-stats.sh`, then commits and
-pushes the generated files. Stage 2 starts headless Claude Code with
-`scripts/nightly_curation_prompt.md`, but only when there is work: a
-repository from `scripts/profile_coverage.py`, a failed stage 1, or a stale
-section or broken preview that stage 1 logged. The log is
+(install steps are in its header). mac-mini-max runs an older, stats-only
+copy of that LaunchAgent at 05:40 as a backup, so most days get two stats
+commits. GitHub Actions is only a manual fallback. Stage 1 runs
+`bash update-stats.sh`, then commits and pushes the generated files. Stage 2
+starts headless Claude Code with `scripts/nightly_curation_prompt.md`, but
+only when there is work: a repository from `scripts/profile_coverage.py`, a
+failed stage 1, or a stale section, broken preview, or withheld repo in
+Building Now that stage 1 logged. The log is
 `~/.local/share/profile-stats/update.log`; Claude's transcripts are
 `curation-YYYY-MM-DD.log` beside it.
 

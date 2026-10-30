@@ -161,7 +161,7 @@ fi
 if [ "$STAGE1_OK" -eq 0 ]; then
   TASKS+=$'### Failed refresh\n\n`bash update-stats.sh` exited non-zero. The end of its output:\n\n```\n'"$(tail -n 60 "$RUN_OUTPUT")"$'\n```\n\n'
 fi
-PROBLEMS=$(grep -nE 'preserving the existing Building Now section|star history generation failed|Live Demos preview .* does not serve an image|^error: ' "$RUN_OUTPUT" 2>/dev/null || true)
+PROBLEMS=$(grep -nE 'preserving the existing Building Now section|star history generation failed|Live Demos preview .* does not serve an image|Building Now shows withheld repo|^error: ' "$RUN_OUTPUT" 2>/dev/null || true)
 if [ -n "$PROBLEMS" ]; then
   TASKS+=$'### Problems the refresh logged but could not fix itself\n\n```\n'"$PROBLEMS"$'\n```\n\nThe full run output is in ~/.local/share/profile-stats/update.log (the last run).\n\n'
 fi

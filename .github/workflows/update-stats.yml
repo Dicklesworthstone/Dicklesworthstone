@@ -2,10 +2,10 @@ name: Update GitHub Stats
 
 # The daily schedule is intentionally disabled. Scheduled runs queue behind
 # throttled GitHub Actions and get cut off, leaving the profile silently stale.
-# The refresh now runs locally on mac-mini-max via the LaunchAgent
-# com.jemanuel.profile-stats (~/.local/bin/profile-stats-update.sh), which
-# executes this same update-stats.sh and pushes. This workflow is kept for
-# manual dispatch as a fallback.
+# The refresh now runs locally every night via the LaunchAgent
+# com.jemanuel.profile-stats (ops/profile-stats-update.sh; see AGENTS.md),
+# which executes this same update-stats.sh and pushes. This workflow is kept
+# for manual dispatch as a fallback.
 on:
   workflow_dispatch: {}   # Manual trigger only
 

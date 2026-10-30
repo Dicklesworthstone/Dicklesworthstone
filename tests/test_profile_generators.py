@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import contextlib
 import http.client
+import io
 import json
 import os
 import re
@@ -331,6 +333,65 @@ class ReadmeActivityTests(unittest.TestCase):
         self.assertIn("[**Pipe A\\|B**]", table)
         self.assertIn("[**Unlisted Repo**]", table)
         self.assertIn("[**FrankenGit**]", table)
+
+    def test_activity_table_flags_a_withheld_repo_without_an_override(self) -> None:
+        payload = json.dumps([repo_payload("franken_withheld")])
+        stderr = io.StringIO()
+        with (
+            patch.dict(os.environ, {"RECENT_ACTIVITY_JSON_CONTENT": payload}),
+            patch.object(
+                update_readme, "withheld_repos", return_value={"franken_withheld"}
+            ),
+            contextlib.redirect_stderr(stderr),
+        ):
+            update_readme.build_recent_repos_table()
+        self.assertIn("Building Now shows withheld repo franken_withheld", stderr.getvalue())
+
+        stderr = io.StringIO()
+        with (
+            patch.dict(os.environ, {"RECENT_ACTIVITY_JSON_CONTENT": payload}),
+            patch.object(
+                update_readme, "withheld_repos", return_value={"franken_withheld"}
+            ),
+            patch.dict(
+                update_readme.RECENT_DESCRIPTION_OVERRIDES,
+                {"franken_withheld": "What its code does today."},
+            ),
+            contextlib.redirect_stderr(stderr),
+        ):
+            table = update_readme.build_recent_repos_table()
+        self.assertNotIn("withheld repo", stderr.getvalue())
+        self.assertIn("What its code does today.", table)
+
+    def test_approximate_counts_round_to_two_significant_figures(self) -> None:
+        # "~898 members" read as an exact count behind a tilde.
+        self.assertEqual(update_readme.approximate_count("898"), "900")
+        self.assertEqual(update_readme.approximate_count("1,234"), "1,200")
+        self.assertEqual(update_readme.approximate_count("57"), "57")
+        self.assertEqual(update_readme.approximate_count("0"), "0")
+
+    def test_withheld_repos_come_from_the_committed_exclusions(self) -> None:
+        withheld = update_readme.withheld_repos()
+        self.assertIn("franken_threed", withheld)
+        self.assertNotIn("frankensim", withheld)
+
+    def test_nightly_job_picks_up_the_withheld_repo_warning(self) -> None:
+        # The wrapper hands Claude only the lines its grep pattern matches.
+        wrapper = (update_readme.ROOT / "ops" / "profile-stats-update.sh").read_text()
+        pattern = re.search(r"PROBLEMS=\$\(grep -nE '([^']+)'", wrapper)
+        self.assertIsNotNone(pattern)
+        stderr = io.StringIO()
+        with (
+            patch.dict(
+                os.environ,
+                {"RECENT_ACTIVITY_JSON_CONTENT": json.dumps([repo_payload("withheld")])},
+            ),
+            patch.object(update_readme, "withheld_repos", return_value={"withheld"}),
+            contextlib.redirect_stderr(stderr),
+        ):
+            update_readme.build_recent_repos_table()
+        self.assertTrue(stderr.getvalue())
+        self.assertRegex(stderr.getvalue(), pattern.group(1))
 
     def test_recent_activity_exclusions_match_the_readme_generator(self) -> None:
         # A repo excluded on one side only makes update_readme drop the whole
