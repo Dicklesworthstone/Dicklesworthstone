@@ -108,8 +108,11 @@ Fourteen tools for multi-agent software development: messaging and file leases, 
 > ```
 > Or install individual tools from the Homebrew tap (macOS and Linux):
 > ```bash
-> brew install dicklesworthstone/tap/cass dicklesworthstone/tap/br dicklesworthstone/tap/xf
-> brew install dicklesworthstone/tap/dcg && dcg install  # registers DCG's agent hooks
+> brew install dicklesworthstone/tap/cass  # CASS
+> brew install dicklesworthstone/tap/br    # Beads Rust
+> brew install dicklesworthstone/tap/xf    # XF
+> brew install dicklesworthstone/tap/dcg   # DCG
+> dcg install                              # adds DCG's agent hooks
 > ```
 > Each tool's README also has a one-line `install.sh`.
 

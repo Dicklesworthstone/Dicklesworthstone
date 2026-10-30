@@ -898,7 +898,7 @@ def build_recent_repos_table(curated_names: dict[str, str] | None = None) -> str
         return ""
     # A withheld repo's GitHub description usually claims what its code does
     # not do yet, which is why it is withheld, but it still shows here whenever
-    # it is busy (Franken Textiles did, unnoticed, from Oct 24, 2026), so it
+    # it is busy (FrankenTextiles did, unnoticed, from Oct 24, 2026), so it
     # needs an override. The nightly job treats this warning as work.
     withheld = withheld_repos()
     windows = {

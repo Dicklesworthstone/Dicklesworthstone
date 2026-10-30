@@ -30,8 +30,9 @@ and regenerate it.
   for "preserving the existing Building Now section" (it froze from Sep 10 to
   Sep 24, 2026 when too many recent repos were not cloned locally). The
   section's caption carries its window's end date, so a frozen table also
-  shows its age on the page. The table shows any busy repo, including ones
-  kept off the rest of the page, so give every repo in
+  shows its age on the page. The table ranks every busy original repo except
+  this one and the package taps, including repos kept off the rest of the
+  page, so give every repo in
   `scripts/profile_exclusions.json` that appears there an honest
   `RECENT_DESCRIPTION_OVERRIDES` entry; the refresh warns "Building Now shows
   withheld repo" until it has one.
@@ -72,7 +73,8 @@ and regenerate it.
   badges until the star counts are unreadable; the padded header gives the
   column a minimum width. A new badge column needs the same padding, and the
   tests fail on a Markdown table without it. In an HTML table, set a badge
-  column's `width` to at least its widest badge: the Nvidia quotes need 170.
+  column's `width` to at least its widest badge: the Nvidia quotes use 170
+  for badges up to 163px wide.
 - Treat `.ee/`, `.wrangler/`, build output, caches, and unrelated worktree
   changes as out of scope. Never stage or alter them as part of a profile
   update.
@@ -89,8 +91,9 @@ commits. GitHub Actions is only a manual fallback. Stage 1 runs
 `bash update-stats.sh`, then commits and pushes the generated files. Stage 2
 starts headless Claude Code with `scripts/nightly_curation_prompt.md`, but
 only when there is work: a repository from `scripts/profile_coverage.py`, a
-failed stage 1, or a stale section, broken preview, or withheld repo in
-Building Now that stage 1 logged. The log is
+failed stage 1, or a problem stage 1 logged (a stale Building Now section, a
+failed star chart, a broken Live Demos preview, or a withheld repo in Building
+Now without an override). The log is
 `~/.local/share/profile-stats/update.log`; Claude's transcripts are
 `curation-YYYY-MM-DD.log` beside it.
 
