@@ -29,7 +29,18 @@ bar_width() {
   python3 -c 'import sys; print(max(2, int(float(sys.argv[1]) * int(sys.argv[2]) / 100)))' "$1" "$2"
 }
 human_bytes() {
-  python3 -c 'import sys; n=int(sys.argv[1]); print(f"{n // 1000000000}G" if n >= 1000000000 else (f"{n // 1000000}M" if n >= 1000000 else (f"{n // 1000}K" if n >= 1000 else f"{n}B")))' "$1"
+  # One decimal below 10 units; whole units floored 3.16 GB to "3G".
+  python3 -c '
+import sys
+n = int(sys.argv[1])
+for unit, size in (("GB", 10**9), ("MB", 10**6), ("KB", 10**3)):
+    if n >= size:
+        value = n / size
+        print(f"{value:.1f} {unit}" if value < 9.95 else f"{round(value)} {unit}")
+        break
+else:
+    print(f"{n} bytes")
+' "$1"
 }
 xml_escape() {
   python3 -c 'import html, sys; print(html.escape(sys.argv[1], quote=True), end="")' "$1"
@@ -589,7 +600,7 @@ write_atomically languages-light.svg << SVGEOF
   <rect x="25" y="50" rx="3" width="445" height="10" fill="#eaeef2"/>
 ${BAR_SEGMENTS_LIGHT}${LEGEND_LIGHT}  <!-- Summary -->
   <line x1="25" y1="210" x2="470" y2="210" stroke="#d0d7de" stroke-width="1"/>
-  <text x="25" y="235" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="12">${BYTES_HUMAN} bytes across ${TOTAL_LANG_REPOS} repositories</text>
+  <text x="25" y="235" fill="#57606a" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="12">${BYTES_HUMAN} across ${TOTAL_LANG_REPOS} repositories</text>
   <text x="25" y="255" fill="#6e7781" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="11">Updated ${MONTH} · Measured by total code bytes per language</text>
 </svg>
 SVGEOF
@@ -602,7 +613,7 @@ write_atomically languages.svg << SVGEOF
   <rect x="25" y="50" rx="3" width="445" height="10" fill="#161b22"/>
 ${BAR_SEGMENTS_DARK}${LEGEND_DARK}  <!-- Summary -->
   <line x1="25" y1="210" x2="470" y2="210" stroke="#21262d" stroke-width="1"/>
-  <text x="25" y="235" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="12">${BYTES_HUMAN} bytes across ${TOTAL_LANG_REPOS} repositories</text>
+  <text x="25" y="235" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="12">${BYTES_HUMAN} across ${TOTAL_LANG_REPOS} repositories</text>
   <text x="25" y="255" fill="#484f58" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="11">Updated ${MONTH} · Measured by total code bytes per language</text>
 </svg>
 SVGEOF

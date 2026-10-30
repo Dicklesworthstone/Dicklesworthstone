@@ -19,7 +19,8 @@
 # repository is neither on the profile nor deliberately excluded
 # (scripts/profile_coverage.py), when an exclusion's revisit date arrives, or
 # when stage 1 failed or logged a problem it cannot fix itself (a stale
-# Building Now section, a failed star chart, a broken Live Demos preview).
+# Building Now section, a failed star chart, a broken Live Demos preview, a
+# withheld repo shown in Building Now with its GitHub description).
 # Instructions: scripts/nightly_curation_prompt.md. Transcript:
 # ~/.local/share/profile-stats/curation-YYYY-MM-DD.log.
 #

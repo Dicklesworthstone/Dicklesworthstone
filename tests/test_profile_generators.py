@@ -372,9 +372,27 @@ class ReadmeActivityTests(unittest.TestCase):
         self.assertEqual(update_readme.approximate_count("57"), "57")
         self.assertEqual(update_readme.approximate_count("0"), "0")
 
+    def test_badge_column_headers_keep_their_minimum_width(self) -> None:
+        # GitHub caps a badge at its cell's width, so an unpadded Stars or
+        # Lang header lets the column shrink its badges (the Flywheel table's
+        # did until Oct 30, 2026).
+        lines = update_readme.README.read_text(encoding="utf-8").splitlines()
+        headers = [
+            line
+            for line, below in zip(lines, lines[1:])
+            if line.startswith("|") and re.fullmatch(r"\|(?:\s*:?-+:?\s*\|)+", below)
+        ]
+        self.assertGreater(len(headers), 5)
+        for header in headers:
+            for cell in header.strip("|").split("|"):
+                if cell.replace("&nbsp;", "").strip() in {"Stars", "Lang"}:
+                    self.assertTrue(cell.strip().startswith("&nbsp;"), header)
+
     def test_withheld_repos_come_from_the_committed_exclusions(self) -> None:
+        # Use permanent entries: maturing repos leave the file.
         withheld = update_readme.withheld_repos()
-        self.assertIn("franken_threed", withheld)
+        self.assertIn("homebrew-tap", withheld)
+        self.assertIn("dicklesworthstone", withheld)
         self.assertNotIn("frankensim", withheld)
 
     def test_nightly_job_picks_up_the_withheld_repo_warning(self) -> None:
