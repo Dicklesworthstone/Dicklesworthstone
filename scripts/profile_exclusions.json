@@ -34,7 +34,7 @@
       "revisit": "2026-11-12"
     },
     "franken_mining": {
-      "reason": "Checked Oct 30, 2026, a day after it was created: its README says status is design plan and scaffold in progress, nothing runs end to end yet, and every capability is DESIGN or TARGET until its first milestone (M0, planned Nov 2026 to Jan 2027) passes its gate.",
+      "reason": "Re-checked Nov 4, 2026: its public lane now runs end to end on one issuer's 18 public workbooks, but its README still says status is design plan and scaffold in progress, nothing is implemented in the plan's sense, and every capability is DESIGN or TARGET until its gate passes; the first milestone gate (M0, planned Nov 2026 to Jan 2027) is still open.",
       "revisit": "2026-11-29"
     },
     "beads_for_cass": {

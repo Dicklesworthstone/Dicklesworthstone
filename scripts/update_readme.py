@@ -199,6 +199,12 @@ RECENT_DESCRIPTION_OVERRIDES = {
         "source compatibility with manimlib scenes. FFmpeg is its only external "
         "tool."
     ),
+    "franken_mining": (
+        "Early Rust workspace for mining-company disclosures: `fmine assure "
+        "public` reads one issuer's 18 public workbooks into claims that cite "
+        "their source cells and reproduces a pinned result. Its first milestone "
+        "gate has not passed."
+    ),
     "franken_nlp": (
         "Pure-Rust CPU NLP engine being built around one model, Nanbeige4.2-3B: "
         "custom quantized weights, shape-specific kernels, and schema-valid "
