@@ -37,6 +37,10 @@
       "reason": "Re-checked Nov 4, 2026: its public lane now runs end to end on one issuer's 18 public workbooks, but its README still says status is design plan and scaffold in progress, nothing is implemented in the plan's sense, and every capability is DESIGN or TARGET until its gate passes; the first milestone gate (M0, planned Nov 2026 to Jan 2027) is still open.",
       "revisit": "2026-11-29"
     },
+    "franken_firmware": {
+      "reason": "Checked Nov 6, 2026: its README says status is research workspace, pre-alpha, with 6 of 56 beads closed; the repo never touches hardware, and its proven results are tiny static /init binaries that build and boot on generic QEMU machines, which its README says say nothing about Sonos silicon.",
+      "revisit": "2026-12-06"
+    },
     "beads_for_cass": {
       "reason": "Static Beads issue dashboard for CASS, like the other generated dashboards."
     },
