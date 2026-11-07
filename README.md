@@ -21,7 +21,7 @@
 
 ![Stars: 33,840+](https://img.shields.io/static/v1?label=Stars&message=33%2C840%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Projects: 215](https://img.shields.io/static/v1?label=Projects&message=215&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 393,158](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=393%2C158&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 393,183](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=393%2C183&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,500+](https://img.shields.io/static/v1?label=Followers&message=3%2C500%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 50.6K](https://img.shields.io/static/v1?label=X+Followers&message=50.6K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -70,7 +70,7 @@
 </p>
 
 > [!NOTE]
-> **393,158 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
+> **393,183 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
 
 ---
 
@@ -201,17 +201,17 @@ The FrankenSuite spans databases, terminals, numerical computing, media, graphs,
 
 | Project | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lang&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 14-day activity | What it does |
 |:--------|:----:|:----------------|:-------------|
-| [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 7,893 commits<br>+5,641,757 / −63,912 lines | Rust geometry, simulation, optimization, and rendering workspace with contract-backed kernels. |
+| [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 7,902 commits<br>+5,641,792 / −63,912 lines | Rust geometry, simulation, optimization, and rendering workspace with contract-backed kernels. |
 | [**FrankenAccounting**](https://github.com/Dicklesworthstone/franken_accounting) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 1,417 commits<br>+651,042 / −20,518 lines | Double-entry ledger in Rust on FrankenGraphDB: append-only journal, exact integer money, bitemporal trial balances, replayable report certificates, CLI, and MCP server. |
 | [**Franken Surveillance System**](https://github.com/Dicklesworthstone/franken_surveillance_system) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 894 commits<br>+522,533 / −9,308 lines | Local-first Rust sensor system for owner-authorized cameras and capture drones, with evidence tracking built into the data model. |
 | [**FrankenGit**](https://github.com/Dicklesworthstone/frankengit) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 882 commits<br>+426,461 / −13,672 lines | Git-compatible forge for human and coding-agent workflows, with verifiable recovery, self-hosting, and an immutable decision stream. |
 | [**FrankenSonos**](https://github.com/Dicklesworthstone/frankensonos) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 881 commits<br>+101,263 / −2,562 lines | Sonos controller in Rust for S1 and S2 speakers: CLI, HTTP API, MCP server, a Spotify-library DJ, and remote access over Tailscale. |
-| [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 789 commits<br>+320,870 / −20,760 lines | Rust property-graph database with MVCC, time travel, branch-pinned reads, WCO/factorized execution, incremental maintenance, and fountain-coded replication. |
+| [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 788 commits<br>+320,870 / −20,760 lines | Rust property-graph database with MVCC, time travel, branch-pinned reads, WCO/factorized execution, incremental maintenance, and fountain-coded replication. |
 | [**Franken Mining**](https://github.com/Dicklesworthstone/franken_mining) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 645 commits<br>+493,573 / −0 lines | Early Rust workspace for mining-company disclosures: `fmine assure public` reads one issuer's 18 public workbooks into claims that cite their source cells and reproduces a pinned result. Its first milestone gate has not passed. |
 | [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 654 commits<br>+238,240 / −18,707 lines | Rust implementation of the Lean 4 toolchain with `.olean`, C ABI, LSP, and CLI compatibility; deterministic parallelism; declaration-level incrementality; and a dual-engine kernel capped at 12 KLOC. |
-| [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 652 commits<br>+139,568 / −11,813 lines | Terminal platform for AI-agent swarms on its own engine, forked from WezTerm, with pane capture, state-transition detection, and a JSON control API. |
+| [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 651 commits<br>+141,180 / −11,831 lines | Terminal platform for AI-agent swarms on its own engine, forked from WezTerm, with pane capture, state-transition detection, and a JSON control API. |
 | [**Remote Compilation Helper**](https://github.com/Dicklesworthstone/remote_compilation_helper) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 558 commits<br>+281,332 / −16,975 lines | Intercepts cargo/gcc builds from AI coding agents via hooks and transparently routes them to remote worker machines, returning artifacts as if compiled locally |
-| [**FrankenTextiles**](https://github.com/Dicklesworthstone/franken_textiles) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 578 commits<br>+183,649 / −8,486 lines | Sewing-pattern engine in Rust/Wasm: drafting, seam and ease validation, alterations, Anny bodies fitted to tape measurements, a cloth drape solver with body contact, and PDF, DXF, HPGL, and embroidery exports. |
+| [**FrankenTextiles**](https://github.com/Dicklesworthstone/franken_textiles) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 577 commits<br>+182,920 / −8,629 lines | Sewing-pattern engine in Rust/Wasm: drafting, seam and ease validation, alterations, Anny bodies fitted to tape measurements, a cloth drape solver with body contact, and PDF, DXF, HPGL, and embroidery exports. |
 | [**FrankenManim**](https://github.com/Dicklesworthstone/franken_manim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 518 commits<br>+92,123 / −11,256 lines | Deterministic Rust implementation of 3b1b's Manim with native TeX typesetting, an analytic Bézier renderer, bit-reproducible output, and source compatibility with manimlib scenes. FFmpeg is its only external tool. |
 <!-- END AUTO-BUILDING-NOW -->
 
