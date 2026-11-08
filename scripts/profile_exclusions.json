@@ -41,6 +41,10 @@
       "reason": "Checked Nov 6, 2026: its README says status is research workspace, pre-alpha, with 6 of 56 beads closed; the repo never touches hardware, and its proven results are tiny static /init binaries that build and boot on generic QEMU machines, which its README says say nothing about Sonos silicon.",
       "revisit": "2026-12-06"
     },
+    "frankenlife": {
+      "reason": "Checked Nov 8, 2026: created that day with one commit; its README says status is design plan, no code yet, the repo holds only the plan, README, agent contract and toolchain settings, and nothing has been built, run or benchmarked.",
+      "revisit": "2026-12-08"
+    },
     "beads_for_cass": {
       "reason": "Static Beads issue dashboard for CASS, like the other generated dashboards."
     },
