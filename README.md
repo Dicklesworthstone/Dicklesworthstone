@@ -21,7 +21,7 @@
 
 ![Stars: 34,100+](https://img.shields.io/static/v1?label=Stars&message=34%2C100%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Projects: 216](https://img.shields.io/static/v1?label=Projects&message=216&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 406,687](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=406%2C687&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 406,699](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=406%2C699&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,500+](https://img.shields.io/static/v1?label=Followers&message=3%2C500%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 50.6K](https://img.shields.io/static/v1?label=X+Followers&message=50.6K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -70,7 +70,7 @@
 </p>
 
 > [!NOTE]
-> **406,687 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
+> **406,699 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
 
 ---
 
@@ -203,12 +203,12 @@ The FrankenSuite spans databases, terminals, numerical computing, media, graphs,
 |:--------|:----:|:----------------|:-------------|
 | [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 9,269 commits<br>+6,506,072 / −108,801 lines | Rust geometry, simulation, optimization, and rendering workspace with contract-backed kernels. |
 | [**Franken Surveillance System**](https://github.com/Dicklesworthstone/franken_surveillance_system) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 943 commits<br>+652,474 / −9,114 lines | Local-first Rust sensor system for owner-authorized cameras and capture drones, with evidence tracking built into the data model. |
-| [**FrankenAccounting**](https://github.com/Dicklesworthstone/franken_accounting) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 771 commits<br>+440,355 / −12,121 lines | Double-entry ledger in Rust on FrankenGraphDB: append-only journal, exact integer money, bitemporal trial balances, replayable report certificates, CLI, and MCP server. |
+| [**FrankenAccounting**](https://github.com/Dicklesworthstone/franken_accounting) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 769 commits<br>+439,336 / −12,059 lines | Double-entry ledger in Rust on FrankenGraphDB: append-only journal, exact integer money, bitemporal trial balances, replayable report certificates, CLI, and MCP server. |
 | [**FrankenGit**](https://github.com/Dicklesworthstone/frankengit) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 742 commits<br>+368,899 / −26,627 lines | Git-compatible forge for human and coding-agent workflows, with verifiable recovery, self-hosting, and an immutable decision stream. |
 | [**Franken Mining**](https://github.com/Dicklesworthstone/franken_mining) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 627 commits<br>+477,750 / −11,393 lines | Early Rust workspace for mining-company disclosures: `fmine assure public` reads one issuer's 18 public workbooks into claims that cite their source cells and reproduces a pinned result. Its first milestone gate has not passed. |
 | [**Remote Compilation Helper**](https://github.com/Dicklesworthstone/remote_compilation_helper) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 576 commits<br>+316,439 / −23,289 lines | Intercepts cargo/gcc builds from AI coding agents via hooks and transparently routes them to remote worker machines, returning artifacts as if compiled locally |
 | [**FrankenSonos**](https://github.com/Dicklesworthstone/frankensonos) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 603 commits<br>+152,538 / −4,193 lines | Sonos controller in Rust for S1 and S2 speakers: CLI, HTTP API, MCP server, a Spotify-library DJ, and remote access over Tailscale. |
-| [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 513 commits<br>+265,502 / −16,263 lines | Rust property-graph database with MVCC, time travel, branch-pinned reads, WCO/factorized execution, incremental maintenance, and fountain-coded replication. |
+| [**FrankenGraphDB**](https://github.com/Dicklesworthstone/frankengraphdb) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 511 commits<br>+264,404 / −15,924 lines | Rust property-graph database with MVCC, time travel, branch-pinned reads, WCO/factorized execution, incremental maintenance, and fountain-coded replication. |
 | [**FrankenRemote**](https://github.com/Dicklesworthstone/franken_remote) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 507 commits<br>+195,651 / −11,263 lines | Tailnet-native remote workstation being built in Rust on Asupersync: HEVC desktop streaming from Linux X11 hosts, with opt-in input, clipboard, file sending, and audio. |
 | [**FrankenLibC**](https://github.com/Dicklesworthstone/frankenlibc) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 501 commits<br>+150,290 / −25,027 lines | Clean-room Rust reimplementation of glibc with an opt-in Transparent Safety Membrane, loaded via LD_PRELOAD. 4,119 exported symbols classified; 2,829 native Rust + direct syscalls (68.7%), the rest host-backed. Two runtime modes (strict/hardened); x86_64 primary, aarch64 covered. Membrane coverage is path-specific, not universal. |
 | [**FrankenTerm**](https://github.com/Dicklesworthstone/frankenterm) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 506 commits<br>+125,012 / −11,830 lines | Terminal platform for AI-agent swarms on its own engine, forked from WezTerm, with pane capture, state-transition detection, and a JSON control API. |
