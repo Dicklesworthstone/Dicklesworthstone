@@ -188,6 +188,13 @@ RECENT_DESCRIPTION_OVERRIDES = {
         "Spatial source browser for Apple Silicon: a Rust engine and native Metal "
         "app that zoom from a repository map down to exact source lines."
     ),
+    "franken_firmware": (
+        "Pre-alpha research workspace toward Rust replacement firmware for Sonos "
+        "speakers. So far it boots tiny static `/init` binaries on generic "
+        "big-endian MIPS and PowerPC QEMU machines and sends decoded Ogg Vorbis "
+        "and MP3 audio over authenticated UDP between processes on one host. "
+        "None of it is qualified on Sonos hardware."
+    ),
     "franken_lean": (
         "Rust implementation of the Lean 4 toolchain with `.olean`, C ABI, LSP, and "
         "CLI compatibility; deterministic parallelism; declaration-level "

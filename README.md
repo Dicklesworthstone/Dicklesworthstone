@@ -21,7 +21,7 @@
 
 ![Stars: 34,120+](https://img.shields.io/static/v1?label=Stars&message=34%2C120%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Projects: 216](https://img.shields.io/static/v1?label=Projects&message=216&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 408,498](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=408%2C498&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 408,499](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=408%2C499&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,500+](https://img.shields.io/static/v1?label=Followers&message=3%2C500%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 50.6K](https://img.shields.io/static/v1?label=X+Followers&message=50.6K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -70,7 +70,7 @@
 </p>
 
 > [!NOTE]
-> **408,498 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
+> **408,499 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
 
 ---
 
@@ -209,10 +209,10 @@ The FrankenSuite spans databases, terminals, numerical computing, media, graphs,
 | [**FrankenSonos**](https://github.com/Dicklesworthstone/frankensonos) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 617 commits<br>+144,112 / −4,288 lines | Sonos controller in Rust for S1 and S2 speakers: CLI, HTTP API, MCP server, a Spotify-library DJ, and remote access over Tailscale. |
 | [**Remote Compilation Helper**](https://github.com/Dicklesworthstone/remote_compilation_helper) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 535 commits<br>+281,714 / −19,408 lines | Intercepts cargo/gcc builds from AI coding agents via hooks and transparently routes them to remote worker machines, returning artifacts as if compiled locally |
 | [**FrankenRemote**](https://github.com/Dicklesworthstone/franken_remote) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 527 commits<br>+183,921 / −12,068 lines | Tailnet-native remote workstation being built in Rust on Asupersync: HEVC desktop streaming from Linux X11 hosts, with opt-in input, clipboard, file sending, and audio. |
-| [**Franken Firmware**](https://github.com/Dicklesworthstone/franken_firmware) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 438 commits<br>+824,259 / −0 lines | Memory-safe Rust replacement firmware for the Sonos hardware you already own — BE-PowerPC + BE-MIPS, S1 + S2. Research workspace: toolchain bake-offs, QEMU proofs, board evidence. Companion to frankensonos. |
+| [**Franken Firmware**](https://github.com/Dicklesworthstone/franken_firmware) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 438 commits<br>+824,259 / −0 lines | Pre-alpha research workspace toward Rust replacement firmware for Sonos speakers. So far it boots tiny static `/init` binaries on generic big-endian MIPS and PowerPC QEMU machines and sends decoded Ogg Vorbis and MP3 audio over authenticated UDP between processes on one host. None of it is qualified on Sonos hardware. |
 | [**FrankenLibC**](https://github.com/Dicklesworthstone/frankenlibc) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 492 commits<br>+149,864 / −22,392 lines | Clean-room Rust reimplementation of glibc with an opt-in Transparent Safety Membrane, loaded via LD_PRELOAD. 4,119 exported symbols classified; 2,829 native Rust + direct syscalls (68.7%), the rest host-backed. Two runtime modes (strict/hardened); x86_64 primary, aarch64 covered. Membrane coverage is path-specific, not universal. |
-| [**MCP Agent Mail Rust**](https://github.com/Dicklesworthstone/mcp_agent_mail_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 454 commits<br>+149,815 / −7,665 lines | Rust MCP server for multi-agent coordination: 45 tools and 25 resources, Git-backed archive, SQLite indexing, advisory file locks, a 16-screen TUI, a server-rendered web UI, and an agent-first robot CLI. |
 | [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 446 commits<br>+170,074 / −11,036 lines | Rust implementation of the Lean 4 toolchain with `.olean`, C ABI, LSP, and CLI compatibility; deterministic parallelism; declaration-level incrementality; and a dual-engine kernel capped at 12 KLOC. |
+| [**MCP Agent Mail Rust**](https://github.com/Dicklesworthstone/mcp_agent_mail_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 448 commits<br>+149,799 / −7,662 lines | Rust MCP server for multi-agent coordination: 45 tools and 25 resources, Git-backed archive, SQLite indexing, advisory file locks, a 16-screen TUI, a server-rendered web UI, and an agent-first robot CLI. |
 <!-- END AUTO-BUILDING-NOW -->
 
 ### Live Demos

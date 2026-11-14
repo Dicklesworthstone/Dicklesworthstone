@@ -30,8 +30,7 @@
       "revisit": "2026-11-29"
     },
     "franken_native_capsule": {
-      "reason": "Internal native-code capsule for FrankenEngine (ADR-0010), not a standalone project.",
-      "revisit": "2026-11-12"
+      "reason": "Re-checked Nov 14, 2026: an internal dependency of FrankenEngine (franken_node -> franken_engine -> capsule), which the profile already lists; its README calls its one fixed-probe native path bring-up evidence that FrankenEngine does not enable, and it has had no commits since Aug 20, 2026."
     },
     "franken_mining": {
       "reason": "Re-checked Nov 4, 2026: its public lane now runs end to end on one issuer's 18 public workbooks, but its README still says status is design plan and scaffold in progress, nothing is implemented in the plan's sense, and every capability is DESIGN or TARGET until its gate passes; the first milestone gate (M0, planned Nov 2026 to Jan 2027) is still open.",
