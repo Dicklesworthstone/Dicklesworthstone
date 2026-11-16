@@ -19,9 +19,9 @@
 
 *Building the tooling that lets dozens of AI agents ship complex projects in days.*
 
-![Stars: 34,150+](https://img.shields.io/static/v1?label=Stars&message=34%2C150%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Stars: 34,160+](https://img.shields.io/static/v1?label=Stars&message=34%2C160%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Projects: 216](https://img.shields.io/static/v1?label=Projects&message=216&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 411,221](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=411%2C221&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 411,225](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=411%2C225&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,500+](https://img.shields.io/static/v1?label=Followers&message=3%2C500%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 50.6K](https://img.shields.io/static/v1?label=X+Followers&message=50.6K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -70,7 +70,7 @@
 </p>
 
 > [!NOTE]
-> **411,221 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
+> **411,225 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
 
 ---
 
@@ -89,7 +89,7 @@ Fourteen tools for multi-agent software development: messaging and file leases, 
 | [**Beads Viewer**](https://github.com/Dicklesworthstone/beads_viewer) | ![Stars](https://img.shields.io/badge/stars-1,733-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbeads_viewer) | ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white) | PageRank-powered task prioritization in a keyboard-driven TUI |
 | [**Flywheel Setup**](https://github.com/Dicklesworthstone/agentic_coding_flywheel_setup) | ![Stars](https://img.shields.io/badge/stars-1,677-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fagentic_coding_flywheel_setup) | ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white) | Installs and configures 30+ tools, including the full Flywheel stack, on an Ubuntu VPS in about 30 minutes |
 | [**Beads Rust**](https://github.com/Dicklesworthstone/beads_rust) | ![Stars](https://img.shields.io/badge/stars-1,157-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbeads_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Local-first, non-invasive issue tracker for git repos |
-| [**CASS**](https://github.com/Dicklesworthstone/coding_agent_session_search) | ![Stars](https://img.shields.io/badge/stars-1,211-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcoding_agent_session_search) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Unified search across 34 AI coding tool histories |
+| [**CASS**](https://github.com/Dicklesworthstone/coding_agent_session_search) | ![Stars](https://img.shields.io/badge/stars-1,212-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcoding_agent_session_search) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Unified search across 34 AI coding tool histories |
 | [**CASS Memory**](https://github.com/Dicklesworthstone/cass_memory_system) | ![Stars](https://img.shields.io/badge/stars-466-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fcass_memory_system) | ![TypeScript](https://img.shields.io/badge/-TS-3178C6?style=flat-square&logo=typescript&logoColor=white) | Three-layer cognitive memory: episodic, working, procedural |
 | [**UBS**](https://github.com/Dicklesworthstone/ultimate_bug_scanner) | ![Stars](https://img.shields.io/badge/stars-317-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fultimate_bug_scanner) | ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white) | 1,000+ pattern-based bug scanner, runs before every commit |
 | [**NTM**](https://github.com/Dicklesworthstone/ntm) | ![Stars](https://img.shields.io/badge/stars-464-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fntm) | ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white) | Multi-agent tmux orchestration with animated dashboards |
@@ -207,11 +207,11 @@ The FrankenSuite spans databases, terminals, numerical computing, media, graphs,
 | [**FrankenAccounting**](https://github.com/Dicklesworthstone/franken_accounting) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 598 commits<br>+371,030 / −11,517 lines | Double-entry ledger in Rust on FrankenGraphDB: append-only journal, exact integer money, bitemporal trial balances, replayable report certificates, CLI, and MCP server. |
 | [**FrankenRemote**](https://github.com/Dicklesworthstone/franken_remote) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 575 commits<br>+180,852 / −11,836 lines | Tailnet-native remote workstation being built in Rust on Asupersync: HEVC desktop streaming from Linux X11 hosts, with opt-in input, clipboard, file sending, and audio. |
 | [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 590 commits<br>+108,873 / −9,286 lines | Rust implementation of SQLite with page-level MVCC concurrent-writer support and RaptorQ durability components. |
-| [**Franken Firmware**](https://github.com/Dicklesworthstone/franken_firmware) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 452 commits<br>+852,153 / −0 lines | Pre-alpha research workspace toward Rust replacement firmware for Sonos speakers. So far it boots tiny static `/init` binaries on generic big-endian MIPS and PowerPC QEMU machines and sends decoded Ogg Vorbis and MP3 audio over authenticated UDP between processes on one host. None of it is qualified on Sonos hardware. |
+| [**Franken Firmware**](https://github.com/Dicklesworthstone/franken_firmware) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 452 commits<br>+874,047 / −0 lines | Pre-alpha research workspace toward Rust replacement firmware for Sonos speakers. So far it boots tiny static `/init` binaries on generic big-endian MIPS and PowerPC QEMU machines and sends decoded Ogg Vorbis and MP3 audio over authenticated UDP between processes on one host. None of it is qualified on Sonos hardware. |
 | [**FrankenGit**](https://github.com/Dicklesworthstone/frankengit) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 481 commits<br>+254,834 / −23,496 lines | Git-compatible forge for human and coding-agent workflows, with verifiable recovery, self-hosting, and an immutable decision stream. |
 | [**Remote Compilation Helper**](https://github.com/Dicklesworthstone/remote_compilation_helper) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 480 commits<br>+238,868 / −16,127 lines | Intercepts cargo/gcc builds from AI coding agents via hooks and transparently routes them to remote worker machines, returning artifacts as if compiled locally |
 | [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 471 commits<br>+192,860 / −12,459 lines | Rust implementation of the Lean 4 toolchain with `.olean`, C ABI, LSP, and CLI compatibility; deterministic parallelism; declaration-level incrementality; and a dual-engine kernel capped at 12 KLOC. |
-| [**MCP Agent Mail Rust**](https://github.com/Dicklesworthstone/mcp_agent_mail_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 476 commits<br>+161,613 / −9,388 lines | Rust MCP server for multi-agent coordination: 45 tools and 25 resources, Git-backed archive, SQLite indexing, advisory file locks, a 16-screen TUI, a server-rendered web UI, and an agent-first robot CLI. |
+| [**MCP Agent Mail Rust**](https://github.com/Dicklesworthstone/mcp_agent_mail_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 477 commits<br>+162,008 / −9,417 lines | Rust MCP server for multi-agent coordination: 45 tools and 25 resources, Git-backed archive, SQLite indexing, advisory file locks, a 16-screen TUI, a server-rendered web UI, and an agent-first robot CLI. |
 | [**FrankenLibC**](https://github.com/Dicklesworthstone/frankenlibc) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 472 commits<br>+153,269 / −21,702 lines | Clean-room Rust reimplementation of glibc with an opt-in Transparent Safety Membrane, loaded via LD_PRELOAD. 4,119 exported symbols classified; 2,829 native Rust + direct syscalls (68.7%), the rest host-backed. Two runtime modes (strict/hardened); x86_64 primary, aarch64 covered. Membrane coverage is path-specific, not universal. |
 <!-- END AUTO-BUILDING-NOW -->
 
@@ -652,7 +652,7 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 - **[Ryan Sean Adams](https://www.bankless.com/)** (Bankless) called the analysis "one of the most thorough analyses of a company I've ever seen"
 - Front page of **Hacker News** (multiple times)
 - Featured on **Slashdot**, the **Bankless podcast**, **Delphi Digital**, and **Farzad Podcast**
-- 34,150+ GitHub stars, 3,500+ GitHub followers, 216 open-source projects, 50.6K X followers
+- 34,160+ GitHub stars, 3,500+ GitHub followers, 216 open-source projects, 50.6K X followers
 
 ---
 
