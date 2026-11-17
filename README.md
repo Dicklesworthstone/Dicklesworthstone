@@ -21,7 +21,7 @@
 
 ![Stars: 34,180+](https://img.shields.io/static/v1?label=Stars&message=34%2C180%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Projects: 216](https://img.shields.io/static/v1?label=Projects&message=216&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 411,529](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=411%2C529&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 411,531](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=411%2C531&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,500+](https://img.shields.io/static/v1?label=Followers&message=3%2C500%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 50.6K](https://img.shields.io/static/v1?label=X+Followers&message=50.6K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -70,7 +70,7 @@
 </p>
 
 > [!NOTE]
-> **411,529 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
+> **411,531 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
 
 ---
 
@@ -206,8 +206,8 @@ The FrankenSuite spans databases, terminals, numerical computing, media, graphs,
 | [**FrankenSonos**](https://github.com/Dicklesworthstone/frankensonos) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 705 commits<br>+189,772 / −6,070 lines | Sonos controller in Rust for S1 and S2 speakers: CLI, HTTP API, MCP server, a Spotify-library DJ, and remote access over Tailscale. |
 | [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 610 commits<br>+112,383 / −9,823 lines | Rust implementation of SQLite with page-level MVCC concurrent-writer support and RaptorQ durability components. |
 | [**FrankenRemote**](https://github.com/Dicklesworthstone/franken_remote) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 577 commits<br>+187,622 / −11,841 lines | Tailnet-native remote workstation being built in Rust on Asupersync: HEVC desktop streaming from Linux X11 hosts, with opt-in input, clipboard, file sending, and audio. |
-| [**Franken Firmware**](https://github.com/Dicklesworthstone/franken_firmware) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 452 commits<br>+852,153 / −0 lines | Pre-alpha research workspace toward Rust replacement firmware for Sonos speakers. So far it boots tiny static `/init` binaries on generic big-endian MIPS and PowerPC QEMU machines and sends decoded Ogg Vorbis and MP3 audio over authenticated UDP between processes on one host. None of it is qualified on Sonos hardware. |
-| [**FrankenAccounting**](https://github.com/Dicklesworthstone/franken_accounting) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 460 commits<br>+289,060 / −10,267 lines | Double-entry ledger in Rust on FrankenGraphDB: append-only journal, exact integer money, bitemporal trial balances, replayable report certificates, CLI, and MCP server. |
+| [**Franken Firmware**](https://github.com/Dicklesworthstone/franken_firmware) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 452 commits<br>+874,047 / −0 lines | Pre-alpha research workspace toward Rust replacement firmware for Sonos speakers. So far it boots tiny static `/init` binaries on generic big-endian MIPS and PowerPC QEMU machines and sends decoded Ogg Vorbis and MP3 audio over authenticated UDP between processes on one host. None of it is qualified on Sonos hardware. |
+| [**FrankenAccounting**](https://github.com/Dicklesworthstone/franken_accounting) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 459 commits<br>+289,046 / −10,267 lines | Double-entry ledger in Rust on FrankenGraphDB: append-only journal, exact integer money, bitemporal trial balances, replayable report certificates, CLI, and MCP server. |
 | [**Remote Compilation Helper**](https://github.com/Dicklesworthstone/remote_compilation_helper) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 448 commits<br>+230,169 / −15,235 lines | Intercepts cargo/gcc builds from AI coding agents via hooks and transparently routes them to remote worker machines, returning artifacts as if compiled locally |
 | [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 439 commits<br>+180,650 / −11,807 lines | Rust implementation of the Lean 4 toolchain with `.olean`, C ABI, LSP, and CLI compatibility; deterministic parallelism; declaration-level incrementality; and a dual-engine kernel capped at 12 KLOC. |
 | [**MCP Agent Mail Rust**](https://github.com/Dicklesworthstone/mcp_agent_mail_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 450 commits<br>+107,677 / −9,373 lines | Rust MCP server for multi-agent coordination: 45 tools and 25 resources, Git-backed archive, SQLite indexing, advisory file locks, a 16-screen TUI, a server-rendered web UI, and an agent-first robot CLI. |
