@@ -44,6 +44,10 @@
       "reason": "Checked Nov 8, 2026: created that day with one commit; its README says status is design plan, no code yet, the repo holds only the plan, README, agent contract and toolchain settings, and nothing has been built, run or benchmarked.",
       "revisit": "2026-12-08"
     },
+    "franken_robotics": {
+      "reason": "Checked Nov 22, 2026: created hours earlier; its README says planning only, with no Cargo workspace, crate or binary, and every command and throughput figure a proposal or target; the repo holds the plan editions, their research and reviews, planning-check scripts and the source of a website about the plan, and no FrankenRobotics physics step has been measured.",
+      "revisit": "2026-12-22"
+    },
     "beads_for_cass": {
       "reason": "Static Beads issue dashboard for CASS, like the other generated dashboards."
     },
