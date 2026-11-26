@@ -45,8 +45,8 @@
       "revisit": "2026-12-08"
     },
     "franken_robotics": {
-      "reason": "Checked Nov 22, 2026: created hours earlier; its README says planning only, with no Cargo workspace, crate or binary, and every command and throughput figure a proposal or target; the repo holds the plan editions, their research and reviews, planning-check scripts and the source of a website about the plan, and no FrankenRobotics physics step has been measured.",
-      "revisit": "2026-12-22"
+      "reason": "Re-checked Nov 26, 2026: its README says it is building the first milestone (M0), with a Cargo workspace of foundation crates since Nov 24, but no robot design type, physics step, GPU kernel or training run; no robot has been simulated, all six recorded gates are open, and every throughput figure is a target.",
+      "revisit": "2026-12-26"
     },
     "beads_for_cass": {
       "reason": "Static Beads issue dashboard for CASS, like the other generated dashboards."

@@ -222,6 +222,13 @@ RECENT_DESCRIPTION_OVERRIDES = {
         "HEVC desktop streaming from Linux X11 hosts, with opt-in input, "
         "clipboard, file sending, and audio."
     ),
+    "franken_robotics": (
+        "Early Rust workspace toward a robot proving ground and design studio "
+        "for AI agents on FrankenSim. Its code so far is first-milestone "
+        "groundwork: a verb registry, an independent certificate auditor, an "
+        "airlock crate for FrankenSim, workspace checks, and SO(3) and SE(3) "
+        "types in progress. Nothing simulates a robot yet."
+    ),
     "franken_surveillance_system": (
         "Local-first Rust sensor system for owner-authorized cameras and capture "
         "drones, with evidence tracking built into the data model."
