@@ -19,9 +19,9 @@
 
 *Building the tooling that lets dozens of AI agents ship complex projects in days.*
 
-![Stars: 34,400+](https://img.shields.io/static/v1?label=Stars&message=34%2C400%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Stars: 34,410+](https://img.shields.io/static/v1?label=Stars&message=34%2C410%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Projects: 217](https://img.shields.io/static/v1?label=Projects&message=217&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
-![Contributions: 426,024](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=426%2C024&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
+![Contributions: 426,031](https://img.shields.io/static/v1?label=Contributions+%281yr%29&message=426%2C031&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![Followers: 3,500+](https://img.shields.io/static/v1?label=Followers&message=3%2C500%2B&color=2b2b2b&style=flat-square&logo=github&logoColor=white)
 ![X: 50.6K](https://img.shields.io/static/v1?label=X+Followers&message=50.6K&color=2b2b2b&style=flat-square&logo=x&logoColor=white)
 
@@ -70,7 +70,7 @@
 </p>
 
 > [!NOTE]
-> **426,024 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
+> **426,031 contributions in the past year.** I use 64 AI coding agent subscription accounts (~$14K/month) and the Flywheel tools below. Most of those contributions landed after January 2026.
 
 ---
 
@@ -85,7 +85,7 @@ Fourteen tools for multi-agent software development: messaging and file leases, 
 | Tool | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stars&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lang&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Purpose |
 |:-----|:-----:|:----:|:--------|
 | [**MCP Agent Mail**](https://github.com/Dicklesworthstone/mcp_agent_mail) | ![Stars](https://img.shields.io/badge/stars-2,245-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fmcp_agent_mail) | ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white) | Gmail for coding agents: messaging, file leases, audit trails. Continued in Rust as [MCP Agent Mail Rust](https://github.com/Dicklesworthstone/mcp_agent_mail_rust) |
-| [**DCG**](https://github.com/Dicklesworthstone/destructive_command_guard) | ![Stars](https://img.shields.io/badge/stars-6,381-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fdestructive_command_guard) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | SIMD-accelerated guard that blocks `rm -rf` and `git reset --hard` |
+| [**DCG**](https://github.com/Dicklesworthstone/destructive_command_guard) | ![Stars](https://img.shields.io/badge/stars-6,382-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fdestructive_command_guard) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | SIMD-accelerated guard that blocks `rm -rf` and `git reset --hard` |
 | [**Beads Viewer**](https://github.com/Dicklesworthstone/beads_viewer) | ![Stars](https://img.shields.io/badge/stars-1,738-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbeads_viewer) | ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white) | PageRank-powered task prioritization in a keyboard-driven TUI |
 | [**Flywheel Setup**](https://github.com/Dicklesworthstone/agentic_coding_flywheel_setup) | ![Stars](https://img.shields.io/badge/stars-1,683-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fagentic_coding_flywheel_setup) | ![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white) | Installs and configures 30+ tools, including the full Flywheel stack, on an Ubuntu VPS in about 30 minutes |
 | [**Beads Rust**](https://github.com/Dicklesworthstone/beads_rust) | ![Stars](https://img.shields.io/badge/stars-1,165-blue?style=flat-square&logo=github&logoColor=white&repo=Dicklesworthstone%2Fbeads_rust) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | Local-first, non-invasive issue tracker for git repos |
@@ -201,18 +201,18 @@ The FrankenSuite spans databases, terminals, numerical computing, media, graphs,
 
 | Project | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lang&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 14-day activity | What it does |
 |:--------|:----:|:----------------|:-------------|
-| [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 997 commits<br>+199,965 / −18,887 lines | Rust implementation of SQLite with page-level MVCC concurrent-writer support and RaptorQ durability components. |
+| [**FrankenSQLite**](https://github.com/Dicklesworthstone/frankensqlite) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 997 commits<br>+200,205 / −18,916 lines | Rust implementation of SQLite with page-level MVCC concurrent-writer support and RaptorQ durability components. |
 | [**FrankenTextiles**](https://github.com/Dicklesworthstone/franken_textiles) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 968 commits<br>+273,811 / −7,979 lines | Sewing-pattern engine in Rust/Wasm: drafting, seam and ease validation, alterations, Anny bodies fitted to tape measurements, a cloth drape solver with body contact, and PDF, DXF, HPGL, and embroidery exports. |
 | [**Franken Surveillance System**](https://github.com/Dicklesworthstone/franken_surveillance_system) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 700 commits<br>+809,848 / −36,281 lines | Local-first Rust sensor system for owner-authorized cameras and capture drones, with evidence tracking built into the data model. |
-| [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 541 commits<br>+712,441 / −418,517 lines | Rust geometry, simulation, optimization, and rendering workspace with contract-backed kernels. |
+| [**FrankenSim**](https://github.com/Dicklesworthstone/frankensim) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 540 commits<br>+712,429 / −418,516 lines | Rust geometry, simulation, optimization, and rendering workspace with contract-backed kernels. |
 | [**NTM**](https://github.com/Dicklesworthstone/ntm) | ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white) | 563 commits<br>+323,979 / −70,119 lines | Named Tmux Manager: a Go control plane to spawn, tile, and coordinate multiple AI coding agents (Claude, Codex, Antigravity, omp, Grok) across tmux panes - graph-aware work triage, safety policy and approvals, Agent Mail coordination, checkpoints/timelines, and robot JSON + REST/SSE/WebSocket/OpenAPI surfaces. |
 | [**FrankenSearch**](https://github.com/Dicklesworthstone/frankensearch) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 594 commits<br>+115,982 / −20,023 lines | Two-tier hybrid local search for Rust and the fsfs CLI: sub-millisecond first-pass results from a Potion/Model2Vec fast tier, then MiniLM quality refinement. Fuses native pure-Rust BM25 (Quill engine) and semantic vector search with Reciprocal Rank Fusion. Progressive iterator API, f16 SIMD vector index, feature-gated compilation. |
 | [**Franken Mining**](https://github.com/Dicklesworthstone/franken_mining) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 527 commits<br>+286,058 / −8,103 lines | Early Rust workspace for mining-company disclosures: `fmine assure public` reads one issuer's 18 public workbooks into claims that cite their source cells and reproduces a pinned result. Its first milestone gate has not passed. |
-| [**Eidetic Engine CLI**](https://github.com/Dicklesworthstone/eidetic_engine_cli) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 501 commits<br>+147,617 / −16,794 lines | Local-first, explainable memory for coding agents: a Rust CLI built on Asupersync, FrankenSQLite, FrankenSearch, and FrankenNetworkX. |
-| [**FrankenRemote**](https://github.com/Dicklesworthstone/franken_remote) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 451 commits<br>+181,621 / −8,010 lines | Tailnet-native remote workstation being built in Rust on Asupersync: HEVC desktop streaming from Linux X11 hosts, with opt-in input, clipboard, file sending, and audio. |
+| [**Eidetic Engine CLI**](https://github.com/Dicklesworthstone/eidetic_engine_cli) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 502 commits<br>+147,617 / −16,794 lines | Local-first, explainable memory for coding agents: a Rust CLI built on Asupersync, FrankenSQLite, FrankenSearch, and FrankenNetworkX. |
+| [**FrankenRemote**](https://github.com/Dicklesworthstone/franken_remote) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 449 commits<br>+181,475 / −7,974 lines | Tailnet-native remote workstation being built in Rust on Asupersync: HEVC desktop streaming from Linux X11 hosts, with opt-in input, clipboard, file sending, and audio. |
 | [**Franken Robotics**](https://github.com/Dicklesworthstone/franken_robotics) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 375 commits<br>+1,839,817 / −0 lines | Early Rust workspace toward a robot proving ground and design studio for AI agents on FrankenSim. Its code so far is first-milestone groundwork: a verb registry, an independent certificate auditor, an airlock crate for FrankenSim, workspace checks, and SO(3) and SE(3) types in progress. Nothing simulates a robot yet. |
-| [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 349 commits<br>+5,167,362 / −13,455 lines | Rust implementation of the Lean 4 toolchain with `.olean`, C ABI, LSP, and CLI compatibility; deterministic parallelism; declaration-level incrementality; and a dual-engine kernel capped at 12 KLOC. |
-| [**ASImposium**](https://github.com/Dicklesworthstone/asimposium.org) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | 432 commits<br>+190,050 / −15,425 lines | Public scientific ledger where human-sponsored AI agents submit, review, and challenge work in mathematics and physics. |
+| [**FrankenLean**](https://github.com/Dicklesworthstone/franken_lean) | ![Rust](https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white) | 346 commits<br>+5,166,115 / −13,401 lines | Rust implementation of the Lean 4 toolchain with `.olean`, C ABI, LSP, and CLI compatibility; deterministic parallelism; declaration-level incrementality; and a dual-engine kernel capped at 12 KLOC. |
+| [**ASImposium**](https://github.com/Dicklesworthstone/asimposium.org) | ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | 431 commits<br>+189,635 / −15,415 lines | Public scientific ledger where human-sponsored AI agents submit, review, and challenge work in mathematics and physics. |
 <!-- END AUTO-BUILDING-NOW -->
 
 ### Live Demos
@@ -652,7 +652,7 @@ Selected essays from [jeffreyemanuel.com/writing](https://www.jeffreyemanuel.com
 - **[Ryan Sean Adams](https://www.bankless.com/)** (Bankless) called the analysis "one of the most thorough analyses of a company I've ever seen"
 - Front page of **Hacker News** (multiple times)
 - Featured on **Slashdot**, the **Bankless podcast**, **Delphi Digital**, and **Farzad Podcast**
-- 34,400+ GitHub stars, 3,500+ GitHub followers, 217 open-source projects, 50.6K X followers
+- 34,410+ GitHub stars, 3,500+ GitHub followers, 217 open-source projects, 50.6K X followers
 
 ---
 
