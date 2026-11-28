@@ -4,24 +4,24 @@
   <!-- Progress bar background -->
   <rect x="25" y="50" rx="3" width="445" height="10" fill="#161b22"/>
   <rect x="25" y="50" rx="3" width="300" height="10" fill="#dea584"/>
-  <rect x="325" y="50" width="55" height="10" fill="#e34c26"/>
-  <rect x="380" y="50" width="23" height="10" fill="#3178c6"/>
-  <rect x="403" y="50" width="23" height="10" fill="#3572A5"/>
-  <rect x="426" y="50" width="13" height="10" fill="#89e051"/>
-  <rect x="439" y="50" width="9" height="10" fill="#f1e05a"/>
-  <rect x="448" y="50" width="8" height="10" fill="#00ADD8"/>
-  <rect x="456" y="50" width="5" height="10" fill="#555555"/>
-  <rect x="461" y="50" width="2" height="10" fill="#F05138"/>
-  <rect x="463" y="50" rx="3" width="2" height="10" fill="#f34b7d"/>
+  <rect x="325" y="50" width="54" height="10" fill="#e34c26"/>
+  <rect x="379" y="50" width="23" height="10" fill="#3178c6"/>
+  <rect x="402" y="50" width="23" height="10" fill="#3572A5"/>
+  <rect x="425" y="50" width="13" height="10" fill="#89e051"/>
+  <rect x="438" y="50" width="9" height="10" fill="#f1e05a"/>
+  <rect x="447" y="50" width="8" height="10" fill="#00ADD8"/>
+  <rect x="455" y="50" width="5" height="10" fill="#555555"/>
+  <rect x="460" y="50" width="2" height="10" fill="#F05138"/>
+  <rect x="462" y="50" rx="3" width="2" height="10" fill="#f34b7d"/>
   <g transform="translate(25, 82)">
     <circle cx="6" cy="6" r="6" fill="#dea584"/>
     <text x="18" y="10" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">Rust</text>
-    <text x="105" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">67.5%</text>
+    <text x="105" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">67.6%</text>
   </g>
   <g transform="translate(25, 107)">
     <circle cx="6" cy="6" r="6" fill="#e34c26"/>
     <text x="18" y="10" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">HTML</text>
-    <text x="105" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">12.4%</text>
+    <text x="105" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">12.3%</text>
   </g>
   <g transform="translate(25, 132)">
     <circle cx="6" cy="6" r="6" fill="#3178c6"/>
@@ -41,7 +41,7 @@
   <g transform="translate(260, 82)">
     <circle cx="6" cy="6" r="6" fill="#f1e05a"/>
     <text x="18" y="10" fill="#c9d1d9" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">JavaScript</text>
-    <text x="150" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">2.1%</text>
+    <text x="150" y="10" fill="#8b949e" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13">2.2%</text>
   </g>
   <g transform="translate(260, 107)">
     <circle cx="6" cy="6" r="6" fill="#00ADD8"/>
